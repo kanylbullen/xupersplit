@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tollesplit
 
-## Getting Started
+Kittysplit-klon för att dela utgifter i grupp — byggd med Next.js 16 och
+Supabase. Live på [tollesplit.vercel.app](https://tollesplit.vercel.app).
 
-First, run the development server:
+## Hur den funkar
+
+- **Skapa** en tollesplit (kräver inloggning, gated via `allowed_creators`-
+  tabellen — just nu bara johan@tollstorp.se). Inloggning sker med e-post +
+  engångskod/magisk länk via Supabase Auth.
+- **Dela länken** `/k/<hemlig-nyckel>` — alla med länken kan lägga in
+  utgifter och överföringar utan konto, precis som Kittysplit.
+- **Saldon** räknas ut automatiskt med minimerade avräkningsförslag
+  ("A betalar B X kr") som kan bokföras som överföringar.
+
+Delning stödjer lika delning, andelar (viktad) och exakta belopp, med
+öresfördelning enligt största-rest-metoden.
+
+## Arkitektur
+
+- **Ingen service-role-nyckel.** All dataåtkomst går via security definer-
+  RPC:er i Postgres (`create_kitty`, `kitty_data`, `save_entry`, …) där den
+  hemliga nyckeln i URL:en är capability. RLS är aktiverat utan policies
+  (deny all) på samtliga tabeller — appen använder enbart den publika
+  publishable-nyckeln.
+- Next.js App Router + server actions; klienten är ren React utan
+  state-bibliotek. Tailwind v4.
+- Supabase-projekt: `uvlgfszbmzdurjlbqovu` (eu-north-1), org molnkontakt.
+- Vercel-projekt: `molnkontakt/tollesplit`, deploy via `vercel deploy --prod`
+  (ingen git-integration ännu).
+
+## Lokal utveckling
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env.local` behöver:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://uvlgfszbmzdurjlbqovu.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<publishable key>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Logiktester
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Split-/saldo-/avräkningslogiken i `src/lib/money.ts` är ren TS och kan
+snabbtestas med `node --experimental-strip-types` (se test i git-historiken).
