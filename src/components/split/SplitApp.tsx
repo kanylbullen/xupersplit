@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Entry, EntryKind, KittyData } from "@/lib/types";
+import type { Entry, EntryKind, SplitData } from "@/lib/types";
 import { EntriesView } from "./EntriesView";
 import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
@@ -11,9 +11,9 @@ import { SettingsDialog } from "./SettingsDialog";
 
 type Tab = "entries" | "balances";
 
-export function KittyApp({ data }: { data: KittyData }) {
-  const { kitty, participants, entries } = data;
-  const storageKey = `tollesplit:me:${kitty.key}`;
+export function SplitApp({ data }: { data: SplitData }) {
+  const { split, participants, entries } = data;
+  const storageKey = `tollesplit:me:${split.key}`;
 
   const [tab, setTab] = useState<Tab>("balances");
   const [meId, setMeId] = useState<string | null>(null);
@@ -33,17 +33,17 @@ export function KittyApp({ data }: { data: KittyData }) {
       const raw = JSON.parse(
         localStorage.getItem("tollysplit:visited") ?? "[]"
       ) as { key: string; title: string; at: number }[];
-      const rest = raw.filter((v) => v.key !== kitty.key);
-      rest.unshift({ key: kitty.key, title: kitty.title, at: Date.now() });
+      const rest = raw.filter((v) => v.key !== split.key);
+      rest.unshift({ key: split.key, title: split.title, at: Date.now() });
       localStorage.setItem("tollysplit:visited", JSON.stringify(rest.slice(0, 50)));
     } catch {
       // corrupt entry — overwrite with just this split
       localStorage.setItem(
         "tollysplit:visited",
-        JSON.stringify([{ key: kitty.key, title: kitty.title, at: Date.now() }])
+        JSON.stringify([{ key: split.key, title: split.title, at: Date.now() }])
       );
     }
-  }, [kitty.key, kitty.title]);
+  }, [split.key, split.title]);
 
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
@@ -70,7 +70,7 @@ export function KittyApp({ data }: { data: KittyData }) {
     const url = window.location.href;
     if (navigator.share) {
       try {
-        await navigator.share({ title: kitty.title, url });
+        await navigator.share({ title: split.title, url });
         return;
       } catch {
         // fall through to clipboard if the user cancelled the share sheet
@@ -94,7 +94,7 @@ export function KittyApp({ data }: { data: KittyData }) {
             </svg>
           </Link>
           <h1 className="min-w-0 flex-1 truncate text-lg font-black tracking-tight">
-            {kitty.title}
+            {split.title}
           </h1>
           <a
             href="https://buymeacoffee.com/xuperfun"
@@ -154,7 +154,7 @@ export function KittyApp({ data }: { data: KittyData }) {
           <EntriesView
             entries={entries}
             participants={participants}
-            currency={kitty.currency}
+            currency={split.currency}
             meId={meId}
             onEdit={(entry) =>
               setEntryDialog({ open: true, entry, kind: entry.kind })
@@ -162,11 +162,11 @@ export function KittyApp({ data }: { data: KittyData }) {
           />
         ) : (
           <BalancesView
-            kittyKey={kitty.key}
-            kittyTitle={kitty.title}
+            splitKey={split.key}
+            splitTitle={split.title}
             entries={entries}
             participants={participants}
-            currency={kitty.currency}
+            currency={split.currency}
             meId={meId}
             onEditEntry={(entry) =>
               setEntryDialog({ open: true, entry, kind: entry.kind })
@@ -199,9 +199,9 @@ export function KittyApp({ data }: { data: KittyData }) {
       <EntryDialog
         open={entryDialog.open}
         onClose={() => setEntryDialog((d) => ({ ...d, open: false }))}
-        kittyKey={kitty.key}
+        splitKey={split.key}
         participants={participants}
-        currency={kitty.currency}
+        currency={split.currency}
         entry={entryDialog.entry}
         initialKind={entryDialog.kind}
         meId={meId}
@@ -214,7 +214,7 @@ export function KittyApp({ data }: { data: KittyData }) {
       <SettingsDialog
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
-        kitty={kitty}
+        split={split}
         participants={participants}
         meId={meId}
         onIdentityReset={() => {

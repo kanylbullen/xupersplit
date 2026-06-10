@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 
 export type CreateState = { error: string } | null;
 
-export async function createKittyAction(
+export async function createSplitAction(
   _prev: CreateState,
   formData: FormData
 ): Promise<CreateState> {
@@ -36,7 +36,7 @@ export async function createKittyAction(
     : null;
 
   const supabase = await createClient();
-  const { data: key, error } = await supabase.rpc("create_kitty", {
+  const { data: key, error } = await supabase.rpc("create_split", {
     p_title: title,
     p_currency: currency,
     p_names: names,

@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { balances } from "@/lib/money";
-import type { KittyData } from "@/lib/types";
+import type { SplitData } from "@/lib/types";
 
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
 const ERROR_MESSAGES: Record<string, string> = {
-  kitty_not_found: "Den här tollyspliten finns inte längre.",
+  split_not_found: "Den här tollyspliten finns inte längre.",
   participant_has_entries:
     "Deltagaren har utgifter eller överföringar och kan inte tas bort.",
   participant_not_found: "Deltagaren hittades inte.",
@@ -60,11 +60,11 @@ export async function saveEntryAction(
   // have served their purpose — wipe them.
   if (result.ok && entry.kind === "transfer") {
     const supabase = await createClient();
-    const { data } = await supabase.rpc("kitty_data", { p_key: key });
-    const kitty = data as KittyData | null;
-    if (kitty) {
-      const hasNumbers = kitty.participants.some((p) => p.swish_number);
-      const allSquare = [...balances(kitty.participants, kitty.entries).values()].every(
+    const { data } = await supabase.rpc("split_data", { p_key: key });
+    const split = data as SplitData | null;
+    if (split) {
+      const hasNumbers = split.participants.some((p) => p.swish_number);
+      const allSquare = [...balances(split.participants, split.entries).values()].every(
         (v) => v === 0
       );
       if (hasNumbers && allSquare) {
@@ -128,12 +128,12 @@ export async function setSwishNumberAction(
   });
 }
 
-export async function updateKittyAction(
+export async function updateSplitAction(
   key: string,
   title: string,
   currency: string
 ): Promise<ActionResult> {
-  return rpc(key, "update_kitty", {
+  return rpc(key, "update_split", {
     p_key: key,
     p_title: title,
     p_currency: currency,

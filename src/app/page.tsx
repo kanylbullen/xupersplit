@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import type { KittySummary } from "@/lib/types";
+import type { SplitSummary } from "@/lib/types";
 import { BeerButton } from "@/components/BeerButton";
 import { MySplits } from "@/components/MySplits";
 
@@ -10,10 +10,10 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let mine: KittySummary[] = [];
+  let mine: SplitSummary[] = [];
   if (user) {
-    const { data } = await supabase.rpc("my_kitties");
-    mine = (data as KittySummary[] | null) ?? [];
+    const { data } = await supabase.rpc("my_splits");
+    mine = (data as SplitSummary[] | null) ?? [];
   }
 
   return (

@@ -25,7 +25,7 @@ export type Entry = {
   shares: Share[];
 };
 
-export type Kitty = {
+export type Split = {
   key: string;
   title: string;
   currency: string;
@@ -34,13 +34,13 @@ export type Kitty = {
   auto_purge: boolean;
 };
 
-export type KittyData = {
-  kitty: Kitty;
+export type SplitData = {
+  split: Split;
   participants: Participant[];
   entries: Entry[];
 };
 
-export type KittySummary = {
+export type SplitSummary = {
   key: string;
   title: string;
   currency: string;

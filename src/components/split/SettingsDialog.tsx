@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useTheme } from "next-themes";
-import type { Kitty, Participant } from "@/lib/types";
+import type { Split, Participant } from "@/lib/types";
 import { CURRENCIES } from "@/lib/money";
 import Link from "next/link";
 import {
@@ -11,7 +11,7 @@ import {
   renameParticipantAction,
   setAutoPurgeAction,
   setSwishNumberAction,
-  updateKittyAction,
+  updateSplitAction,
 } from "@/app/k/[key]/actions";
 import { formatSwishNumber, normalizeSwishNumber } from "@/lib/swish";
 import { Button, Dialog, Input, Label, Select } from "@/components/ui";
@@ -19,20 +19,20 @@ import { Button, Dialog, Input, Label, Select } from "@/components/ui";
 export function SettingsDialog({
   open,
   onClose,
-  kitty,
+  split,
   participants,
   meId,
   onIdentityReset,
 }: {
   open: boolean;
   onClose: () => void;
-  kitty: Kitty;
+  split: Split;
   participants: Participant[];
   meId: string | null;
   onIdentityReset: () => void;
 }) {
-  const [title, setTitle] = useState(kitty.title);
-  const [currency, setCurrency] = useState(kitty.currency);
+  const [title, setTitle] = useState(split.title);
+  const [currency, setCurrency] = useState(split.currency);
   const [newName, setNewName] = useState("");
   const [renaming, setRenaming] = useState<string | null>(null);
   const [renameText, setRenameText] = useState("");
@@ -46,13 +46,13 @@ export function SettingsDialog({
 
   useEffect(() => {
     if (open) {
-      setTitle(kitty.title);
-      setCurrency(kitty.currency);
+      setTitle(split.title);
+      setCurrency(split.currency);
       setNewName("");
       setRenaming(null);
       setError(null);
     }
-  }, [open, kitty.title, kitty.currency]);
+  }, [open, split.title, split.currency]);
 
   function run(action: () => Promise<{ ok: boolean; error?: string }>) {
     setError(null);
@@ -62,25 +62,25 @@ export function SettingsDialog({
     });
   }
 
-  const dirty = title.trim() !== kitty.title || currency !== kitty.currency;
+  const dirty = title.trim() !== split.title || currency !== split.currency;
 
   return (
     <Dialog open={open} onClose={onClose} title="Inställningar">
       <div className="space-y-6">
         <section className="space-y-3">
           <div>
-            <Label htmlFor="kitty-title">Namn</Label>
+            <Label htmlFor="split-title">Namn</Label>
             <Input
-              id="kitty-title"
+              id="split-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={80}
             />
           </div>
           <div>
-            <Label htmlFor="kitty-currency">Valuta</Label>
+            <Label htmlFor="split-currency">Valuta</Label>
             <Select
-              id="kitty-currency"
+              id="split-currency"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
@@ -94,7 +94,7 @@ export function SettingsDialog({
           {dirty && (
             <Button
               onClick={() =>
-                run(() => updateKittyAction(kitty.key, title, currency))
+                run(() => updateSplitAction(split.key, title, currency))
               }
               disabled={pending || title.trim().length === 0}
             >
@@ -123,7 +123,7 @@ export function SettingsDialog({
                     <button
                       onClick={() => {
                         run(() =>
-                          renameParticipantAction(kitty.key, p.id, renameText)
+                          renameParticipantAction(split.key, p.id, renameText)
                         );
                         setRenaming(null);
                       }}
@@ -160,7 +160,7 @@ export function SettingsDialog({
                     </button>
                     <button
                       onClick={() =>
-                        run(() => deleteParticipantAction(kitty.key, p.id))
+                        run(() => deleteParticipantAction(split.key, p.id))
                       }
                       disabled={pending}
                       className="text-sm text-stone-400 hover:text-negative"
@@ -180,7 +180,7 @@ export function SettingsDialog({
                       setError("Ogiltigt Swish-nummer — ange ett svenskt mobilnummer.");
                       return;
                     }
-                    run(() => setSwishNumberAction(kitty.key, p.id, normalized));
+                    run(() => setSwishNumberAction(split.key, p.id, normalized));
                     setSwishEditing(null);
                   }}
                 >
@@ -229,7 +229,7 @@ export function SettingsDialog({
               e.preventDefault();
               const name = newName.trim();
               if (!name) return;
-              run(() => addParticipantAction(kitty.key, name));
+              run(() => addParticipantAction(split.key, name));
               setNewName("");
             }}
           >
@@ -283,14 +283,14 @@ export function SettingsDialog({
 
         <section>
           <Label>Integritet</Label>
-          {kitty.has_owner ? (
+          {split.has_owner ? (
             <label className="flex cursor-pointer items-start gap-2.5 text-sm">
               <input
                 type="checkbox"
-                checked={kitty.auto_purge}
+                checked={split.auto_purge}
                 disabled={pending}
                 onChange={(e) =>
-                  run(() => setAutoPurgeAction(kitty.key, e.target.checked))
+                  run(() => setAutoPurgeAction(split.key, e.target.checked))
                 }
                 className="mt-0.5 h-4 w-4 accent-teal-600"
               />

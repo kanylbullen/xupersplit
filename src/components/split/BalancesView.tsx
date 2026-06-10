@@ -16,16 +16,16 @@ import { avatarColor, initials, todayIso } from "./helpers";
 import { SwishDialog, type SwishPayment } from "./SwishDialog";
 
 export function BalancesView({
-  kittyKey,
-  kittyTitle,
+  splitKey,
+  splitTitle,
   entries,
   participants,
   currency,
   meId,
   onEditEntry,
 }: {
-  kittyKey: string;
-  kittyTitle: string;
+  splitKey: string;
+  splitTitle: string;
   entries: Entry[];
   participants: Participant[];
   currency: string;
@@ -62,7 +62,7 @@ export function BalancesView({
     }
     setSwishError(null);
     startTransition(async () => {
-      const result = await setSwishNumberAction(kittyKey, me.id, normalized);
+      const result = await setSwishNumberAction(splitKey, me.id, normalized);
       if (!result.ok) setSwishError(result.error);
     });
   }
@@ -72,7 +72,7 @@ export function BalancesView({
     setSettling(id);
     setError(null);
     startTransition(async () => {
-      const result = await saveEntryAction(kittyKey, {
+      const result = await saveEntryAction(splitKey, {
         kind: "transfer",
         description: "Avräkning",
         amount_cents: amount,
@@ -159,7 +159,7 @@ export function BalancesView({
                             toName: to.name,
                             toNumber: to.swish_number!,
                             amountCents: s.amount_cents,
-                            message: kittyTitle,
+                            message: splitTitle,
                           });
                           setSwishOpen(true);
                         }}

@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { KittySummary } from "@/lib/types";
+import type { SplitSummary } from "@/lib/types";
 
 type VisitedSplit = { key: string; title: string; at: number };
 
-export function MySplits({ server }: { server: KittySummary[] }) {
+export function MySplits({ server }: { server: SplitSummary[] }) {
   const [visited, setVisited] = useState<VisitedSplit[]>([]);
 
   useEffect(() => {

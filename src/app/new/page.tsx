@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { NewKittyForm } from "./NewKittyForm";
+import { NewSplitForm } from "./NewSplitForm";
 
-export default function NewKittyPage() {
+export default function NewSplitPage() {
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 py-10">
       <Link
@@ -18,7 +18,7 @@ export default function NewKittyPage() {
         kostnaderna. Ingen inloggning behövs — men spara länken när du är
         klar, den är nyckeln till din tollysplit.
       </p>
-      <NewKittyForm />
+      <NewSplitForm />
     </main>
   );
 }

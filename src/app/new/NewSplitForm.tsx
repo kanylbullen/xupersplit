@@ -3,10 +3,10 @@
 import { useActionState, useState } from "react";
 import { Button, Input, Label, Select } from "@/components/ui";
 import { CURRENCIES } from "@/lib/money";
-import { createKittyAction } from "./actions";
+import { createSplitAction } from "./actions";
 
-export function NewKittyForm() {
-  const [state, formAction, pending] = useActionState(createKittyAction, null);
+export function NewSplitForm() {
+  const [state, formAction, pending] = useActionState(createSplitAction, null);
   const [nameCount, setNameCount] = useState(3);
 
   return (

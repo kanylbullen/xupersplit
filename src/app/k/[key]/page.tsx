@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
-import type { KittyData } from "@/lib/types";
-import { KittyApp } from "@/components/kitty/KittyApp";
+import type { SplitData } from "@/lib/types";
+import { SplitApp } from "@/components/split/SplitApp";
 
-async function fetchKitty(key: string): Promise<KittyData | null> {
+async function fetchSplit(key: string): Promise<SplitData | null> {
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("kitty_data", { p_key: key });
+  const { data, error } = await supabase.rpc("split_data", { p_key: key });
   if (error || !data) return null;
-  return data as KittyData;
+  return data as SplitData;
 }
 
 export async function generateMetadata({
@@ -17,21 +17,21 @@ export async function generateMetadata({
   params: Promise<{ key: string }>;
 }): Promise<Metadata> {
   const { key } = await params;
-  const data = await fetchKitty(key);
+  const data = await fetchSplit(key);
   return {
-    title: data ? `${data.kitty.title} — Tollysplit` : "Tollysplit",
+    title: data ? `${data.split.title} — Tollysplit` : "Tollysplit",
     robots: { index: false },
   };
 }
 
-export default async function KittyPage({
+export default async function SplitPage({
   params,
 }: {
   params: Promise<{ key: string }>;
 }) {
   const { key } = await params;
-  const data = await fetchKitty(key);
+  const data = await fetchSplit(key);
   if (!data) notFound();
 
-  return <KittyApp data={data} />;
+  return <SplitApp data={data} />;
 }

@@ -23,7 +23,7 @@ function centsToText(cents: number): string {
 export function EntryDialog({
   open,
   onClose,
-  kittyKey,
+  splitKey,
   participants,
   currency,
   entry,
@@ -32,7 +32,7 @@ export function EntryDialog({
 }: {
   open: boolean;
   onClose: () => void;
-  kittyKey: string;
+  splitKey: string;
   participants: Participant[];
   currency: string;
   entry: Entry | null;
@@ -181,7 +181,7 @@ export function EntryDialog({
     };
 
     startTransition(async () => {
-      const result = await saveEntryAction(kittyKey, input);
+      const result = await saveEntryAction(splitKey, input);
       if (!result.ok) setError(result.error);
       else {
         track("entry_saved", { kind, isEdit: Boolean(entry) });
@@ -193,7 +193,7 @@ export function EntryDialog({
   function remove() {
     if (!entry) return;
     startTransition(async () => {
-      const result = await deleteEntryAction(kittyKey, entry.id);
+      const result = await deleteEntryAction(splitKey, entry.id);
       if (!result.ok) setError(result.error);
       else onClose();
     });
