@@ -9,11 +9,14 @@ import {
   shareOfTotal,
   totalSpent,
 } from "@/lib/money";
-import { saveEntryAction } from "@/app/k/[key]/actions";
+import { saveEntryAction, setSwishNumberAction } from "@/app/k/[key]/actions";
+import { normalizeSwishNumber } from "@/lib/swish";
 import { avatarColor, initials, todayIso } from "./helpers";
+import { SwishDialog, type SwishPayment } from "./SwishDialog";
 
 export function BalancesView({
   kittyKey,
+  kittyTitle,
   entries,
   participants,
   currency,
@@ -21,6 +24,7 @@ export function BalancesView({
   onEditEntry,
 }: {
   kittyKey: string;
+  kittyTitle: string;
   entries: Entry[];
   participants: Participant[];
   currency: string;
@@ -38,6 +42,29 @@ export function BalancesView({
   const [pending, startTransition] = useTransition();
   const [settling, setSettling] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [swishPayment, setSwishPayment] = useState<SwishPayment | null>(null);
+  const [swishOpen, setSwishOpen] = useState(false);
+  const [swishInput, setSwishInput] = useState("");
+  const [swishError, setSwishError] = useState<string | null>(null);
+
+  const me = meId ? participants.find((p) => p.id === meId) : null;
+  const useSwish = currency === "SEK";
+  const showSwishPrompt =
+    useSwish && me && !me.swish_number && (bal.get(me.id) ?? 0) > 0;
+
+  function saveMySwishNumber() {
+    if (!me) return;
+    const normalized = normalizeSwishNumber(swishInput);
+    if (!normalized) {
+      setSwishError("Ange ett svenskt mobilnummer, t.ex. 070-123 45 67.");
+      return;
+    }
+    setSwishError(null);
+    startTransition(async () => {
+      const result = await setSwishNumberAction(kittyKey, me.id, normalized);
+      if (!result.ok) setSwishError(result.error);
+    });
+  }
 
   function recordSettlement(from: string, to: string, amount: number) {
     const id = `${from}-${to}`;
@@ -64,6 +91,33 @@ export function BalancesView({
         <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
           Så blir ni kvitt
         </h3>
+        {showSwishPrompt && (
+          <div className="mb-3 rounded-2xl border border-primary/30 bg-primary-soft/40 p-4">
+            <p className="mb-2 text-sm font-semibold">
+              Du har pengar att få, {me.name}! Lägg in ditt Swish-nummer så
+              kan de andra swisha dig direkt härifrån.
+            </p>
+            <div className="flex gap-2">
+              <input
+                inputMode="tel"
+                placeholder="070-123 45 67"
+                value={swishInput}
+                onChange={(e) => setSwishInput(e.target.value)}
+                className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-surface px-3 py-2 text-sm outline-none focus:border-primary"
+              />
+              <button
+                onClick={saveMySwishNumber}
+                disabled={pending}
+                className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-50"
+              >
+                Spara
+              </button>
+            </div>
+            {swishError && (
+              <p className="mt-1.5 text-xs text-negative">{swishError}</p>
+            )}
+          </div>
+        )}
         {plan.length === 0 && paidTransfers.length === 0 ? (
           <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
             <p className="font-semibold">Allt är uppgjort 🎉</p>
@@ -93,13 +147,32 @@ export function BalancesView({
                       {formatMoney(s.amount_cents, currency)}
                     </span>
                   </span>
-                  <button
-                    onClick={() => recordSettlement(s.from, s.to, s.amount_cents)}
-                    disabled={pending}
-                    className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold text-stone-600 transition-colors hover:border-primary hover:text-primary-dark disabled:opacity-50"
-                  >
-                    {settling === id ? "Bokför…" : "Markera betald"}
-                  </button>
+                  <span className="flex shrink-0 flex-col items-stretch gap-1.5 sm:flex-row">
+                    {useSwish && to?.swish_number && (
+                      <button
+                        onClick={() => {
+                          setSwishPayment({
+                            fromName: from?.name ?? "?",
+                            toName: to.name,
+                            toNumber: to.swish_number!,
+                            amountCents: s.amount_cents,
+                            message: kittyTitle,
+                          });
+                          setSwishOpen(true);
+                        }}
+                        className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+                      >
+                        Swisha
+                      </button>
+                    )}
+                    <button
+                      onClick={() => recordSettlement(s.from, s.to, s.amount_cents)}
+                      disabled={pending}
+                      className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold text-stone-600 transition-colors hover:border-primary hover:text-primary-dark disabled:opacity-50"
+                    >
+                      {settling === id ? "Bokför…" : "Markera betald"}
+                    </button>
+                  </span>
                 </div>
               );
             })}
@@ -191,6 +264,12 @@ export function BalancesView({
           {formatMoney(total, currency)}
         </p>
       </div>
+
+      <SwishDialog
+        open={swishOpen}
+        onClose={() => setSwishOpen(false)}
+        payment={swishPayment}
+      />
     </div>
   );
 }

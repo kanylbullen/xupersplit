@@ -145,6 +145,7 @@ export function KittyApp({ data }: { data: KittyData }) {
         ) : (
           <BalancesView
             kittyKey={kitty.key}
+            kittyTitle={kitty.title}
             entries={entries}
             participants={participants}
             currency={kitty.currency}

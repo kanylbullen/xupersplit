@@ -8,8 +8,10 @@ import {
   addParticipantAction,
   deleteParticipantAction,
   renameParticipantAction,
+  setSwishNumberAction,
   updateKittyAction,
 } from "@/app/k/[key]/actions";
+import { formatSwishNumber, normalizeSwishNumber } from "@/lib/swish";
 import { Button, Dialog, Input, Label, Select } from "@/components/ui";
 
 export function SettingsDialog({
@@ -32,6 +34,8 @@ export function SettingsDialog({
   const [newName, setNewName] = useState("");
   const [renaming, setRenaming] = useState<string | null>(null);
   const [renameText, setRenameText] = useState("");
+  const [swishEditing, setSwishEditing] = useState<string | null>(null);
+  const [swishText, setSwishText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const { theme, setTheme } = useTheme();
@@ -103,8 +107,9 @@ export function SettingsDialog({
             {participants.map((p, i) => (
               <div
                 key={p.id}
-                className={`flex items-center gap-2 px-3 py-2.5 ${i > 0 ? "border-t border-stone-100" : ""}`}
+                className={`px-3 py-2.5 ${i > 0 ? "border-t border-stone-100" : ""}`}
               >
+              <div className="flex items-center gap-2">
                 {renaming === p.id ? (
                   <>
                     <input
@@ -162,6 +167,57 @@ export function SettingsDialog({
                     </button>
                   </>
                 )}
+              </div>
+              {swishEditing === p.id ? (
+                <form
+                  className="mt-1.5 flex gap-2"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const normalized = normalizeSwishNumber(swishText);
+                    if (!normalized && swishText.trim() !== "") {
+                      setError("Ogiltigt Swish-nummer — ange ett svenskt mobilnummer.");
+                      return;
+                    }
+                    run(() => setSwishNumberAction(kitty.key, p.id, normalized));
+                    setSwishEditing(null);
+                  }}
+                >
+                  <input
+                    inputMode="tel"
+                    placeholder="070-123 45 67 (tomt = ta bort)"
+                    value={swishText}
+                    onChange={(e) => setSwishText(e.target.value)}
+                    autoFocus
+                    className="min-w-0 flex-1 rounded-lg border border-stone-300 px-2 py-1.5 text-sm outline-none focus:border-primary"
+                  />
+                  <button
+                    type="submit"
+                    disabled={pending}
+                    className="text-sm font-semibold text-primary hover:text-primary-dark"
+                  >
+                    Spara
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSwishEditing(null)}
+                    className="text-sm text-stone-400 hover:text-ink"
+                  >
+                    Avbryt
+                  </button>
+                </form>
+              ) : (
+                <button
+                  onClick={() => {
+                    setSwishEditing(p.id);
+                    setSwishText(p.swish_number ?? "");
+                  }}
+                  className="mt-0.5 text-xs text-stone-400 hover:text-primary-dark"
+                >
+                  {p.swish_number
+                    ? `Swish: ${formatSwishNumber(p.swish_number)} · ändra`
+                    : "+ Lägg till Swish-nummer"}
+                </button>
+              )}
               </div>
             ))}
           </div>

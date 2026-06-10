@@ -15,6 +15,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   bad_amount: "Beloppet måste vara större än noll.",
   shares_required: "Minst en person måste vara med och dela.",
   bad_recipient: "Välj en annan mottagare än avsändaren.",
+  bad_swish_number: "Ogiltigt Swish-nummer — ange ett svenskt mobilnummer.",
 };
 
 function friendly(message: string | undefined): string {
@@ -85,6 +86,18 @@ export async function deleteParticipantAction(
   participantId: string
 ): Promise<ActionResult> {
   return rpc(key, "delete_participant", { p_key: key, p_id: participantId });
+}
+
+export async function setSwishNumberAction(
+  key: string,
+  participantId: string,
+  number: string | null
+): Promise<ActionResult> {
+  return rpc(key, "set_swish_number", {
+    p_key: key,
+    p_id: participantId,
+    p_number: number,
+  });
 }
 
 export async function updateKittyAction(
