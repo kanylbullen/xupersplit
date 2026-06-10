@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { balances } from "@/lib/money";
+import type { KittyData } from "@/lib/types";
 
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
@@ -52,7 +54,33 @@ export async function saveEntryAction(
   key: string,
   entry: EntryInput
 ): Promise<ActionResult> {
-  return rpc(key, "save_entry", { p_key: key, p_entry: entry });
+  const result = await rpc(key, "save_entry", { p_key: key, p_entry: entry });
+
+  // Privacy: once a transfer makes everyone square, stored Swish numbers
+  // have served their purpose — wipe them.
+  if (result.ok && entry.kind === "transfer") {
+    const supabase = await createClient();
+    const { data } = await supabase.rpc("kitty_data", { p_key: key });
+    const kitty = data as KittyData | null;
+    if (kitty) {
+      const hasNumbers = kitty.participants.some((p) => p.swish_number);
+      const allSquare = [...balances(kitty.participants, kitty.entries).values()].every(
+        (v) => v === 0
+      );
+      if (hasNumbers && allSquare) {
+        await supabase.rpc("clear_swish_numbers", { p_key: key });
+        revalidatePath(`/k/${key}`);
+      }
+    }
+  }
+  return result;
+}
+
+export async function setAutoPurgeAction(
+  key: string,
+  on: boolean
+): Promise<ActionResult> {
+  return rpc(key, "set_auto_purge", { p_key: key, p_on: on });
 }
 
 export async function deleteEntryAction(

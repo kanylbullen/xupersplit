@@ -82,7 +82,12 @@ export default async function Home() {
 
       <footer className="mt-16 flex flex-col items-center gap-4 text-center text-xs text-stone-400">
         <BeerButton />
-        <span>tollysplit · byggd med kärlek, kaffe och öl</span>
+        <span>
+          tollysplit · byggd med kärlek, kaffe och öl ·{" "}
+          <Link href="/integritet" className="hover:text-ink">
+            integritetspolicy
+          </Link>
+        </span>
       </footer>
     </main>
   );

@@ -30,6 +30,8 @@ export type Kitty = {
   title: string;
   currency: string;
   created_at: string;
+  has_owner: boolean;
+  auto_purge: boolean;
 };
 
 export type KittyData = {

@@ -4,10 +4,12 @@ import { useEffect, useState, useTransition } from "react";
 import { useTheme } from "next-themes";
 import type { Kitty, Participant } from "@/lib/types";
 import { CURRENCIES } from "@/lib/money";
+import Link from "next/link";
 import {
   addParticipantAction,
   deleteParticipantAction,
   renameParticipantAction,
+  setAutoPurgeAction,
   setSwishNumberAction,
   updateKittyAction,
 } from "@/app/k/[key]/actions";
@@ -276,6 +278,43 @@ export function SettingsDialog({
           </div>
           <p className="mt-1.5 text-xs text-stone-400">
             System följer enhetens ljusa/mörka läge.
+          </p>
+        </section>
+
+        <section>
+          <Label>Integritet</Label>
+          {kitty.has_owner ? (
+            <label className="flex cursor-pointer items-start gap-2.5 text-sm">
+              <input
+                type="checkbox"
+                checked={kitty.auto_purge}
+                disabled={pending}
+                onChange={(e) =>
+                  run(() => setAutoPurgeAction(kitty.key, e.target.checked))
+                }
+                className="mt-0.5 h-4 w-4 accent-teal-600"
+              />
+              <span>
+                Radera den här tollyspliten automatiskt efter 6 månader utan
+                aktivitet
+              </span>
+            </label>
+          ) : (
+            <p className="text-sm text-stone-500">
+              Den här tollyspliten raderas automatiskt efter 6 månader utan
+              aktivitet. Skapa splits inloggad om du vill kunna stänga av
+              gallringen.
+            </p>
+          )}
+          <p className="mt-1.5 text-xs text-stone-400">
+            Swish-nummer raderas automatiskt när alla är kvitt. Läs mer i{" "}
+            <Link
+              href="/integritet"
+              className="text-primary hover:text-primary-dark"
+            >
+              integritetspolicyn
+            </Link>
+            .
           </p>
         </section>
 
