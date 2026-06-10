@@ -1,65 +1,64 @@
-# tollesplit
+# Tollysplit
 
-Kittysplit-klon för att dela utgifter i grupp — byggd med Next.js 16 och
-Supabase. Live på [tollysplit.xuper.fun](https://tollysplit.xuper.fun)
-(primär) och [tollesplit.vercel.app](https://tollesplit.vercel.app).
-DNS: CNAME i Cloudflare (zon xuper.fun, DNS-only) → `cname.vercel-dns.com`;
-token finns i Phase-appen `homelab` (`CLOUDFLARE_DNS_TOKEN`).
+Dela utgifter i grupp utan krångel — byggt med Next.js 16 och Supabase.
+Skapa en split, dela länken, och låt alla lägga in sina utlägg. Saldon och
+vem-betalar-vem räknas ut automatiskt, med Swish-betalning direkt från
+saldovyn.
 
-## Hur den funkar
+## Funktioner
 
-- **Skapa** en tollysplit — ingen inloggning krävs (kittysplit-modellen,
-  sedan 2026-06-10). Spam-broms: max 10 skapade/timme per IP-hash och
-  100/timme globalt (i `create_kitty`). Inloggning (mejl + engångskod via
-  Resend-SMTP) är *valfri* och gör bara att ens splits följer med mellan
-  enheter; utan den listas besökta splits per enhet via localStorage
-  (`tollysplit:visited`). Obs: /auth/confirm är en sida med knapp eftersom
-  M365 Safe Links förhandsklickar länkar och annars förbrukar engångstoken.
-- **Dela länken** `/k/<hemlig-nyckel>` — alla med länken kan lägga in
-  utgifter och överföringar utan konto, precis som Kittysplit.
-- **Saldon** räknas ut automatiskt med minimerade avräkningsförslag
-  ("A betalar B X kr") som kan bokföras som överföringar.
-
-Delning stödjer lika delning, andelar (viktad) och exakta belopp, med
-öresfördelning enligt största-rest-metoden.
+- **Inget konto behövs** för att skapa eller använda en split — den hemliga
+  länken är hela nyckeln. Valfri e-postinloggning gör att dina splits följer
+  med mellan enheter.
+- **Flexibel delning:** lika, viktade andelar eller exakta belopp, med
+  öresfördelning enligt största-rest-metoden.
+- **Smarta avräkningar:** minimerat antal betalningar ("A betalar B X kr"),
+  bokförbara som överföringar.
+- **Swish:** deltagare kan lägga in sitt nummer och få en förifylld QR-kod
+  + app-länk på varje avräkningsrad (endast SEK).
+- **Mörkt/ljust läge**, svensk UI, integritets- & cookiepolicy.
 
 ## Arkitektur
 
-- **Ingen service-role-nyckel.** All dataåtkomst går via security definer-
-  RPC:er i Postgres (`create_kitty`, `kitty_data`, `save_entry`, …) där den
+- **Ingen service-role-nyckel i appen.** All dataåtkomst går via
+  `security definer`-RPC:er i Postgres (`kitty_data`, `save_entry`, …) där den
   hemliga nyckeln i URL:en är capability. RLS är aktiverat utan policies
-  (deny all) på samtliga tabeller — appen använder enbart den publika
-  publishable-nyckeln.
-- Next.js App Router + server actions; klienten är ren React utan
+  (deny-all) på samtliga tabeller och direkt-grants är återkallade — appen
+  använder enbart den publika publishable-nyckeln. Hela schemat finns i
+  [`supabase/migrations/`](supabase/migrations).
+- **Next.js App Router** + server actions; klienten är ren React utan
   state-bibliotek. Tailwind v4.
-- Supabase-projekt: `uvlgfszbmzdurjlbqovu` (eu-north-1), org molnkontakt.
-- Vercel-projekt: `molnkontakt/tollesplit`, deploy via `vercel deploy --prod`
-  (ingen git-integration ännu).
+- **Integritet by design:** Swish-nummer raderas när alla är kvitt, splits
+  utan aktivitet gallras efter 6 månader, IP-hashar (spamskydd) raderas inom
+  ett dygn.
 
-## Lokal utveckling
+## Kom igång
 
 ```bash
 npm install
+cp .env.example .env.local   # fyll i din egen Supabase-URL och anon-nyckel
 npm run dev
 ```
 
 `.env.local` behöver:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://uvlgfszbmzdurjlbqovu.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<publishable key>
+NEXT_PUBLIC_SUPABASE_URL=https://<ditt-projekt>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<din publishable key>
 ```
 
-## Logiktester
+Applicera databasschemat genom att köra migrationen i `supabase/migrations/`
+mot ditt Supabase-projekt (t.ex. via `supabase db push` eller dashboardens
+SQL-editor).
 
-Split-/saldo-/avräkningslogiken i `src/lib/money.ts` är ren TS och kan
-snabbtestas med `node --experimental-strip-types` (se test i git-historiken).
+## Tester
+
+Split-, saldo- och avräkningslogiken i `src/lib/money.ts` är ren TypeScript
+och kan snabbtestas med `node --experimental-strip-types`.
 
 ## Swish
 
-Deltagare kan lägga in sitt Swish-nummer (Inställningar eller bannern i
-saldovyn). Avräkningsrader får då en "Swisha"-knapp (endast SEK) som visar
-förifylld QR-kod (Swish publika QR-API, proxat via `/api/swish-qr`) och en
-`app.swish.nu`-länk som öppnar Swish-appen direkt på mobil. Riktiga pushade
-betalningsförfrågningar kräver Swish Handel (företagsavtal + certifikat) och
-är medvetet bortvalt.
+Pushade betalningsförfrågningar (notis direkt i mottagarens app) kräver Swish
+Handel med företagsavtal och certifikat, och är medvetet bortvalt. Istället
+används Swish publika app-länkar (`app.swish.nu`) och QR-API:t (proxat via
+`/api/swish-qr`), som fungerar person-till-person utan avtal.

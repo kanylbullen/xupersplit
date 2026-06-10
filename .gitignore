@@ -32,9 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# private infra/deploy notes (not for the public repo)
+DEPLOY.md
 
 # typescript
 *.tsbuildinfo
