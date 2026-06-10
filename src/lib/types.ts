@@ -1,8 +1,11 @@
+import type { PaymentType } from "./payment";
+
 export type Participant = {
   id: string;
   name: string;
   position: number;
-  swish_number: string | null;
+  payment_type: PaymentType | null;
+  payment_value: string | null;
 };
 
 export type Share = {

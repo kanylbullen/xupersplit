@@ -10,10 +10,22 @@ import {
   shareOfTotal,
   totalSpent,
 } from "@/lib/money";
-import { saveEntryAction, setSwishNumberAction } from "@/app/k/[key]/actions";
-import { normalizeSwishNumber } from "@/lib/swish";
+import { saveEntryAction, setPaymentMethodAction } from "@/app/k/[key]/actions";
+import {
+  PAYMENT_META,
+  PAYMENT_TYPES,
+  type PaymentType,
+  normalizePayment,
+} from "@/lib/payment";
 import { avatarColor, initials, todayIso } from "./helpers";
-import { SwishDialog, type SwishPayment } from "./SwishDialog";
+import { PaymentDialog, type Payment } from "./PaymentDialog";
+
+// Pick a sensible default payment method from the split's currency.
+const DEFAULT_TYPE: Record<string, PaymentType> = {
+  SEK: "swish",
+  NOK: "vipps",
+  DKK: "mobilepay",
+};
 
 export function BalancesView({
   splitKey,
@@ -43,27 +55,32 @@ export function BalancesView({
   const [pending, startTransition] = useTransition();
   const [settling, setSettling] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [swishPayment, setSwishPayment] = useState<SwishPayment | null>(null);
-  const [swishOpen, setSwishOpen] = useState(false);
-  const [swishInput, setSwishInput] = useState("");
-  const [swishError, setSwishError] = useState<string | null>(null);
+  const [payment, setPayment] = useState<Payment | null>(null);
+  const [payOpen, setPayOpen] = useState(false);
+  const [payType, setPayType] = useState<PaymentType>(
+    DEFAULT_TYPE[currency] ?? "iban"
+  );
+  const [payInput, setPayInput] = useState("");
+  const [payError, setPayError] = useState<string | null>(null);
 
   const me = meId ? participants.find((p) => p.id === meId) : null;
-  const useSwish = currency === "SEK";
-  const showSwishPrompt =
-    useSwish && me && !me.swish_number && (bal.get(me.id) ?? 0) > 0;
+  const showPaymentPrompt = me && !me.payment_value && (bal.get(me.id) ?? 0) > 0;
 
-  function saveMySwishNumber() {
+  function saveMyPayment() {
     if (!me) return;
-    const normalized = normalizeSwishNumber(swishInput);
+    const normalized = normalizePayment(payType, payInput);
     if (!normalized) {
-      setSwishError("Ange ett svenskt mobilnummer, t.ex. 070-123 45 67.");
+      setPayError(
+        PAYMENT_META[payType].kind === "iban"
+          ? "Ange ett giltigt IBAN."
+          : "Ange ett giltigt telefonnummer."
+      );
       return;
     }
-    setSwishError(null);
+    setPayError(null);
     startTransition(async () => {
-      const result = await setSwishNumberAction(splitKey, me.id, normalized);
-      if (!result.ok) setSwishError(result.error);
+      const result = await setPaymentMethodAction(splitKey, me.id, payType, normalized);
+      if (!result.ok) setPayError(result.error);
     });
   }
 
@@ -93,31 +110,40 @@ export function BalancesView({
         <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
           Så blir ni kvitt
         </h3>
-        {showSwishPrompt && (
+        {showPaymentPrompt && (
           <div className="mb-3 rounded-2xl border border-primary/30 bg-primary-soft/40 p-4">
             <p className="mb-2 text-sm font-semibold">
-              Du har pengar att få, {me.name}! Lägg in ditt Swish-nummer så
-              kan de andra swisha dig direkt härifrån.
+              Du har pengar att få, {me.name}! Lägg in ditt betalsätt så kan de
+              andra betala dig direkt härifrån.
             </p>
             <div className="flex gap-2">
+              <select
+                value={payType}
+                onChange={(e) => setPayType(e.target.value as PaymentType)}
+                className="rounded-xl border border-stone-300 bg-surface px-2 py-2 text-sm outline-none focus:border-primary"
+              >
+                {PAYMENT_TYPES.map((t) => (
+                  <option key={t} value={t}>
+                    {PAYMENT_META[t].label}
+                  </option>
+                ))}
+              </select>
               <input
-                inputMode="tel"
-                placeholder="070-123 45 67"
-                value={swishInput}
-                onChange={(e) => setSwishInput(e.target.value)}
+                inputMode={PAYMENT_META[payType].kind === "iban" ? "text" : "tel"}
+                placeholder={PAYMENT_META[payType].placeholder}
+                value={payInput}
+                onChange={(e) => setPayInput(e.target.value)}
                 className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-surface px-3 py-2 text-sm outline-none focus:border-primary"
               />
               <button
-                onClick={saveMySwishNumber}
+                onClick={saveMyPayment}
                 disabled={pending}
                 className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-50"
               >
                 Spara
               </button>
             </div>
-            {swishError && (
-              <p className="mt-1.5 text-xs text-negative">{swishError}</p>
-            )}
+            {payError && <p className="mt-1.5 text-xs text-negative">{payError}</p>}
           </div>
         )}
         {plan.length === 0 && paidTransfers.length === 0 ? (
@@ -136,6 +162,7 @@ export function BalancesView({
               const from = byId.get(s.from);
               const to = byId.get(s.to);
               const id = `${s.from}-${s.to}`;
+              const canPay = to?.payment_type && to?.payment_value;
               return (
                 <div
                   key={id}
@@ -150,22 +177,23 @@ export function BalancesView({
                     </span>
                   </span>
                   <span className="flex shrink-0 flex-col items-stretch gap-1.5 sm:flex-row">
-                    {useSwish && to?.swish_number && (
+                    {canPay && (
                       <button
                         onClick={() => {
-                          track("swish_dialog_opened");
-                          setSwishPayment({
+                          track("payment_dialog_opened", { method: to!.payment_type! });
+                          setPayment({
                             fromName: from?.name ?? "?",
-                            toName: to.name,
-                            toNumber: to.swish_number!,
+                            toName: to!.name,
+                            toType: to!.payment_type!,
+                            toValue: to!.payment_value!,
                             amountCents: s.amount_cents,
                             message: splitTitle,
                           });
-                          setSwishOpen(true);
+                          setPayOpen(true);
                         }}
                         className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
                       >
-                        Swisha
+                        {to!.payment_type === "swish" ? "Swisha" : "Betala"}
                       </button>
                     )}
                     <button
@@ -268,10 +296,10 @@ export function BalancesView({
         </p>
       </div>
 
-      <SwishDialog
-        open={swishOpen}
-        onClose={() => setSwishOpen(false)}
-        payment={swishPayment}
+      <PaymentDialog
+        open={payOpen}
+        onClose={() => setPayOpen(false)}
+        payment={payment}
       />
     </div>
   );

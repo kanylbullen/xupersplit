@@ -10,10 +10,16 @@ import {
   deleteParticipantAction,
   renameParticipantAction,
   setAutoPurgeAction,
-  setSwishNumberAction,
+  setPaymentMethodAction,
   updateSplitAction,
 } from "@/app/k/[key]/actions";
-import { formatSwishNumber, normalizeSwishNumber } from "@/lib/swish";
+import {
+  PAYMENT_META,
+  PAYMENT_TYPES,
+  type PaymentType,
+  formatPayment,
+  normalizePayment,
+} from "@/lib/payment";
 import { Button, Dialog, Input, Label, Select } from "@/components/ui";
 
 export function SettingsDialog({
@@ -36,8 +42,9 @@ export function SettingsDialog({
   const [newName, setNewName] = useState("");
   const [renaming, setRenaming] = useState<string | null>(null);
   const [renameText, setRenameText] = useState("");
-  const [swishEditing, setSwishEditing] = useState<string | null>(null);
-  const [swishText, setSwishText] = useState("");
+  const [payEditing, setPayEditing] = useState<string | null>(null);
+  const [payType, setPayType] = useState<PaymentType>("swish");
+  const [payText, setPayText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const { theme, setTheme } = useTheme();
@@ -170,25 +177,41 @@ export function SettingsDialog({
                   </>
                 )}
               </div>
-              {swishEditing === p.id ? (
+              {payEditing === p.id ? (
                 <form
                   className="mt-1.5 flex gap-2"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    const normalized = normalizeSwishNumber(swishText);
-                    if (!normalized && swishText.trim() !== "") {
-                      setError("Ogiltigt Swish-nummer — ange ett svenskt mobilnummer.");
+                    if (payText.trim() === "") {
+                      run(() => setPaymentMethodAction(split.key, p.id, null, null));
+                      setPayEditing(null);
                       return;
                     }
-                    run(() => setSwishNumberAction(split.key, p.id, normalized));
-                    setSwishEditing(null);
+                    const normalized = normalizePayment(payType, payText);
+                    if (!normalized) {
+                      setError("Ogiltig uppgift — kontrollera numret eller IBAN.");
+                      return;
+                    }
+                    run(() => setPaymentMethodAction(split.key, p.id, payType, normalized));
+                    setPayEditing(null);
                   }}
                 >
+                  <select
+                    value={payType}
+                    onChange={(e) => setPayType(e.target.value as PaymentType)}
+                    className="rounded-lg border border-stone-300 bg-surface px-1.5 py-1.5 text-sm outline-none focus:border-primary"
+                  >
+                    {PAYMENT_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {PAYMENT_META[t].label}
+                      </option>
+                    ))}
+                  </select>
                   <input
-                    inputMode="tel"
-                    placeholder="070-123 45 67 (tomt = ta bort)"
-                    value={swishText}
-                    onChange={(e) => setSwishText(e.target.value)}
+                    inputMode={PAYMENT_META[payType].kind === "iban" ? "text" : "tel"}
+                    placeholder={`${PAYMENT_META[payType].placeholder} (tomt = ta bort)`}
+                    value={payText}
+                    onChange={(e) => setPayText(e.target.value)}
                     autoFocus
                     className="min-w-0 flex-1 rounded-lg border border-stone-300 px-2 py-1.5 text-sm outline-none focus:border-primary"
                   />
@@ -201,7 +224,7 @@ export function SettingsDialog({
                   </button>
                   <button
                     type="button"
-                    onClick={() => setSwishEditing(null)}
+                    onClick={() => setPayEditing(null)}
                     className="text-sm text-stone-400 hover:text-ink"
                   >
                     Avbryt
@@ -210,14 +233,15 @@ export function SettingsDialog({
               ) : (
                 <button
                   onClick={() => {
-                    setSwishEditing(p.id);
-                    setSwishText(p.swish_number ?? "");
+                    setPayEditing(p.id);
+                    setPayType(p.payment_type ?? "swish");
+                    setPayText(p.payment_value ?? "");
                   }}
                   className="mt-0.5 text-xs text-stone-400 hover:text-primary-dark"
                 >
-                  {p.swish_number
-                    ? `Swish: ${formatSwishNumber(p.swish_number)} · ändra`
-                    : "+ Lägg till Swish-nummer"}
+                  {p.payment_type && p.payment_value
+                    ? `${PAYMENT_META[p.payment_type].label}: ${formatPayment(p.payment_type, p.payment_value)} · ändra`
+                    : "+ Lägg till betalsätt"}
                 </button>
               )}
               </div>
@@ -307,7 +331,7 @@ export function SettingsDialog({
             </p>
           )}
           <p className="mt-1.5 text-xs text-stone-400">
-            Swish-nummer raderas automatiskt när alla är kvitt. Läs mer i{" "}
+            Betaluppgifter raderas automatiskt när alla är kvitt. Läs mer i{" "}
             <Link
               href="/integritet"
               className="text-primary hover:text-primary-dark"

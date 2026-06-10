@@ -35,7 +35,8 @@ create table if not exists public.participants (
   name text not null,
   position int not null default 0,
   created_at timestamptz not null default now(),
-  swish_number text check (swish_number is null or swish_number ~ '^07[0-9]{8}$')
+  payment_type text check (payment_type in ('swish', 'vipps', 'mobilepay', 'iban')),
+  payment_value text
 );
 
 create table if not exists public.entries (
@@ -199,7 +200,8 @@ begin
         'has_owner', k.created_by is not null, 'auto_purge', k.auto_purge
       ) from splits k where k.id = v_id),
     'participants', (select coalesce(jsonb_agg(jsonb_build_object(
-        'id', p.id, 'name', p.name, 'position', p.position, 'swish_number', p.swish_number
+        'id', p.id, 'name', p.name, 'position', p.position,
+        'payment_type', p.payment_type, 'payment_value', p.payment_value
       ) order by p.position, p.created_at), '[]'::jsonb)
       from participants p where p.split_id = v_id),
     'entries', (select coalesce(jsonb_agg(jsonb_build_object(
@@ -283,30 +285,39 @@ begin
   perform _touch_split(v_id);
 end $$;
 
-create or replace function public.set_swish_number(p_key text, p_id uuid, p_number text)
+create or replace function public.set_payment_method(p_key text, p_id uuid, p_type text, p_value text)
 returns void
 language plpgsql volatile security definer set search_path = public
 as $$
-declare v_id uuid := _require_split(p_key);
+declare v_id uuid := _require_split(p_key); v_clean text;
 begin
-  if p_number is not null and p_number !~ '^07[0-9]{8}$' then
-    raise exception 'bad_swish_number';
+  if p_type is null or p_value is null or length(trim(p_value)) = 0 then
+    update participants set payment_type = null, payment_value = null where id = p_id and split_id = v_id;
+  else
+    if p_type not in ('swish', 'vipps', 'mobilepay', 'iban') then raise exception 'bad_payment_type'; end if;
+    if p_type = 'iban' then
+      v_clean := upper(replace(p_value, ' ', ''));
+      if v_clean !~ '^[A-Z]{2}[0-9]{2}[A-Z0-9]{8,30}$' then raise exception 'bad_payment_value'; end if;
+    else
+      v_clean := replace(replace(p_value, ' ', ''), '-', '');
+      if v_clean !~ '^\+?[0-9]{6,15}$' then raise exception 'bad_payment_value'; end if;
+    end if;
+    update participants set payment_type = p_type, payment_value = v_clean where id = p_id and split_id = v_id;
   end if;
-  update participants set swish_number = p_number where id = p_id and split_id = v_id;
   if not found then
     raise exception 'participant_not_found' using errcode = 'P0002';
   end if;
   perform _touch_split(v_id);
 end $$;
 
-create or replace function public.clear_swish_numbers(p_key text)
+create or replace function public.clear_payment_methods(p_key text)
 returns void
 language plpgsql volatile security definer set search_path = public
 as $$
 declare v_id uuid := _require_split(p_key);
 begin
-  update participants set swish_number = null
-  where split_id = v_id and swish_number is not null;
+  update participants set payment_type = null, payment_value = null
+  where split_id = v_id and (payment_type is not null or payment_value is not null);
 end $$;
 
 create or replace function public.set_auto_purge(p_key text, p_on boolean)
@@ -407,8 +418,8 @@ grant execute on function public.update_split(text, text, text) to anon, authent
 grant execute on function public.add_participant(text, text) to anon, authenticated;
 grant execute on function public.rename_participant(text, uuid, text) to anon, authenticated;
 grant execute on function public.delete_participant(text, uuid) to anon, authenticated;
-grant execute on function public.set_swish_number(text, uuid, text) to anon, authenticated;
-grant execute on function public.clear_swish_numbers(text) to anon, authenticated;
+grant execute on function public.set_payment_method(text, uuid, text, text) to anon, authenticated;
+grant execute on function public.clear_payment_methods(text) to anon, authenticated;
 grant execute on function public.set_auto_purge(text, boolean) to anon, authenticated;
 grant execute on function public.save_entry(text, jsonb) to anon, authenticated;
 grant execute on function public.delete_entry(text, uuid) to anon, authenticated;

@@ -17,7 +17,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   bad_amount: "Beloppet måste vara större än noll.",
   shares_required: "Minst en person måste vara med och dela.",
   bad_recipient: "Välj en annan mottagare än avsändaren.",
-  bad_swish_number: "Ogiltigt Swish-nummer — ange ett svenskt mobilnummer.",
+  bad_payment_type: "Okänt betalsätt.",
+  bad_payment_value: "Ogiltig uppgift — kontrollera numret eller IBAN.",
 };
 
 function friendly(message: string | undefined): string {
@@ -56,19 +57,19 @@ export async function saveEntryAction(
 ): Promise<ActionResult> {
   const result = await rpc(key, "save_entry", { p_key: key, p_entry: entry });
 
-  // Privacy: once a transfer makes everyone square, stored Swish numbers
+  // Privacy: once a transfer makes everyone square, stored payment methods
   // have served their purpose — wipe them.
   if (result.ok && entry.kind === "transfer") {
     const supabase = await createClient();
     const { data } = await supabase.rpc("split_data", { p_key: key });
     const split = data as SplitData | null;
     if (split) {
-      const hasNumbers = split.participants.some((p) => p.swish_number);
+      const hasMethods = split.participants.some((p) => p.payment_value);
       const allSquare = [...balances(split.participants, split.entries).values()].every(
         (v) => v === 0
       );
-      if (hasNumbers && allSquare) {
-        await supabase.rpc("clear_swish_numbers", { p_key: key });
+      if (hasMethods && allSquare) {
+        await supabase.rpc("clear_payment_methods", { p_key: key });
         revalidatePath(`/k/${key}`);
       }
     }
@@ -116,15 +117,17 @@ export async function deleteParticipantAction(
   return rpc(key, "delete_participant", { p_key: key, p_id: participantId });
 }
 
-export async function setSwishNumberAction(
+export async function setPaymentMethodAction(
   key: string,
   participantId: string,
-  number: string | null
+  type: string | null,
+  value: string | null
 ): Promise<ActionResult> {
-  return rpc(key, "set_swish_number", {
+  return rpc(key, "set_payment_method", {
     p_key: key,
     p_id: participantId,
-    p_number: number,
+    p_type: type,
+    p_value: value,
   });
 }
 
