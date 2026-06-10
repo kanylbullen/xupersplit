@@ -53,3 +53,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<publishable key>
 
 Split-/saldo-/avräkningslogiken i `src/lib/money.ts` är ren TS och kan
 snabbtestas med `node --experimental-strip-types` (se test i git-historiken).
+
+## Swish
+
+Deltagare kan lägga in sitt Swish-nummer (Inställningar eller bannern i
+saldovyn). Avräkningsrader får då en "Swisha"-knapp (endast SEK) som visar
+förifylld QR-kod (Swish publika QR-API, proxat via `/api/swish-qr`) och en
+`app.swish.nu`-länk som öppnar Swish-appen direkt på mobil. Riktiga pushade
+betalningsförfrågningar kräver Swish Handel (företagsavtal + certifikat) och
+är medvetet bortvalt.
