@@ -93,7 +93,8 @@ export default async function Home() {
                     <div className="font-semibold">{k.title}</div>
                     <div className="text-sm text-stone-400">
                       {k.participant_count} deltagare · {k.entry_count}{" "}
-                      {k.entry_count === 1 ? "post" : "poster"}
+                      {k.entry_count === 1 ? "post" : "poster"} · skapad{" "}
+                      {new Date(k.created_at).toLocaleDateString("sv-SE")}
                     </div>
                   </div>
                   <span className="text-stone-300">→</span>

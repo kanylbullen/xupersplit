@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Entry, EntryKind, KittyData } from "@/lib/types";
-import { BeerButton } from "@/components/BeerButton";
 import { EntriesView } from "./EntriesView";
 import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
@@ -79,6 +78,16 @@ export function KittyApp({ data }: { data: KittyData }) {
           <h1 className="min-w-0 flex-1 truncate text-lg font-black tracking-tight">
             {kitty.title}
           </h1>
+          <a
+            href="https://buymeacoffee.com/xuperfun"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Bjud utvecklaren på en öl"
+            title="Buy me a beer"
+            className="rounded-xl bg-primary-soft px-2.5 py-2 text-sm transition-colors hover:bg-primary-soft/70"
+          >
+            🍺
+          </a>
           <button
             onClick={share}
             className="flex items-center gap-1.5 rounded-xl bg-primary-soft px-3 py-2 text-sm font-semibold text-primary-dark transition-colors hover:bg-primary-soft/70"
@@ -145,9 +154,6 @@ export function KittyApp({ data }: { data: KittyData }) {
             }
           />
         )}
-        <footer className="mt-10 flex justify-center">
-          <BeerButton />
-        </footer>
       </div>
 
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-stone-200/60 bg-cream/90 px-4 py-3 backdrop-blur">
