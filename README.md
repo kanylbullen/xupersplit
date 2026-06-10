@@ -1,7 +1,10 @@
 # tollesplit
 
 Kittysplit-klon för att dela utgifter i grupp — byggd med Next.js 16 och
-Supabase. Live på [tollesplit.vercel.app](https://tollesplit.vercel.app).
+Supabase. Live på [tollysplit.xuper.fun](https://tollysplit.xuper.fun)
+(primär) och [tollesplit.vercel.app](https://tollesplit.vercel.app).
+DNS: CNAME i Cloudflare (zon xuper.fun, DNS-only) → `cname.vercel-dns.com`;
+token finns i Phase-appen `homelab` (`CLOUDFLARE_DNS_TOKEN`).
 
 ## Hur den funkar
 
