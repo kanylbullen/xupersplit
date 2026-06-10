@@ -19,7 +19,7 @@ export async function generateMetadata({
   const { key } = await params;
   const data = await fetchKitty(key);
   return {
-    title: data ? `${data.kitty.title} — Tollesplit` : "Tollesplit",
+    title: data ? `${data.kitty.title} — Tollysplit` : "Tollysplit",
     robots: { index: false },
   };
 }

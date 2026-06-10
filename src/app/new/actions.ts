@@ -16,7 +16,7 @@ export async function createKittyAction(
     .map((n) => String(n).trim())
     .filter((n) => n.length > 0);
 
-  if (!title) return { error: "Ge din tollesplit ett namn." };
+  if (!title) return { error: "Ge din tollysplit ett namn." };
   if (names.length < 2) return { error: "Lägg till minst två deltagare." };
 
   const supabase = await createClient();
@@ -28,7 +28,7 @@ export async function createKittyAction(
 
   if (error || !key) {
     if (error?.message.includes("not_allowed")) {
-      return { error: "Ditt konto har inte behörighet att skapa tollesplits." };
+      return { error: "Ditt konto har inte behörighet att skapa tollysplits." };
     }
     return { error: `Något gick fel: ${error?.message ?? "okänt fel"}` };
   }

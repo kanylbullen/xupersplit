@@ -23,7 +23,7 @@ export default async function Home() {
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 sm:py-16">
       <header className="mb-10 flex items-center justify-between">
         <span className="text-xl font-black tracking-tight text-primary">
-          tollesplit
+          tollysplit
         </span>
         {user ? (
           <form action="/auth/signout" method="post" className="flex items-center gap-3">
@@ -59,12 +59,12 @@ export default async function Home() {
             href="/new"
             className="inline-block rounded-xl bg-primary px-6 py-3.5 text-base font-semibold text-white shadow-md transition-colors hover:bg-primary-dark"
           >
-            Skapa en ny tollesplit
+            Skapa en ny tollysplit
           </Link>
         ) : user ? (
           <p className="rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
             Ditt konto ({user.email}) har inte behörighet att skapa nya
-            tollesplits ännu.
+            tollysplits ännu.
           </p>
         ) : (
           <Link
@@ -79,7 +79,7 @@ export default async function Home() {
       {mine.length > 0 && (
         <section className="mb-12">
           <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-stone-400">
-            Dina tollesplits
+            Dina tollysplits
           </h2>
           <ul className="space-y-2">
             {mine.map((k) => (
@@ -105,7 +105,7 @@ export default async function Home() {
 
       <section className="grid gap-4 sm:grid-cols-3">
         {[
-          ["1. Skapa", "Döp din tollesplit och lägg till vilka som är med."],
+          ["1. Skapa", "Döp din tollysplit och lägg till vilka som är med."],
           ["2. Dela länken", "Alla med länken kan lägga in utgifter — utan konto."],
           ["3. Gör upp", "Saldon räknas ut automatiskt, med färdiga förslag på vem som swishar vem."],
         ].map(([title, body]) => (
@@ -119,8 +119,17 @@ export default async function Home() {
         ))}
       </section>
 
-      <footer className="mt-16 text-center text-xs text-stone-400">
-        tollesplit · byggd med kärlek och kaffe
+      <footer className="mt-16 flex flex-col items-center gap-4 text-center text-xs text-stone-400">
+        <a
+          href="https://buymeacoffee.com/xuperfun"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-xl border border-black/80 px-5 py-2.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-105"
+          style={{ backgroundColor: "#5F7FFF" }}
+        >
+          <span className="text-base">🍺</span> Buy me a beer
+        </a>
+        <span>tollysplit · byggd med kärlek och kaffe</span>
       </footer>
     </main>
   );

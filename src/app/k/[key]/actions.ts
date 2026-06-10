@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
 const ERROR_MESSAGES: Record<string, string> = {
-  kitty_not_found: "Den här tollespliten finns inte längre.",
+  kitty_not_found: "Den här tollyspliten finns inte längre.",
   participant_has_entries:
     "Deltagaren har utgifter eller överföringar och kan inte tas bort.",
   participant_not_found: "Deltagaren hittades inte.",

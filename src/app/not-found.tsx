@@ -8,7 +8,7 @@ export default function NotFound() {
         Hittar inget här
       </h1>
       <p className="mb-6 text-stone-500">
-        Länken är fel eller så har den här tollespliten tagits bort. Kolla att
+        Länken är fel eller så har den här tollyspliten tagits bort. Kolla att
         du fått hela länken.
       </p>
       <Link

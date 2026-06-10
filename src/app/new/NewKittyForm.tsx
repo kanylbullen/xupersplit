@@ -61,7 +61,7 @@ export function NewKittyForm() {
       {state?.error && <p className="text-sm text-negative">{state.error}</p>}
 
       <Button type="submit" disabled={pending} className="w-full">
-        {pending ? "Skapar…" : "Skapa tollesplit"}
+        {pending ? "Skapar…" : "Skapa tollysplit"}
       </Button>
     </form>
   );

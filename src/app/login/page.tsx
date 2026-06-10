@@ -22,7 +22,7 @@ export default async function LoginPage({
         href="/"
         className="mb-10 text-xl font-black tracking-tight text-primary"
       >
-        tollesplit
+        tollysplit
       </Link>
       <h1 className="mb-2 text-2xl font-black tracking-tight">Logga in</h1>
       <p className="mb-6 text-stone-500">

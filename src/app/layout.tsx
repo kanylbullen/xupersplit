@@ -9,9 +9,9 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Tollesplit — dela utgifter enkelt",
+  title: "Tollysplit — dela utgifter enkelt",
   description:
-    "Dela utgifter med vänner utan krångel. Skapa en tollesplit, dela länken och låt alla lägga in sina utlägg.",
+    "Dela utgifter med vänner utan krångel. Skapa en tollysplit, dela länken och låt alla lägga in sina utlägg.",
 };
 
 export const viewport: Viewport = {
