@@ -3,6 +3,13 @@ import type { NextRequest } from "next/server";
 // Proxy for Swish's public prefilled-QR generator (it has no CORS headers,
 // so the browser can't call it directly).
 export async function GET(request: NextRequest) {
+  // Same-origin only — this proxy exists for our own /k pages, not as a
+  // public QR-generation relay for third parties.
+  const secFetchSite = request.headers.get("sec-fetch-site");
+  if (secFetchSite && secFetchSite !== "same-origin") {
+    return new Response("Forbidden", { status: 403 });
+  }
+
   const { searchParams } = new URL(request.url);
   const number = searchParams.get("number") ?? "";
   const amountCents = Number(searchParams.get("amount") ?? "");

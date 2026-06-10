@@ -27,6 +27,10 @@ export function ConfirmClient({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Only allow same-site internal redirects — never a protocol-relative
+  // (//evil.com) or absolute URL smuggled in via the ?next= param.
+  const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/";
+
   // A ?code= param comes from Supabase's own redirect after it already
   // verified the token — nothing left to protect, exchange right away.
   useEffect(() => {
@@ -35,11 +39,11 @@ export function ConfirmClient({
       const { error } = await createClient().auth.exchangeCodeForSession(code);
       if (error) setError("Länken är ogiltig eller har gått ut.");
       else {
-        router.push(next);
+        router.push(safeNext);
         router.refresh();
       }
     })();
-  }, [code, next, router]);
+  }, [code, safeNext, router]);
 
   async function confirm() {
     if (!tokenHash) return;
@@ -54,7 +58,7 @@ export function ConfirmClient({
       setError("Länken är ogiltig eller har gått ut.");
       return;
     }
-    router.push(next);
+    router.push(safeNext);
     router.refresh();
   }
 

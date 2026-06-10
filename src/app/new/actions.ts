@@ -23,8 +23,14 @@ export async function createKittyAction(
   if (names.length < 2) return { error: "Lägg till minst två deltagare." };
 
   // Hashed client IP feeds the per-IP creation throttle in the database.
+  // Use Vercel's trusted headers — a client can spoof x-forwarded-for, but
+  // x-vercel-forwarded-for / x-real-ip are set by the edge to the real
+  // client IP and can't be overridden from the request.
   const headerStore = await headers();
-  const ip = (headerStore.get("x-forwarded-for") ?? "").split(",")[0].trim();
+  const ip =
+    headerStore.get("x-vercel-forwarded-for")?.trim() ||
+    headerStore.get("x-real-ip")?.trim() ||
+    "";
   const ipHash = ip
     ? createHash("sha256").update(`tollysplit:${ip}`).digest("hex").slice(0, 32)
     : null;
