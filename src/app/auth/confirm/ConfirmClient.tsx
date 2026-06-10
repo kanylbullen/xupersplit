@@ -1,0 +1,95 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import type { EmailOtpType } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui";
+
+/**
+ * Email scanners (e.g. Microsoft Safe Links) prefetch links in emails, which
+ * would consume a one-time login token before the user clicks. That's why the
+ * token_hash flow requires an explicit button press — scanners follow links
+ * but don't click buttons.
+ */
+export function ConfirmClient({
+  tokenHash,
+  type,
+  code,
+  next,
+}: {
+  tokenHash: string | null;
+  type: string;
+  code: string | null;
+  next: string;
+}) {
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // A ?code= param comes from Supabase's own redirect after it already
+  // verified the token — nothing left to protect, exchange right away.
+  useEffect(() => {
+    if (!code) return;
+    (async () => {
+      const { error } = await createClient().auth.exchangeCodeForSession(code);
+      if (error) setError("Länken är ogiltig eller har gått ut.");
+      else {
+        router.push(next);
+        router.refresh();
+      }
+    })();
+  }, [code, next, router]);
+
+  async function confirm() {
+    if (!tokenHash) return;
+    setBusy(true);
+    setError(null);
+    const { error } = await createClient().auth.verifyOtp({
+      type: type as EmailOtpType,
+      token_hash: tokenHash,
+    });
+    if (error) {
+      setBusy(false);
+      setError("Länken är ogiltig eller har gått ut.");
+      return;
+    }
+    router.push(next);
+    router.refresh();
+  }
+
+  const invalid = !tokenHash && !code;
+
+  return (
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center px-4 py-24 text-center">
+      <span className="mb-8 text-xl font-black tracking-tight text-primary">
+        tollysplit
+      </span>
+      {error || invalid ? (
+        <>
+          <p className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error ?? "Länken är ogiltig eller har gått ut."} Begär en ny kod
+            på inloggningssidan.
+          </p>
+          <Button onClick={() => router.push("/login")}>
+            Till inloggningen
+          </Button>
+        </>
+      ) : code ? (
+        <p className="text-stone-500">Loggar in…</p>
+      ) : (
+        <>
+          <h1 className="mb-2 text-2xl font-black tracking-tight">
+            Bekräfta inloggning
+          </h1>
+          <p className="mb-6 text-stone-500">
+            Tryck på knappen för att logga in på Tollysplit.
+          </p>
+          <Button onClick={confirm} disabled={busy} className="px-8">
+            {busy ? "Loggar in…" : "Logga in"}
+          </Button>
+        </>
+      )}
+    </main>
+  );
+}
