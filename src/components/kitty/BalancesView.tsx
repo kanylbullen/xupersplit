@@ -50,12 +50,51 @@ export function BalancesView({
 
   return (
     <div className="space-y-6 pb-28">
-      <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
-        <p className="text-sm font-medium text-stone-400">Totalt spenderat</p>
-        <p className="text-3xl font-black tracking-tight">
-          {formatMoney(total, currency)}
+      <section>
+        <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
+          Så blir ni kvitt
+        </h3>
+        {plan.length === 0 ? (
+          <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
+            <p className="font-semibold">Allt är uppgjort 🎉</p>
+            <p className="text-sm text-stone-500">Ingen är skyldig någon något.</p>
+          </div>
+        ) : (
+          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-surface shadow-sm">
+            {plan.map((s, i) => {
+              const from = byId.get(s.from);
+              const to = byId.get(s.to);
+              const id = `${s.from}-${s.to}`;
+              return (
+                <div
+                  key={id}
+                  className={`flex items-center gap-3 px-4 py-3.5 ${i > 0 ? "border-t border-stone-100" : ""}`}
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="font-semibold">{from?.name}</span>
+                    <span className="text-stone-400"> betalar </span>
+                    <span className="font-semibold">{to?.name}</span>
+                    <span className="block font-bold text-primary-dark">
+                      {formatMoney(s.amount_cents, currency)}
+                    </span>
+                  </span>
+                  <button
+                    onClick={() => recordSettlement(s.from, s.to, s.amount_cents)}
+                    disabled={pending}
+                    className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold text-stone-600 transition-colors hover:border-primary hover:text-primary-dark disabled:opacity-50"
+                  >
+                    {settling === id ? "Bokför…" : "Markera betald"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {error && <p className="mt-2 text-sm text-negative">{error}</p>}
+        <p className="mt-2 px-1 text-xs text-stone-400">
+          ”Markera betald” bokför en överföring så att saldona nollas.
         </p>
-      </div>
+      </section>
 
       <section>
         <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
@@ -103,51 +142,12 @@ export function BalancesView({
         </div>
       </section>
 
-      <section>
-        <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
-          Så blir ni kvitt
-        </h3>
-        {plan.length === 0 ? (
-          <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
-            <p className="font-semibold">Allt är uppgjort 🎉</p>
-            <p className="text-sm text-stone-500">Ingen är skyldig någon något.</p>
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-surface shadow-sm">
-            {plan.map((s, i) => {
-              const from = byId.get(s.from);
-              const to = byId.get(s.to);
-              const id = `${s.from}-${s.to}`;
-              return (
-                <div
-                  key={id}
-                  className={`flex items-center gap-3 px-4 py-3.5 ${i > 0 ? "border-t border-stone-100" : ""}`}
-                >
-                  <span className="min-w-0 flex-1">
-                    <span className="font-semibold">{from?.name}</span>
-                    <span className="text-stone-400"> betalar </span>
-                    <span className="font-semibold">{to?.name}</span>
-                    <span className="block font-bold text-primary-dark">
-                      {formatMoney(s.amount_cents, currency)}
-                    </span>
-                  </span>
-                  <button
-                    onClick={() => recordSettlement(s.from, s.to, s.amount_cents)}
-                    disabled={pending}
-                    className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-semibold text-stone-600 transition-colors hover:border-primary hover:text-primary-dark disabled:opacity-50"
-                  >
-                    {settling === id ? "Bokför…" : "Markera betald"}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        {error && <p className="mt-2 text-sm text-negative">{error}</p>}
-        <p className="mt-2 px-1 text-xs text-stone-400">
-          ”Markera betald” bokför en överföring så att saldona nollas.
+      <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
+        <p className="text-sm font-medium text-stone-400">Totalt spenderat</p>
+        <p className="text-3xl font-black tracking-tight">
+          {formatMoney(total, currency)}
         </p>
-      </section>
+      </div>
     </div>
   );
 }

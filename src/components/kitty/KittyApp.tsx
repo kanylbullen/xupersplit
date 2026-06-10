@@ -15,7 +15,7 @@ export function KittyApp({ data }: { data: KittyData }) {
   const { kitty, participants, entries } = data;
   const storageKey = `tollesplit:me:${kitty.key}`;
 
-  const [tab, setTab] = useState<Tab>("entries");
+  const [tab, setTab] = useState<Tab>("balances");
   const [meId, setMeId] = useState<string | null>(null);
   const [identityLoaded, setIdentityLoaded] = useState(false);
   const [entryDialog, setEntryDialog] = useState<{
@@ -102,8 +102,8 @@ export function KittyApp({ data }: { data: KittyData }) {
         <nav className="mt-3 grid grid-cols-2 gap-1 rounded-xl bg-stone-200/60 p-1">
           {(
             [
-              ["entries", "Utgifter"],
               ["balances", "Saldon"],
+              ["entries", "Utgifter"],
             ] as const
           ).map(([value, label]) => (
             <button
