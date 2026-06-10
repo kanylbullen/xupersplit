@@ -128,7 +128,7 @@ export default async function Home() {
         >
           <span className="text-base">🍺</span> Buy me a beer
         </a>
-        <span>tollysplit · byggd med kärlek och kaffe</span>
+        <span>tollysplit · byggd med kärlek, kaffe och öl</span>
       </footer>
     </main>
   );
