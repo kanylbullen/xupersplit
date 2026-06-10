@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookiepolicy — Tollysplit",
+  title: "Cookie policy — Tollysplit",
 };
 
 export default function CookiesPage() {
@@ -14,59 +14,55 @@ export default function CookiesPage() {
       >
         tollysplit
       </Link>
-      <h1 className="mb-2 text-3xl font-black tracking-tight">Cookiepolicy</h1>
+      <h1 className="mb-2 text-3xl font-black tracking-tight">Cookie policy</h1>
       <p className="mb-8 text-stone-500">
-        Korta versionen: Tollysplit använder bara cookies som krävs för att
-        sajten ska fungera. Ingen spårning, ingen reklam, inga
-        tredjepartscookies — och därför behövs inget cookiesamtycke.
+        Short version: Tollysplit only uses cookies that are needed for the
+        site to work. No tracking, no ads, no third-party cookies — and so no
+        cookie consent is required.
       </p>
 
       <div className="space-y-6">
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
-          <h2 className="mb-1.5 font-bold">Nödvändiga cookies</h2>
+          <h2 className="mb-1.5 font-bold">Necessary cookies</h2>
           <p className="text-sm leading-relaxed text-stone-500">
-            Om du väljer att logga in sätts en sessionscookie (
+            If you choose to sign in, a session cookie (
             <code className="rounded bg-stone-100 px-1">sb-…-auth-token</code>)
-            som håller dig inloggad. Den sätts av vår databastjänst Supabase,
-            innehåller bara din inloggningssession och försvinner när du
-            loggar ut. Loggar du aldrig in sätts ingen cookie alls.
+            keeps you logged in. It's set by our database provider Supabase,
+            contains only your sign-in session, and disappears when you log
+            out. If you never sign in, no cookie is set at all.
           </p>
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
-          <h2 className="mb-1.5 font-bold">Lokal lagring (localStorage)</h2>
+          <h2 className="mb-1.5 font-bold">Local storage</h2>
           <p className="text-sm leading-relaxed text-stone-500">
-            Din webbläsare sparar några saker lokalt som aldrig skickas till
-            oss: listan ”Dina tollysplits”, ditt ”vem är du”-val per split,
-            ditt val av ljust/mörkt läge och att du stängt cookie-notisen.
-            Allt ligger kvar på din enhet och kan rensas via webbläsarens
-            inställningar.
+            Your browser saves a few things locally that are never sent to us:
+            the “Your tollysplits” list, your “who are you” choice per split,
+            your chosen language, your light/dark preference, and the fact that
+            you've dismissed the cookie notice. It all stays on your device and
+            can be cleared from your browser settings.
           </p>
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
-          <h2 className="mb-1.5 font-bold">Det som inte finns</h2>
+          <h2 className="mb-1.5 font-bold">What's not here</h2>
           <p className="text-sm leading-relaxed text-stone-500">
-            Inga analyscookies, inga annonsnätverk, ingen
-            tredjepartsspårning, inga ”vi och våra 847 partners”. Vi räknar
-            sidvisningar med Vercels webbstatistik, men den är helt
-            cookiefri och anonym — den kan inte känna igen dig mellan besök
-            eller följa dig till andra sajter. Eftersom allt vi använder är
-            strikt nödvändigt eller cookiefritt kräver lagen inget samtycke
-            — notisen du såg är bara information.
+            No analytics cookies, no ad networks, no third-party tracking, no
+            “us and our 847 partners”. We count page views with Vercel's
+            statistics, but it's entirely cookieless and anonymous — it can't
+            recognise you between visits or follow you to other sites. Since
+            everything we use is strictly necessary or cookieless, the law
+            requires no consent — the notice you saw is just information.
           </p>
         </section>
       </div>
 
       <p className="mt-8 text-center text-sm text-stone-400">
-        Se även{" "}
-        <Link
-          href="/integritet"
-          className="text-primary hover:text-primary-dark"
-        >
-          integritetspolicyn
+        See also the{" "}
+        <Link href="/privacy" className="text-primary hover:text-primary-dark">
+          privacy policy
         </Link>
-        . Senast uppdaterad 2026-06-10.
+        . Last updated 2026-06-10.
       </p>
     </main>
   );

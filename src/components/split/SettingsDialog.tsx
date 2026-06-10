@@ -335,7 +335,7 @@ export function SettingsDialog({
           <p className="mt-1.5 text-xs text-stone-400">
             {dict.set.purgeHint1}{" "}
             <Link
-              href="/integritet"
+              href="/privacy"
               className="text-primary hover:text-primary-dark"
             >
               {dict.set.privacyLink}
