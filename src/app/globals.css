@@ -2,6 +2,7 @@
 
 @theme {
   --color-cream: #faf8f4;
+  --color-surface: #ffffff;
   --color-ink: #1c1917;
   --color-primary: #0d9488;
   --color-primary-dark: #0f766e;
@@ -10,6 +11,32 @@
   --color-positive: #059669;
   --color-negative: #dc2626;
   --font-sans: var(--font-geist-sans);
+}
+
+/* Dark theme: flip the semantic tokens and the stone scale. The .dark class
+   is managed by next-themes (default: follow system preference). */
+.dark {
+  color-scheme: dark;
+  --color-cream: #16140f;
+  --color-surface: #221f1a;
+  --color-ink: #f0ede7;
+  --color-primary: #14b8a6;
+  --color-primary-dark: #2dd4bf;
+  --color-primary-soft: #11403b;
+  --color-positive: #34d399;
+  --color-negative: #f87171;
+  --color-stone-50: #2a2722;
+  --color-stone-100: #2e2b25;
+  --color-stone-200: #3c3830;
+  --color-stone-300: #514c42;
+  --color-stone-400: #938d80;
+  --color-stone-500: #aba496;
+  --color-stone-600: #c9c2b4;
+  --color-stone-900: #f0ede7;
+  --color-amber-50: #382b10;
+  --color-amber-800: #fbd980;
+  --color-red-50: #3b1c1c;
+  --color-red-700: #fca5a5;
 }
 
 body {

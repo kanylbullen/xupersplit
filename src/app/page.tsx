@@ -86,7 +86,7 @@ export default async function Home() {
               <li key={k.key}>
                 <Link
                   href={`/k/${k.key}`}
-                  className="flex items-center justify-between rounded-2xl border border-stone-200/80 bg-white px-4 py-3.5 shadow-sm transition-colors hover:border-primary/40"
+                  className="flex items-center justify-between rounded-2xl border border-stone-200/80 bg-surface px-4 py-3.5 shadow-sm transition-colors hover:border-primary/40"
                 >
                   <div>
                     <div className="font-semibold">{k.title}</div>
@@ -111,7 +111,7 @@ export default async function Home() {
         ].map(([title, body]) => (
           <div
             key={title}
-            className="rounded-2xl border border-stone-200/80 bg-white p-5 shadow-sm"
+            className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm"
           >
             <h3 className="mb-1 font-bold">{title}</h3>
             <p className="text-sm text-stone-500">{body}</p>

@@ -46,7 +46,7 @@ export function EntriesView({
           <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
             {formatDateHeading(group.date)}
           </h3>
-          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-surface shadow-sm">
             {group.items.map((entry, i) => {
               const payer = byId.get(entry.paid_by);
               const isTransfer = entry.kind === "transfer";

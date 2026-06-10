@@ -111,7 +111,7 @@ export function KittyApp({ data }: { data: KittyData }) {
               onClick={() => setTab(value)}
               className={`rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
                 tab === value
-                  ? "bg-white text-ink shadow-sm"
+                  ? "bg-surface text-ink shadow-sm"
                   : "text-stone-500 hover:text-ink"
               }`}
             >
@@ -155,7 +155,7 @@ export function KittyApp({ data }: { data: KittyData }) {
             onClick={() =>
               setEntryDialog({ open: true, entry: null, kind: "transfer" })
             }
-            className="rounded-xl border border-stone-300 bg-white px-4 py-3 text-base font-semibold text-ink transition-colors hover:bg-stone-50"
+            className="rounded-xl border border-stone-300 bg-surface px-4 py-3 text-base font-semibold text-ink transition-colors hover:bg-stone-50"
           >
             Överföring
           </button>
@@ -190,7 +190,7 @@ export function KittyApp({ data }: { data: KittyData }) {
       />
 
       {toast && (
-        <div className="fixed bottom-20 left-1/2 z-20 -translate-x-1/2 rounded-xl bg-ink px-4 py-2.5 text-sm font-medium text-white shadow-lg">
+        <div className="fixed bottom-20 left-1/2 z-20 -translate-x-1/2 rounded-xl bg-ink px-4 py-2.5 text-sm font-medium text-cream shadow-lg">
           {toast}
         </div>
       )}

@@ -50,7 +50,7 @@ export function BalancesView({
 
   return (
     <div className="space-y-6 pb-28">
-      <div className="rounded-2xl border border-stone-200/80 bg-white p-5 text-center shadow-sm">
+      <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
         <p className="text-sm font-medium text-stone-400">Totalt spenderat</p>
         <p className="text-3xl font-black tracking-tight">
           {formatMoney(total, currency)}
@@ -61,7 +61,7 @@ export function BalancesView({
         <h3 className="mb-2 px-1 text-sm font-bold uppercase tracking-wide text-stone-400">
           Saldo per person
         </h3>
-        <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-surface shadow-sm">
           {participants.map((p, i) => {
             const value = bal.get(p.id) ?? 0;
             const width = Math.round((Math.abs(value) / maxAbs) * 100);
@@ -108,12 +108,12 @@ export function BalancesView({
           Så blir ni kvitt
         </h3>
         {plan.length === 0 ? (
-          <div className="rounded-2xl border border-stone-200/80 bg-white p-5 text-center shadow-sm">
+          <div className="rounded-2xl border border-stone-200/80 bg-surface p-5 text-center shadow-sm">
             <p className="font-semibold">Allt är uppgjort 🎉</p>
             <p className="text-sm text-stone-500">Ingen är skyldig någon något.</p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-stone-200/80 bg-surface shadow-sm">
             {plan.map((s, i) => {
               const from = byId.get(s.from);
               const to = byId.get(s.to);

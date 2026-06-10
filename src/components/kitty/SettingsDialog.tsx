@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import { useTheme } from "next-themes";
 import type { Kitty, Participant } from "@/lib/types";
 import { CURRENCIES } from "@/lib/money";
 import {
@@ -33,6 +34,9 @@ export function SettingsDialog({
   const [renameText, setRenameText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (open) {
@@ -187,6 +191,35 @@ export function SettingsDialog({
           </form>
           <p className="mt-1.5 text-xs text-stone-400">
             Deltagare med bokförda poster kan inte tas bort.
+          </p>
+        </section>
+
+        <section>
+          <Label>Utseende</Label>
+          <div className="grid grid-cols-3 gap-1 rounded-xl bg-stone-100 p-1">
+            {(
+              [
+                ["light", "Ljust"],
+                ["dark", "Mörkt"],
+                ["system", "System"],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setTheme(value)}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
+                  mounted && theme === value
+                    ? "bg-surface text-ink shadow-sm"
+                    : "text-stone-500 hover:text-ink"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <p className="mt-1.5 text-xs text-stone-400">
+            System följer enhetens ljusa/mörka läge.
           </p>
         </section>
 

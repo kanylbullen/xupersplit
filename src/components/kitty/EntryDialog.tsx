@@ -220,7 +220,7 @@ export function EntryDialog({
                 onClick={() => setKind(value)}
                 className={`rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
                   kind === value
-                    ? "bg-white text-ink shadow-sm"
+                    ? "bg-surface text-ink shadow-sm"
                     : "text-stone-500 hover:text-ink"
                 }`}
               >
@@ -321,7 +321,7 @@ export function EntryDialog({
                     onClick={() => setSplitMode(value)}
                     className={`rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
                       splitMode === value
-                        ? "bg-white text-ink shadow-sm"
+                        ? "bg-surface text-ink shadow-sm"
                         : "text-stone-500 hover:text-ink"
                     }`}
                   >

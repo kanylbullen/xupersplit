@@ -13,7 +13,7 @@ export function Button({
     primary:
       "bg-primary text-white hover:bg-primary-dark shadow-sm disabled:opacity-50",
     secondary:
-      "bg-white text-ink border border-stone-300 hover:bg-stone-50 disabled:opacity-50",
+      "bg-surface text-ink border border-stone-300 hover:bg-stone-50 disabled:opacity-50",
     ghost: "text-primary hover:bg-primary-soft/60 disabled:opacity-50",
     danger: "text-negative hover:bg-red-50 disabled:opacity-50",
   } as const;
@@ -31,7 +31,7 @@ export function Input({
 }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
-      className={`w-full rounded-xl border border-stone-300 bg-white px-3.5 py-2.5 text-base outline-none transition-colors placeholder:text-stone-400 focus:border-primary focus:ring-2 focus:ring-primary/20 ${className}`}
+      className={`w-full rounded-xl border border-stone-300 bg-surface px-3.5 py-2.5 text-base outline-none transition-colors placeholder:text-stone-400 focus:border-primary focus:ring-2 focus:ring-primary/20 ${className}`}
       {...props}
     />
   );
@@ -43,7 +43,7 @@ export function Select({
 }: React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className={`w-full rounded-xl border border-stone-300 bg-white px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 ${className}`}
+      className={`w-full rounded-xl border border-stone-300 bg-surface px-3.5 py-2.5 text-base outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 ${className}`}
       {...props}
     />
   );
@@ -88,7 +88,7 @@ export function Dialog({
       onClick={(e) => {
         if (e.target === ref.current) onClose();
       }}
-      className="m-auto w-[calc(100vw-2rem)] max-w-lg rounded-2xl bg-white p-0 shadow-2xl backdrop:bg-ink/40 backdrop:backdrop-blur-sm"
+      className="m-auto w-[calc(100vw-2rem)] max-w-lg rounded-2xl bg-surface p-0 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm"
     >
       <div className="flex items-center justify-between border-b border-stone-100 px-5 py-4">
         <h2 className="text-lg font-bold">{title}</h2>
@@ -113,7 +113,7 @@ export function Card({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={`rounded-2xl border border-stone-200/80 bg-white shadow-sm ${className}`}
+      className={`rounded-2xl border border-stone-200/80 bg-surface shadow-sm ${className}`}
       {...props}
     />
   );
