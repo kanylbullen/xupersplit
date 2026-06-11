@@ -102,7 +102,7 @@ export function SplitApp({ data }: { data: SplitData }) {
             href="https://buymeacoffee.com/xuperfun"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Bjud utvecklaren på en öl"
+            aria-label="Buy me a beer"
             title="Buy me a beer"
             className="rounded-xl bg-primary-soft px-2.5 py-2 text-sm transition-colors hover:bg-primary-soft/70"
           >

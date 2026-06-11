@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useI18n } from "@/lib/i18n/client";
 
 export function Button({
   variant = "primary",
@@ -72,6 +73,7 @@ export function Dialog({
   title: string;
   children: React.ReactNode;
 }) {
+  const { dict } = useI18n();
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -94,7 +96,7 @@ export function Dialog({
         <h2 className="text-lg font-bold">{title}</h2>
         <button
           onClick={onClose}
-          aria-label="Stäng"
+          aria-label={dict.common.close}
           className="rounded-lg p-1.5 text-stone-400 hover:bg-stone-100 hover:text-ink"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
