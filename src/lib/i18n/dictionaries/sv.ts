@@ -145,6 +145,8 @@ const sv = {
     openSwish: "Öppna Swish-appen",
     openOther:
       "Öppna {method} i din telefon och betala {amount} till uppgiften ovan.",
+    verifyWarning:
+      "Kontrollera mottagarens namn i din betalapp innan du betalar — vem som helst med länken kan ändra betaluppgifterna här, så betala på eget ansvar.",
     reminder:
       "Glöm inte att trycka ”Markera betald” när betalningen är gjord — vi får ingen bekräftelse automatiskt.",
   },

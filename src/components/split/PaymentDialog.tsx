@@ -61,6 +61,10 @@ export function PaymentDialog({
         </p>
         <p className="text-3xl font-black tracking-tight">{amount}</p>
 
+        <p className="rounded-xl bg-amber-50 px-3.5 py-2.5 text-left text-xs text-amber-800">
+          ⚠️ {dict.pay.verifyWarning}
+        </p>
+
         {rich && open && (
           // eslint-disable-next-line @next/next/no-img-element
           <img

@@ -145,6 +145,8 @@ const en: Dict = {
     openSwish: "Open the Swish app",
     openOther:
       "Open {method} on your phone and pay {amount} to the details above.",
+    verifyWarning:
+      "Check the recipient's name in your payment app before paying — anyone with the link can change the payment details here, so pay at your own risk.",
     reminder:
       "Don't forget to tap “Mark as paid” once the payment is made — we don't get a confirmation automatically.",
   },

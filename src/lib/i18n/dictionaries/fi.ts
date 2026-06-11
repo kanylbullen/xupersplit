@@ -145,6 +145,8 @@ const fi: Dict = {
     openSwish: "Avaa Swish-sovellus",
     openOther:
       "Avaa {method} puhelimessasi ja maksa {amount} yllä oleviin tietoihin.",
+    verifyWarning:
+      "Tarkista vastaanottajan nimi maksusovelluksessasi ennen maksamista — kuka tahansa linkillä voi muuttaa maksutietoja täällä, joten maksa omalla vastuullasi.",
     reminder:
       "Muista painaa ”Merkitse maksetuksi”, kun maksu on tehty — emme saa vahvistusta automaattisesti.",
   },

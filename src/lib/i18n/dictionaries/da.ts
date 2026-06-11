@@ -145,6 +145,8 @@ const da: Dict = {
     openSwish: "Åbn Swish-appen",
     openOther:
       "Åbn {method} på din telefon og betal {amount} til oplysningerne ovenfor.",
+    verifyWarning:
+      "Tjek modtagerens navn i din betalingsapp, før du betaler — alle med linket kan ændre betalingsoplysningerne her, så betal på eget ansvar.",
     reminder:
       "Husk at trykke “Markér som betalt”, når betalingen er foretaget — vi får ingen bekræftelse automatisk.",
   },

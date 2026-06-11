@@ -145,6 +145,8 @@ const is: Dict = {
     openSwish: "Opna Swish-appið",
     openOther:
       "Opnaðu {method} í símanum þínum og borgaðu {amount} samkvæmt upplýsingunum að ofan.",
+    verifyWarning:
+      "Athugaðu nafn viðtakandans í greiðsluappinu þínu áður en þú borgar — allir með hlekkinn geta breytt greiðsluupplýsingunum hér, svo greiddu á eigin ábyrgð.",
     reminder:
       "Mundu að ýta á „Merkja sem greitt“ þegar greiðslan er gerð — við fáum enga staðfestingu sjálfkrafa.",
   },
