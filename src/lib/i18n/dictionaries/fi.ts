@@ -205,6 +205,7 @@ const fi: Dict = {
     name: "Nimi",
     currency: "Valuutta",
     saveChanges: "Tallenna muutokset",
+    currencyLocked: "Päävaluutta on lukittu, koska tapahtumia on jo olemassa.",
     participants: "Osallistujat",
     rename: "Nimeä uudelleen",
     newParticipant: "Uusi osallistuja",

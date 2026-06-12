@@ -205,6 +205,7 @@ const da: Dict = {
     name: "Navn",
     currency: "Valuta",
     saveChanges: "Gem ændringer",
+    currencyLocked: "Hovedvalutaen er låst, fordi der allerede findes transaktioner.",
     participants: "Deltagere",
     rename: "Omdøb",
     newParticipant: "Ny deltager",

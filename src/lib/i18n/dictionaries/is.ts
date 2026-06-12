@@ -205,6 +205,7 @@ const is: Dict = {
     name: "Nafn",
     currency: "Gjaldmiðill",
     saveChanges: "Vista breytingar",
+    currencyLocked: "Aðalgjaldmiðillinn er læstur því færslur eru þegar til.",
     participants: "Þátttakendur",
     rename: "Endurnefna",
     newParticipant: "Nýr þátttakandi",

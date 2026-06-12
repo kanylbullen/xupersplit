@@ -205,6 +205,8 @@ const sv = {
     name: "Namn",
     currency: "Valuta",
     saveChanges: "Spara ändringar",
+    currencyLocked:
+      "Huvudvalutan är låst eftersom det redan finns transaktioner.",
     participants: "Deltagare",
     rename: "Byt namn",
     newParticipant: "Ny deltagare",
