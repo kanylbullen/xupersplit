@@ -351,11 +351,13 @@ export function PaymentDialog({
             <>
               <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
               {/* metamask.app.link, not link.metamask.io — the latter 404s
-                  in-app. @1 (mainnet) because MetaMask errors without a
-                  chainId and mainnet exists in every wallet; the payer can
-                  switch network in the send view. */}
+                  in-app. MetaMask errors without a chainId, and wants it in
+                  HEX (@0x1): it keys network configs by hex id and doesn't
+                  normalize decimal (@1 → "chain ID 1 not found"). Mainnet
+                  exists in every wallet; the payer can switch network in
+                  the send view. */}
               <a
-                href={`https://metamask.app.link/send/${evm.address}@1`}
+                href={`https://metamask.app.link/send/${evm.address}@0x1`}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => track("metamask_opened")}
