@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Cancel superseded runs on the same PR.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Public, safe to expose — security relies on RLS + RPCs.
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      SMOKE_SPLIT_KEY: ${{ secrets.SMOKE_SPLIT_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
