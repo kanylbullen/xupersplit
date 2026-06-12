@@ -309,50 +309,50 @@ export function EntryDialog({
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label htmlFor="entry-amount">{dict.entryD.amountLabel}</Label>
-            <div className="flex gap-2">
-              <Input
-                id="entry-amount"
-                inputMode="decimal"
-                placeholder="0"
-                value={amountText}
-                onChange={(e) => setAmountText(e.target.value)}
-              />
-              <Select
-                aria-label={dict.entryD.amountLabel}
-                value={entryCurrency}
-                onChange={(e) => setEntryCurrency(e.target.value)}
-                className="w-24 shrink-0"
-              >
-                {CURRENCIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </Select>
-            </div>
-          </div>
-          <div>
-            <Label htmlFor="entry-date">{dict.entryD.date}</Label>
+        <div>
+          <Label htmlFor="entry-amount">{dict.entryD.amountLabel}</Label>
+          <div className="flex gap-2">
             <Input
-              id="entry-date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              id="entry-amount"
+              inputMode="decimal"
+              placeholder="0"
+              value={amountText}
+              onChange={(e) => setAmountText(e.target.value)}
+              className="min-w-0 flex-1"
             />
+            <Select
+              aria-label={dict.entryD.amountLabel}
+              value={entryCurrency}
+              onChange={(e) => setEntryCurrency(e.target.value)}
+              className="w-24 shrink-0"
+            >
+              {CURRENCIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </Select>
           </div>
+          {isForeign && (
+            <p className="mt-1 text-xs text-stone-500">
+              {rateLoading
+                ? "…"
+                : amountCents !== null
+                  ? t(dict.entryD.fxLocked, { amount: money(amountCents) })
+                  : dict.entryD.fxUnavailable}
+            </p>
+          )}
         </div>
-        {isForeign && (
-          <p className="-mt-2 text-xs text-stone-500">
-            {rateLoading
-              ? "…"
-              : amountCents !== null
-                ? t(dict.entryD.fxLocked, { amount: money(amountCents) })
-                : dict.entryD.fxUnavailable}
-          </p>
-        )}
+
+        <div>
+          <Label htmlFor="entry-date">{dict.entryD.date}</Label>
+          <Input
+            id="entry-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
