@@ -62,8 +62,8 @@ export async function saveEntryAction(
   if (result.ok && entry.kind === "transfer") {
     const supabase = await createClient();
     const { data } = await supabase.rpc("split_data", { p_key: key });
-    const split = data as SplitData | null;
-    if (split) {
+    const split = data as (SplitData & { not_found?: boolean }) | null;
+    if (split && !split.not_found && split.participants) {
       const hasMethods = split.participants.some((p) => p.payment_value);
       const allSquare = [...balances(split.participants, split.entries).values()].every(
         (v) => v === 0

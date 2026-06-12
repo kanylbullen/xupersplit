@@ -69,6 +69,13 @@ create table if not exists public.entry_shares (
   primary key (entry_id, participant_id)
 );
 
+-- Per-hour counter of failed split-key lookups (enumeration monitoring).
+-- Bloat-proof: one row per hour no matter the request volume.
+create table if not exists public.lookup_failures (
+  hour timestamptz primary key,
+  count bigint not null default 0
+);
+
 create index if not exists entries_split_idx on public.entries (split_id, entry_date desc, created_at desc);
 create index if not exists participants_split_idx on public.participants (split_id, position);
 create index if not exists splits_created_at_idx on public.splits (created_at);
@@ -88,6 +95,8 @@ revoke all on public.splits from anon, authenticated;
 revoke all on public.participants from anon, authenticated;
 revoke all on public.entries from anon, authenticated;
 revoke all on public.entry_shares from anon, authenticated;
+alter table public.lookup_failures enable row level security;
+revoke all on public.lookup_failures from anon, authenticated;
 
 -- ─────────────────────────────────────────────────────────────────────────
 -- Internal helpers (NOT granted to anon/authenticated)
@@ -194,8 +203,17 @@ create or replace function public.split_data(p_key text)
 returns jsonb
 language plpgsql volatile security definer set search_path = public
 as $$
-declare v_id uuid := _require_split(p_key);
+declare v_id uuid;
 begin
+  select id into v_id from splits where key = p_key;
+  -- Unknown key: record the miss (per-hour counter, bloat-proof) for
+  -- enumeration monitoring and signal not-found instead of raising.
+  if v_id is null then
+    insert into lookup_failures (hour, count) values (date_trunc('hour', now()), 1)
+      on conflict (hour) do update set count = lookup_failures.count + 1;
+    return jsonb_build_object('not_found', true);
+  end if;
+
   update splits set last_activity = now()
   where id = v_id and last_activity < now() - interval '1 day';
 
@@ -421,6 +439,15 @@ begin
   perform _touch_split(v_split);
 end $$;
 
+-- Read-only failed-lookup counter for the security monitor (returns a count,
+-- nothing sensitive).
+create or replace function public.recent_lookup_failures()
+returns bigint language sql stable security definer set search_path = public
+as $$
+  select coalesce(sum(count), 0)::bigint
+  from lookup_failures where hour > now() - interval '24 hours'
+$$;
+
 -- ─────────────────────────────────────────────────────────────────────────
 -- RPC grants: lock down, then grant only the public API surface
 -- ─────────────────────────────────────────────────────────────────────────
@@ -440,6 +467,7 @@ grant execute on function public.clear_payment_methods(text) to anon, authentica
 grant execute on function public.set_auto_purge(text, boolean) to anon, authenticated;
 grant execute on function public.save_entry(text, jsonb) to anon, authenticated;
 grant execute on function public.delete_entry(text, uuid) to anon, authenticated;
+grant execute on function public.recent_lookup_failures() to anon, authenticated;
 
 -- ─────────────────────────────────────────────────────────────────────────
 -- Scheduled privacy purge (pg_cron)
@@ -455,5 +483,6 @@ select cron.schedule(
     where auto_purge and last_activity < now() - interval '6 months';
   update public.splits set created_ip_hash = null
     where created_ip_hash is not null and created_at < now() - interval '24 hours';
+  delete from public.lookup_failures where hour < now() - interval '7 days';
   $job$
 );

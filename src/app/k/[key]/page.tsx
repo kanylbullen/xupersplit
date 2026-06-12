@@ -7,7 +7,10 @@ import { SplitApp } from "@/components/split/SplitApp";
 async function fetchSplit(key: string): Promise<SplitData | null> {
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("split_data", { p_key: key });
-  if (error || !data) return null;
+  // Tolerate both behaviours: the old split_data raised (→ error) on an
+  // unknown key; the new one returns { not_found: true } so it can log the
+  // failed lookup for enumeration monitoring.
+  if (error || !data || (data as { not_found?: boolean }).not_found) return null;
   return data as SplitData;
 }
 
