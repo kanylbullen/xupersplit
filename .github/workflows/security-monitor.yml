@@ -1,0 +1,41 @@
+name: Security monitor
+
+# Watches for split-key enumeration: split_data logs every failed key lookup
+# (whether via the website or directly against Supabase), and this job alerts
+# if the 24h count crosses a threshold. The secret key (122 bits of entropy)
+# makes guessing infeasible — this just tells us if anyone is even trying.
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  enumeration-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      THRESHOLD: "200"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Count failed split lookups (last 24h)
+        run: |
+          COUNT=$(curl -s -X POST "$SUPABASE_URL/rest/v1/rpc/recent_lookup_failures" \
+            -H "apikey: $SUPABASE_KEY" -H "Content-Type: application/json" -d '{}')
+          echo "Failed split lookups in last 24h: $COUNT (threshold: $THRESHOLD)"
+          if ! [[ "$COUNT" =~ ^[0-9]+$ ]]; then
+            echo "::warning::Unexpected response from recent_lookup_failures: $COUNT"
+            exit 0
+          fi
+          if [ "$COUNT" -gt "$THRESHOLD" ]; then
+            echo "::warning::Possible enumeration — $COUNT failed lookups"
+            gh issue create --repo "${{ github.repository }}" \
+              --title "⚠️ Possible split-key enumeration: $COUNT failed lookups in 24h" \
+              --body "The \`recent_lookup_failures\` RPC reported **$COUNT** failed split-key lookups in the last 24 hours (threshold $THRESHOLD).\n\nThis is the signature of someone trying random split keys. The keys are 122-bit random, so guessing one is infeasible — but worth a look. Check Supabase logs and consider tightening the per-IP rate limit or rotating if a specific split key leaked." \
+              || echo "issue creation failed (non-fatal)"
+          fi
