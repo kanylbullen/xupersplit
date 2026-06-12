@@ -94,8 +94,12 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Your rights",
     <>
-      You have the right to access, rectification, erasure, restriction,
-      objection and data portability regarding your personal data. Email{" "}
+      Much of this is self-service: anyone with the link can edit or delete
+      entries, export the whole split as JSON or CSV from Settings, and remove
+      a participant — so you can take yourself out of a split directly, as long
+      as you haven't recorded any expenses or transfers yet. Beyond that, you
+      have the right to access, rectification, erasure, restriction, objection
+      and data portability regarding your personal data. Email{" "}
       <a
         href="mailto:tollysplit@xuper.fun"
         className="text-primary hover:text-primary-dark"

@@ -213,6 +213,8 @@ const nb: Dict = {
       "Denne tollyspliten slettes automatisk etter 6 måneder uten aktivitet. Lag splits mens du er innlogget hvis du vil kunne slå av slettingen.",
     purgeHint1: "Betalingsopplysninger slettes automatisk når alle er gjort opp. Les mer i",
     privacyLink: "personvernerklæringen",
+    dataExport: "Eksporter data",
+    dataExportHint: "Last ned hele denne tollyspliten.",
     changeIdentity: "Endre hvem du er på denne enheten",
   },
   notFound: {

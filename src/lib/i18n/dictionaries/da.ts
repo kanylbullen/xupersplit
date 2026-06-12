@@ -213,6 +213,8 @@ const da: Dict = {
       "Denne tollysplit slettes automatisk efter 6 måneder uden aktivitet. Opret splits, mens du er logget ind, hvis du vil kunne slå sletningen fra.",
     purgeHint1: "Betalingsoplysninger slettes automatisk, når alle har gjort op. Læs mere i",
     privacyLink: "privatlivspolitikken",
+    dataExport: "Eksportér data",
+    dataExportHint: "Download hele denne tollysplit.",
     changeIdentity: "Skift hvem du er på denne enhed",
   },
   notFound: {

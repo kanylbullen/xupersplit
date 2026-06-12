@@ -23,12 +23,15 @@ import {
 import { Button, Dialog, Input, Label, Select } from "@/components/ui";
 import { useI18n } from "@/lib/i18n/client";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { exportCsv, exportJson } from "@/lib/export";
+import type { SplitData } from "@/lib/types";
 
 export function SettingsDialog({
   open,
   onClose,
   split,
   participants,
+  entries,
   meId,
   onIdentityReset,
 }: {
@@ -36,6 +39,7 @@ export function SettingsDialog({
   onClose: () => void;
   split: Split;
   participants: Participant[];
+  entries: SplitData["entries"];
   meId: string | null;
   onIdentityReset: () => void;
 }) {
@@ -312,6 +316,25 @@ export function SettingsDialog({
         <section>
           <Label>{dict.switcher.label}</Label>
           <LocaleSwitcher />
+        </section>
+
+        <section>
+          <Label>{dict.set.dataExport}</Label>
+          <div className="flex gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => exportJson({ split, participants, entries })}
+            >
+              JSON
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => exportCsv({ split, participants, entries })}
+            >
+              CSV
+            </Button>
+          </div>
+          <p className="mt-1.5 text-xs text-stone-400">{dict.set.dataExportHint}</p>
         </section>
 
         <section>

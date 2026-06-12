@@ -213,6 +213,8 @@ const fi: Dict = {
       "Tämä tollysplit poistetaan automaattisesti 6 kuukauden käyttämättömyyden jälkeen. Luo splitit kirjautuneena, jos haluat voida poistaa automaattipoiston käytöstä.",
     purgeHint1: "Maksutiedot poistetaan automaattisesti, kun kaikki on selvitetty. Lue lisää",
     privacyLink: "tietosuojaselosteesta",
+    dataExport: "Vie tiedot",
+    dataExportHint: "Lataa koko tämä tollysplit.",
     changeIdentity: "Vaihda, kuka olet tällä laitteella",
   },
   notFound: {

@@ -220,6 +220,7 @@ export function SplitApp({ data }: { data: SplitData }) {
         onClose={() => setSettingsOpen(false)}
         split={split}
         participants={participants}
+        entries={entries}
         meId={meId}
         onIdentityReset={() => {
           localStorage.removeItem(storageKey);

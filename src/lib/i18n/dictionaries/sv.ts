@@ -213,6 +213,8 @@ const sv = {
       "Den här tollyspliten raderas automatiskt efter 6 månader utan aktivitet. Skapa splits inloggad om du vill kunna stänga av gallringen.",
     purgeHint1: "Betaluppgifter raderas automatiskt när alla är kvitt. Läs mer i",
     privacyLink: "integritetspolicyn",
+    dataExport: "Exportera data",
+    dataExportHint: "Ladda ner hela den här tollyspliten.",
     changeIdentity: "Byt vem du är på den här enheten",
   },
   notFound: {

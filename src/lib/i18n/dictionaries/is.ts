@@ -213,6 +213,8 @@ const is: Dict = {
       "Þessum tollysplit er eytt sjálfkrafa eftir 6 mánuði án virkni. Búðu til splitti innskráð(ur) ef þú vilt geta slökkt á eyðingunni.",
     purgeHint1: "Greiðsluupplýsingum er eytt sjálfkrafa þegar allir hafa gert upp. Lesið meira í",
     privacyLink: "persónuverndarstefnunni",
+    dataExport: "Flytja út gögn",
+    dataExportHint: "Sæktu allan þennan tollysplit.",
     changeIdentity: "Breyta hver þú ert á þessu tæki",
   },
   notFound: {
