@@ -62,7 +62,8 @@ export default function CookiesPage() {
         <Link href="/privacy" className="text-primary hover:text-primary-dark">
           privacy policy
         </Link>
-        . Last updated 2026-06-10.
+        , which names the data controller and your rights. Last updated
+        2026-06-12.
       </p>
     </main>
   );
