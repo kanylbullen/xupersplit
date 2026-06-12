@@ -347,25 +347,12 @@ export function PaymentDialog({
             </>
           )
         ) : isEvm ? (
+          // No wallet deeplink: MetaMask's send-deeplink parser proved broken
+          // three ways in field testing (in-app 404 on link.metamask.io,
+          // "network not found" on @1, silent no-op on @0x1). QR + copy is
+          // the honest, working flow.
           evm.status === "ready" && (
-            <>
-              <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
-              {/* metamask.app.link, not link.metamask.io — the latter 404s
-                  in-app. MetaMask errors without a chainId, and wants it in
-                  HEX (@0x1): it keys network configs by hex id and doesn't
-                  normalize decimal (@1 → "chain ID 1 not found"). Mainnet
-                  exists in every wallet; the payer can switch network in
-                  the send view. */}
-              <a
-                href={`https://metamask.app.link/send/${evm.address}@0x1`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => track("metamask_opened")}
-                className="w-full rounded-xl bg-primary px-4 py-3 font-bold text-white shadow-md transition-colors hover:bg-primary-dark"
-              >
-                {dict.pay.openMetaMask}
-              </a>
-            </>
+            <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
           )
         ) : (
           <p className="text-sm text-stone-500">

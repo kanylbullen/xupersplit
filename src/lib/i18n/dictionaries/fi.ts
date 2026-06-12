@@ -167,8 +167,7 @@ const fi: Dict = {
     evmError:
       "Osoitetta ei voitu hakea juuri nyt — kopioi se manuaalisesti ja varmista saajalta.",
     evmNote:
-      "Avaa MetaMask suoraan, skannaa QR-koodi lompakon skannerilla (aloitusnäytöltä — lähetysnäkymästä se usein puuttuu), tai kopioi osoite. Sopikaa saajan kanssa verkosta (esim. Base, Arbitrum, mainnet) ja tokenista (esim. USDC) ennen lähettämistä.",
-    openMetaMask: "Avaa MetaMaskissa",
+      "Skannaa QR-koodi lompakon skannerilla (aloitusnäytöltä — lähetysnäkymästä se usein puuttuu) tai kopioi osoite. Sopikaa saajan kanssa verkosta (esim. Base, Arbitrum, mainnet) ja tokenista (esim. USDC) ennen lähettämistä.",
     changedWarning:
       "Saajan maksutietoja muutettiin {date}, ja ne eroavat alun perin syötetyistä. Varmista saajalta toista kanavaa pitkin ennen maksamista.",
     openOther:
