@@ -12,7 +12,7 @@ export const PAYMENT_META: Record<PaymentType, PaymentMeta> = {
   swish: { label: "Swish", hint: "SE", kind: "phone", placeholder: "070-123 45 67" },
   vipps: { label: "Vipps", hint: "NO", kind: "phone", placeholder: "412 34 567" },
   mobilepay: { label: "MobilePay", hint: "DK/FI", kind: "phone", placeholder: "12 34 56 78" },
-  revolut: { label: "Revolut", hint: "revtag", kind: "revtag", placeholder: "@dittnamn" },
+  revolut: { label: "Revolut", hint: "revtag", kind: "revtag", placeholder: "@john" },
   iban: { label: "IBAN", hint: "", kind: "iban", placeholder: "SE35 5000 0000 0549 1000 0003" },
 };
 

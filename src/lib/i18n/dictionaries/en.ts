@@ -196,6 +196,7 @@ const en: Dict = {
     name: "Name",
     currency: "Currency",
     saveChanges: "Save changes",
+    currencyLocked: "The main currency is locked because entries already exist.",
     participants: "Participants",
     rename: "Rename",
     newParticipant: "New participant",

@@ -119,6 +119,7 @@ export function SettingsDialog({
               id="split-currency"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
+              disabled={entries.length > 0}
             >
               {CURRENCIES.map((c) => (
                 <option key={c} value={c}>
@@ -126,6 +127,11 @@ export function SettingsDialog({
                 </option>
               ))}
             </Select>
+            {entries.length > 0 && (
+              <p className="mt-1.5 text-xs text-stone-400">
+                {dict.set.currencyLocked}
+              </p>
+            )}
           </div>
           {dirty && (
             <Button
