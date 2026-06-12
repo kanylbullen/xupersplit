@@ -5,6 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Least-privilege GITHUB_TOKEN — this workflow only needs to read the repo.
+permissions:
+  contents: read
+
 # Cancel superseded runs on the same PR.
 concurrency:
   group: ci-${{ github.ref }}
