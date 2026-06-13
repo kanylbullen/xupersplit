@@ -5,13 +5,14 @@ export type PaymentType =
   | "iban"
   | "revolut"
   | "lightning"
-  | "evm";
+  | "evm"
+  | "solana";
 
 type PaymentMeta = {
   label: string;
   /** Country hint shown next to the label. */
   hint: string;
-  kind: "phone" | "iban" | "revtag" | "lnaddress" | "evmaddress";
+  kind: "phone" | "iban" | "revtag" | "lnaddress" | "evmaddress" | "soladdress";
   placeholder: string;
 };
 
@@ -22,6 +23,7 @@ export const PAYMENT_META: Record<PaymentType, PaymentMeta> = {
   revolut: { label: "Revolut", hint: "revtag", kind: "revtag", placeholder: "@john" },
   lightning: { label: "Lightning", hint: "bitcoin", kind: "lnaddress", placeholder: "satoshi@strike.me" },
   evm: { label: "Ethereum", hint: "EVM", kind: "evmaddress", placeholder: "0x… / namn.eth" },
+  solana: { label: "Solana", hint: "USDC", kind: "soladdress", placeholder: "Solana-adress" },
   iban: { label: "IBAN", hint: "", kind: "iban", placeholder: "SE35 5000 0000 0549 1000 0003" },
 };
 
@@ -55,6 +57,11 @@ export function normalizePayment(type: PaymentType, input: string): string | nul
       ? clean
       : null;
   }
+  if (PAYMENT_META[type].kind === "soladdress") {
+    // base58 Solana address — case-sensitive, never lowercase.
+    const clean = input.trim();
+    return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(clean) ? clean : null;
+  }
   // phone-type (swish/vipps/mobilepay)
   const clean = input.replace(/[\s\-()./]/g, "");
   return /^\+?[0-9]{6,15}$/.test(clean) ? clean : null;
@@ -71,6 +78,10 @@ export function formatPayment(type: PaymentType, value: string): string {
   // Long 0x addresses get the usual middle-ellipsis; ENS names shown as-is.
   if (type === "evm" && value.startsWith("0x")) {
     return `${value.slice(0, 6)}…${value.slice(-4)}`;
+  }
+  // Solana addresses are long base58 — middle-ellipsize.
+  if (type === "solana") {
+    return `${value.slice(0, 4)}…${value.slice(-4)}`;
   }
   // Swedish Swish numbers get the familiar grouping; others shown as-is.
   if (type === "swish" && /^07\d{8}$/.test(value)) {

@@ -4,15 +4,21 @@ import { type ReactNode } from "react";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { wagmiAdapter, projectId, networks } from "@/lib/wallet/config";
+import {
+  wagmiAdapter,
+  solanaAdapter,
+  projectId,
+  allNetworks,
+} from "@/lib/wallet/config";
 
 const queryClient = new QueryClient();
 
-// Initialise AppKit once on the client (only when configured).
-if (wagmiAdapter && projectId) {
+// Initialise AppKit once on the client (only when configured). One modal,
+// two adapters: wagmi for EVM USDC, the Solana adapter for Solana USDC.
+if (wagmiAdapter && solanaAdapter && projectId) {
   createAppKit({
-    adapters: [wagmiAdapter],
-    networks,
+    adapters: [wagmiAdapter, solanaAdapter],
+    networks: allNetworks,
     projectId,
     metadata: {
       name: "Tollysplit",

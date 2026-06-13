@@ -199,6 +199,8 @@ const nb: Dict = {
       "Kunne ikke slå opp adressen akkurat nå — kopier den manuelt og dobbeltsjekk med mottakeren.",
     evmNote:
       "Skann QR-koden med lommebokens skanner (på startsiden — send-visningen mangler ofte skanner) eller kopier adressen. Bli enige med mottakeren om nettverk (f.eks. Base, Arbitrum, mainnet) og token (f.eks. USDC) før du sender.",
+    solanaNote:
+      "Skann QR-koden med Solana-lommeboken din (Phantom/Solflare) eller kopier adressen — dette er en USDC-betaling på Solana.",
     walletChain: "Nettverk",
     walletConnect: "Koble til lommebok",
     walletPay: "Betal {amount} USDC",

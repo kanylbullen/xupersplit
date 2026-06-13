@@ -25,7 +25,7 @@ const securityHeaders = [
       "font-src 'self'",
       // Supabase REST/Auth + Vercel analytics + WalletConnect/Reown relay,
       // RPC proxy and config API (only contacted once the wallet flow opens).
-      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://vitals.vercel-insights.com https://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.reown.com https://api.web3modal.org",
+      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://vitals.vercel-insights.com https://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.reown.com https://api.web3modal.org https://*.solana.com https://solana-rpc.publicnode.com",
       // WalletConnect's attestation iframe.
       "frame-src 'self' https://verify.walletconnect.org https://secure.walletconnect.org",
       "form-action 'self'",

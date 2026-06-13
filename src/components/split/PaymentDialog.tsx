@@ -17,6 +17,7 @@ import type { PaymentMethod } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { LOCALE_INTL } from "@/lib/i18n/config";
 import { WalletPayButton } from "./WalletPayButton";
+import { SolanaPayButton } from "./SolanaPayButton";
 import { walletEnabled } from "./WalletProvider";
 
 export type Payment = {
@@ -59,6 +60,7 @@ export function PaymentDialog({
   const [selected, setSelected] = useState(0);
   const [ln, setLn] = useState<LnState>({ status: "idle" });
   const [evm, setEvm] = useState<EvmState>({ status: "idle" });
+  const [solUsd, setSolUsd] = useState<number | null>(null);
 
   // Close on Escape (this is a plain overlay, not a native <dialog>).
   useEffect(() => {
@@ -157,6 +159,36 @@ export function PaymentDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, payment, method?.type, method?.value]);
 
+  // Solana: the debt ≈ in USD (USDC is dollar-denominated). The address is the
+  // recipient's own — no resolution needed.
+  useEffect(() => {
+    if (!open || !payment || method?.type !== "solana") {
+      setSolUsd(null);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      if (payment.currency === "USD") {
+        if (!cancelled) setSolUsd(payment.amountCents / 100);
+        return;
+      }
+      const fx = await fetch(`/api/fx?from=${payment.currency}&to=USD`)
+        .then((r) => r.json())
+        .catch(() => null);
+      if (!cancelled) {
+        setSolUsd(
+          fx && typeof fx.rate === "number"
+            ? (payment.amountCents / 100) * fx.rate
+            : null
+        );
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, payment, method?.type, method?.value]);
+
   if (!open || !payment || !method) return null;
 
   const type: PaymentType = method.type;
@@ -164,6 +196,7 @@ export function PaymentDialog({
   const appLink = hasAppLink(type);
   const isLightning = type === "lightning";
   const isEvm = type === "evm";
+  const isSolana = type === "solana";
   const pretty = formatPayment(type, method.value);
   const label = PAYMENT_META[type].label;
   const amount = formatMoney(payment.amountCents, payment.currency, LOCALE_INTL[locale]);
@@ -249,6 +282,19 @@ export function PaymentDialog({
               {evm.address}
             </p>
           )}
+          {isSolana && solUsd !== null && payment.currency !== "USD" && (
+            <p className="text-sm font-semibold text-stone-500">
+              ≈ {new Intl.NumberFormat(LOCALE_INTL[locale], {
+                maximumFractionDigits: 2,
+              }).format(solUsd)}{" "}
+              USDC
+            </p>
+          )}
+          {isSolana && (
+            <p className="mt-1 break-all font-mono text-sm font-semibold">
+              ◎ {method.value}
+            </p>
+          )}
         </div>
 
         {payment.methods.length > 1 && (
@@ -291,7 +337,7 @@ export function PaymentDialog({
         )}
         <p className="rounded-xl bg-amber-50 px-3.5 py-2.5 text-left text-xs text-amber-800">
           ⚠️ {dict.pay.verifyWarning}
-          {(isLightning || isEvm) && ` ${dict.pay.cryptoIrreversible}`}
+          {(isLightning || isEvm || isSolana) && ` ${dict.pay.cryptoIrreversible}`}
         </p>
 
         {rich && open && (
@@ -330,6 +376,15 @@ export function PaymentDialog({
             aria-label={`Adress-QR till ${payment.toName}`}
             dangerouslySetInnerHTML={{
               __html: renderSVG(evm.address, { ecc: "M", border: 1 }),
+            }}
+          />
+        )}
+        {isSolana && open && (
+          <div
+            className="h-[220px] w-[220px] rounded-xl border border-stone-200 bg-white p-2 [&>svg]:h-full [&>svg]:w-full"
+            aria-label={`Solana-QR till ${payment.toName}`}
+            dangerouslySetInnerHTML={{
+              __html: renderSVG(method.value, { ecc: "M", border: 1 }),
             }}
           />
         )}
@@ -404,6 +459,16 @@ export function PaymentDialog({
               <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
             </>
           )
+        ) : isSolana ? (
+          <>
+            {walletEnabled && (
+              <>
+                <SolanaPayButton toAddress={method.value} usd={solUsd} />
+                <p className="text-xs text-stone-400">{dict.pay.walletOr}</p>
+              </>
+            )}
+            <p className="text-sm text-stone-500">{dict.pay.solanaNote}</p>
+          </>
         ) : (
           <p className="text-sm text-stone-500">
             {t(dict.pay.openOther, { method: label, amount })}
