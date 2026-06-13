@@ -20,6 +20,9 @@ export const EVM_CHAINS: {
 
 export const USDC_DECIMALS = 6;
 
+// USDC SPL mint on Solana mainnet (also 6 decimals).
+export const SOLANA_USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+
 export const ERC20_TRANSFER_ABI = [
   {
     name: "transfer",

@@ -199,6 +199,8 @@ const fi: Dict = {
       "Osoitetta ei voitu hakea juuri nyt — kopioi se manuaalisesti ja varmista saajalta.",
     evmNote:
       "Skannaa QR-koodi lompakon skannerilla (aloitusnäytöltä — lähetysnäkymästä se usein puuttuu) tai kopioi osoite. Sopikaa saajan kanssa verkosta (esim. Base, Arbitrum, mainnet) ja tokenista (esim. USDC) ennen lähettämistä.",
+    solanaNote:
+      "Skannaa QR-koodi Solana-lompakollasi (Phantom/Solflare) tai kopioi osoite — tämä on USDC-maksu Solanassa.",
     walletChain: "Verkko",
     walletConnect: "Yhdistä lompakko",
     walletPay: "Maksa {amount} USDC",

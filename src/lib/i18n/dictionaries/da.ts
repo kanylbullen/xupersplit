@@ -199,6 +199,8 @@ const da: Dict = {
       "Kunne ikke slå adressen op lige nu — kopiér den manuelt og dobbelttjek med modtageren.",
     evmNote:
       "Scan QR-koden med din wallets scanner (på startsiden — send-visningen mangler ofte en scanner) eller kopiér adressen. Aftal med modtageren, hvilket netværk (f.eks. Base, Arbitrum, mainnet) og token (f.eks. USDC) der bruges, før du sender.",
+    solanaNote:
+      "Scan QR-koden med din Solana-wallet (Phantom/Solflare) eller kopiér adressen — dette er en USDC-betaling på Solana.",
     walletChain: "Netværk",
     walletConnect: "Forbind wallet",
     walletPay: "Betal {amount} USDC",

@@ -199,6 +199,8 @@ const is: Dict = {
       "Ekki tókst að fletta upp vistfanginu núna — afritaðu það handvirkt og staðfestu við viðtakanda.",
     evmNote:
       "Skannaðu QR-kóðann með skanna veskisins (á forsíðunni — sendiskjáinn vantar oft skanna) eða afritaðu vistfangið. Komdu þér saman við viðtakanda um net (t.d. Base, Arbitrum, mainnet) og token (t.d. USDC) áður en þú sendir.",
+    solanaNote:
+      "Skannaðu QR-kóðann með Solana-veskinu þínu (Phantom/Solflare) eða afritaðu vistfangið — þetta er USDC-greiðsla á Solana.",
     walletChain: "Net",
     walletConnect: "Tengja veski",
     walletPay: "Greiða {amount} USDC",

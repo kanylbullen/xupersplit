@@ -199,6 +199,8 @@ const en: Dict = {
       "Couldn't resolve the address right now — copy it manually and double-check with the recipient.",
     evmNote:
       "Scan the QR with your wallet's scanner (on the home screen — send views often lack one) or copy the address. Agree with the recipient on network (e.g. Base, Arbitrum, mainnet) and token (e.g. USDC) before sending.",
+    solanaNote:
+      "Scan the QR with your Solana wallet (Phantom/Solflare) or copy the address — this is a USDC payment on Solana.",
     walletChain: "Network",
     walletConnect: "Connect wallet",
     walletPay: "Pay {amount} USDC",

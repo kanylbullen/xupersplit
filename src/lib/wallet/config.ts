@@ -1,21 +1,33 @@
 import { cookieStorage, createStorage } from "wagmi";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { base, arbitrum, optimism, polygon, mainnet } from "@reown/appkit/networks";
-import type { AppKitNetwork } from "@reown/appkit/networks";
-
-// Reown (WalletConnect) project id — free, from cloud.reown.com. Public by
-// design (embedded in the client). When absent the wallet flow is disabled
-// and the EVM pay dialog falls back to QR + copy.
-export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
-
-// Chains we let the payer send USDC on. Same recipient address on all of them;
-// the payer picks whichever is cheapest. Order = display order.
-export const networks: [AppKitNetwork, ...AppKitNetwork[]] = [
+import { SolanaAdapter } from "@reown/appkit-adapter-solana";
+import {
   base,
   arbitrum,
   optimism,
   polygon,
   mainnet,
+  solana,
+} from "@reown/appkit/networks";
+import type { AppKitNetwork } from "@reown/appkit/networks";
+
+// Reown (WalletConnect) project id — free, from cloud.reown.com. Public by
+// design (embedded in the client). When absent the wallet flow is disabled
+// and the crypto pay dialogs fall back to QR + copy.
+export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
+
+// EVM chains the payer can send USDC on (one wagmi adapter), plus Solana
+// (its own adapter). Same recipient address per ecosystem.
+export const evmNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [
+  base,
+  arbitrum,
+  optimism,
+  polygon,
+  mainnet,
+];
+export const allNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [
+  ...evmNetworks,
+  solana,
 ];
 
 export const wagmiAdapter = projectId
@@ -23,6 +35,8 @@ export const wagmiAdapter = projectId
       storage: createStorage({ storage: cookieStorage }),
       ssr: true,
       projectId,
-      networks,
+      networks: evmNetworks,
     })
   : null;
+
+export const solanaAdapter = projectId ? new SolanaAdapter() : null;
