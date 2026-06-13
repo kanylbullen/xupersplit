@@ -1,82 +1,148 @@
+<div align="center">
+
+<img src="docs/cover.png" alt="Tollysplit — dela utgifter, slipp tjafset" width="640" />
+
 # Tollysplit
 
 **Dela utgifter i grupp utan krångel.** Skapa en split, dela länken och låt
-alla lägga in vad de betalat. Saldon och vem-betalar-vem räknas ut
-automatiskt — med Swish-betalning med ett tryck direkt från saldovyn.
+alla lägga in vad de betalat — saldon och vem-betalar-vem räknas ut
+automatiskt, med betalning på ett tryck direkt från saldovyn.
 
-🔗 **Live:** [tollysplit.xuper.fun](https://tollysplit.xuper.fun)
-
-🌍 **Språk:** [English](README.md) · Svenska
+[**tollysplit.xuper.fun**](https://tollysplit.xuper.fun) · [English](README.md) · Svenska
 
 [![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
-&nbsp;Next.js 16 · Supabase · Tailwind v4
+&nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
+
+</div>
 
 ---
 
+## Vad det är
+
+En ren utgiftsdelare utan konton. Den **hemliga länken är nyckeln** — vem som
+helst med den kan lägga in utgifter och göra upp; ingen inloggning krävs.
+Valfri e-postinloggning gör bara att dina splits följer med mellan enheter.
+Byggd som ett en-prompt-projekt och vidareutvecklad därifrån.
+
 ## Funktioner
 
-- **Inget konto behövs** för att skapa eller använda en split — den hemliga
-  länken *är* nyckeln. Valfri e-postinloggning gör bara att dina splits följer
-  med mellan enheter.
-- **Flexibel delning:** lika, viktade andelar eller exakta belopp, med
-  öresfördelning enligt största-rest-metoden.
-- **Smarta avräkningar:** minsta möjliga antal betalningar ("A betalar B X kr"),
-  bokförbara som överföringar.
-- **Betalning byggd för Norden** — se nedan.
-- **Mörkt / ljust / system-läge**, integritets- & cookiepolicy, cookiefri
-  statistik.
+- **Inget konto behövs.** Den ogissningsbara split-länken (122 bitars entropi)
+  *är* behörigheten. Inloggning är valfri.
+- **Flexibel delning** — lika, viktade andelar eller exakta belopp, med
+  öresavrundning enligt största-rest-metoden.
+- **Smart avräkning** — minsta antal "A betalar B"-överföringar, med
+  **delbetalningar** ("betala allt eller en del") och överstrykning när det är
+  gjort.
+- **Multivaluta** — lägg in utgifter i valfri valuta med kursen **låst vid
+  spara** (Kittysplit-modell); sätt en huvudvaluta per split. Inklusive **sats**
+  — kör en hel split i bitcoin om du vill.
+- **Åtta betalsätt**, flera med äkta förifyllning på ett tryck — [se nedan](#betalsätt).
+- **Sex språk** — English, Svenska, Norsk, Dansk, Suomi, Íslenska
+  (autodetekteras, kan bytas).
+- **Inbyggd integritet** — betaluppgifter kan raderas när alla är kvitt,
+  inaktiva splits gallras efter 6 månader, IP-hashar tas bort inom ett dygn,
+  CSV/JSON-export, fullständig GDPR-policy.
+- **Mörkt / ljust / system**-tema, cookie-fri analys, diskret cookie-notis.
 
-## 🇸🇪 Betalning — Swish först
+## Betalsätt
 
-Tollysplit satsar på den **svenska marknaden**: när en split är i SEK och
-mottagaren har sparat ett Swish-nummer får varje avräkningsrad en **"Swisha"-
-knapp** som visar en förifylld QR-kod (mottagare, exakt belopp och splittens
-namn som meddelande) och en **"Öppna Swish"**-länk som startar appen med allt
-ifyllt på mobilen. Ett tryck, klart.
+Tollysplit lagrar varje mottagares betaluppgift(er) och, där ett betalnätverk
+erbjuder ett **öppet, avtalsfritt** gränssnitt, gör saldoraden till en riktig
+betalning på ett tryck — **förifylld med exakt belopp**. Inga pengar passerar
+någonsin Tollysplit; appen bygger bara länken/fakturan/transaktionen som
+betalaren godkänner i sin egen app.
 
-Det funkar för att **Swish har ett genuint öppet, avtalsfritt API** — en publik
-förifylld deeplink (`app.swish.nu`) och ett publikt QR-endpoint. Inget
-företagsavtal, inga API-nycklar. Härligt utvecklarvänligt.
+| Betalsätt | Upplevelse | Hur |
+| --- | --- | --- |
+| **Swish** 🇸🇪 | QR + app-deeplänk, belopp förifyllt | Öppen `app.swish.nu`-länk + QR-endpoint — inget handlaravtal |
+| **Lightning** ⚡ | QR + `lightning:`-länk, **exakt belopp inbakat** | LNURL-pay (LUD-16): en lightning-adress → BOLT11-faktura |
+| **Ethereum / USDC** Ξ | **Förifylld USDC** på ett tryck | WalletConnect (Reown AppKit) — anslut, välj kedja, godkänn |
+| **Ethereum-adress** | Adress-QR + kopiera, ENS löses | `0x…` eller `namn.eth` (löses via viem vid betaltillfället) |
+| **Revolut** | Klickbar `revolut.me`-profillänk | Öppnar mottagarens profil för att betala |
+| **Vipps · MobilePay · IBAN** | Lagrad uppgift + kopiera-knapp | Inget öppet P2P-API — betalaren avslutar i sin egen app |
 
-Tyvärr erbjuder **de andra nordiska plånböckerna inte samma sak.** Vipps (Norge)
-och MobilePay (Danmark/Finland, numera Vipps MobilePay) har bara
-belopps-förifyllda flöden via sina **ePayment/QR-API:er för handlare, vilka
-kräver företagsavtal och leder pengarna till ett företag** snarare än
-person-till-person. Det enda publika är en personlig QR som bär ett
-telefonnummer men inget belopp. Så för Vipps, MobilePay och IBAN gör Tollysplit
-det ärliga: sparar betaluppgiften och visar den med en **kopiera-knapp** intill
-beloppet, så betalaren kan slutföra i sin egen app. Om Vipps eller MobilePay
-någon gång släpper en öppen P2P-deeplink i Swish-stil är det en liten ändring
-att koppla in — PR välkomna. 🤞
+**Varför skillnaden?** Swish har en genuint öppen förifylld deeplänk och
+QR-endpoint; Lightnings LNURL och EVM/WalletConnect är öppna protokoll. Vipps
+och MobilePay (numera Vipps MobilePay) erbjuder bara beloppsförifyllda flöden
+via sina **handlar-API:er** — ett företagsavtal som dirigerar pengar till ett
+bolag, inte person-till-person — så för dem gör Tollysplit det ärliga och visar
+uppgiften med en kopiera-knapp. Skulle de någon gång släppa en öppen
+P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
+
+> **Krypto är oåterkalleligt.** Kryptometoder visar extra varningar, och **alla**
+> betalsätt varnar (med datum) om mottagarens uppgifter någonsin ändrats från
+> det som först lades in — vem som helst med länken kan ändra dem.
 
 ## Arkitektur
 
 - **Ingen service-role-nyckel i appen.** All dataåtkomst går via
-  `security definer`-RPC:er i Postgres (`split_data`, `save_entry`, …) där den
-  hemliga split-nyckeln i URL:en är capability. RLS är aktiverat utan policies
-  (deny-all) på samtliga tabeller och direkt-grants är återkallade — appen
-  håller bara den publika publishable-nyckeln. Hela schemat finns i
-  [`supabase/migrations/`](supabase/migrations).
-- **Next.js App Router** + server actions; klienten är ren React utan
-  state-bibliotek. Tailwind v4.
-- **Integritet by design:** betaluppgifter raderas när alla är kvitt, inaktiva
-  splits gallras efter 6 månader, och spamskyddets IP-hash raderas inom ett
-  dygn.
+  `security definer`-RPC:er i Postgres (`split_data`, `save_entry`,
+  `set_payment_methods`, …) där den hemliga split-nyckeln i URL:en är
+  behörigheten. RLS är deny-all på alla tabeller och direkta grants är
+  återkallade — klienten håller bara den publika publishable-nyckeln. Schema
+  och varje ändring finns i [`supabase/migrations/`](supabase/migrations).
+- **Next.js App Router** + server actions; klienten är ren React, inget
+  state-bibliotek. Tailwind v4 med CSS-variabeltema.
+- **Tunna, nyckellösa API-routes** proxar de öppna betalnätverken, alla
+  same-origin-låsta: `/api/swish-qr`, `/api/ln-invoice` (LNURL-pay),
+  `/api/ens` (viem), `/api/fx` (fiat + BTC, med leverantörs-fallback).
+- **WalletConnect** är helt gated på ett projekt-ID — saknas det faller
+  EVM-dialogen rent tillbaka på QR + kopiera.
+- **Integritet & missbruksskydd** — radering av betaluppgifter vid kvittning
+  (kan stängas av), 6-månadersgallring av inaktiva splits, skapande-gräns per
+  IP-hash + globalt, och ett dagligt jobb som flaggar enumererings­försök på
+  split-nycklar.
+
+## Teknikstack
+
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Supabase (Postgres,
+Auth) · wagmi + viem + Reown AppKit · Playwright · Vercel
 
 ## Kör lokalt
 
 ```bash
 npm install
-cp .env.example .env.local   # fyll i din egen Supabase-URL + anon-nyckel
+cp .env.example .env.local   # lägg in din egen Supabase-URL + anon-nyckel
 npm run dev
 ```
 
-## Deploya din egen
+`.env.local`:
 
-Tollysplit är byggd för att gå att självhosta på gratisnivåerna hos
-Supabase + Vercel. Fullständig steg-för-steg-guide finns i den
-[engelska README:n](README.md#deploy-your-own) (Supabase → Vercel →
-Cloudflare).
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<ditt-projekt>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<din publishable-nyckel>
+# Valfritt — aktiverar WalletConnect-USDC-flödet (gratis-ID från cloud.reown.com)
+NEXT_PUBLIC_REOWN_PROJECT_ID=<ditt reown-projekt-ID>
+```
+
+## Hosta själv
+
+Self-hostbar på gratisnivåerna hos **Supabase + Vercel**.
+
+1. **Supabase** — skapa ett projekt (EU-regionerna håller data i Europa),
+   applicera sedan schemat med `supabase link --project-ref <ref> && supabase
+   db push` (kör varje migration i
+   [`supabase/migrations/`](supabase/migrations)). Hämta **Project URL** och
+   **publishable (anon)-nyckel**. För valfri e-postinloggning, konfigurera SMTP
+   och `…/auth/confirm`-redirecten.
+2. **Vercel** — importera repot, lägg till `NEXT_PUBLIC_SUPABASE_URL` och
+   `NEXT_PUBLIC_SUPABASE_ANON_KEY` (båda säkra att exponera; säkerheten vilar på
+   RLS + RPC:er). Lägg till `NEXT_PUBLIC_REOWN_PROJECT_ID` också om du vill ha
+   WalletConnect. Deploya.
+3. **Egen domän (valfritt)** — lägg till den i Vercel, peka en **DNS-only**
+   CNAME mot `cname.vercel-dns.com`, och lägg domänens `…/auth/confirm` i
+   Supabases redirect-allowlist om du använder e-postinloggning.
+
+## Tester & CI
+
+Playwright-smoke-tester (`npm run test:e2e`) körs på varje PR mot en lokal
+produktionsbuild och gatear merge till `main`; den rena
+delnings-/saldo-/avräkningslogiken finns i `src/lib/money.ts`.
+
+## Bidra
+
+Issues och PR:er välkomnas — särskilt en riktig öppen P2P-deeplänk för Vipps
+eller MobilePay, eller fler betalspår. Kodbasen är liten och fullt typad.
 
 ## Licens
 
@@ -86,9 +152,9 @@ MIT — se [LICENSE](LICENSE).
 
 <div align="center">
 
-Om Tollysplit besparade ditt gäng lite tjafs kan du
+Om Tollysplit besparade din grupp lite tjafs kan du
 
-[![Bjud på en öl](https://img.shields.io/badge/Bjud%20p%C3%A5%20en%20%C3%B6l-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
+[![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
 
 *byggd med kärlek, kaffe och öl*
 
