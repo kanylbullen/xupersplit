@@ -168,6 +168,16 @@ const sv = {
       "Kunde inte slå upp adressen just nu — kopiera den manuellt och dubbelkolla med mottagaren.",
     evmNote:
       "Scanna QR-koden med plånbokens scanner (på startsidan — send-vyn saknar ofta scanner) eller kopiera adressen. Kom överens med mottagaren om nätverk (t.ex. Base, Arbitrum, mainnet) och token (t.ex. USDC) innan du skickar.",
+    walletChain: "Nätverk",
+    walletConnect: "Anslut plånbok",
+    walletPay: "Betala {amount} USDC",
+    walletPayGeneric: "Betala med plånbok",
+    walletAwaiting: "Godkänn i plånboken…",
+    walletConfirming: "Bekräftar på kedjan…",
+    walletSent: "Betalning skickad ✓ — glöm inte att markera den som betald.",
+    walletError: "Betalningen avbröts eller misslyckades.",
+    walletOr: "— eller betala manuellt —",
+    walletDisconnect: "Byt plånbok",
     changedWarning:
       "Mottagarens betaluppgifter ändrades {date} och skiljer sig från de som först lades in. Bekräfta med mottagaren via en annan kanal innan du betalar.",
     openOther:

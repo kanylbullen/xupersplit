@@ -10,6 +10,7 @@ import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
 import { IdentityDialog } from "./IdentityDialog";
 import { SettingsDialog } from "./SettingsDialog";
+import { WalletProvider } from "./WalletProvider";
 
 type Tab = "entries" | "balances";
 
@@ -84,6 +85,7 @@ export function SplitApp({ data }: { data: SplitData }) {
   }
 
   return (
+    <WalletProvider>
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-4">
       <header className="sticky top-0 z-10 -mx-4 mb-4 border-b border-stone-200/60 bg-cream/90 px-4 py-3 backdrop-blur">
         <div className="flex items-center gap-2">
@@ -234,5 +236,6 @@ export function SplitApp({ data }: { data: SplitData }) {
         </div>
       )}
     </div>
+    </WalletProvider>
   );
 }

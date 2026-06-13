@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
 import { renderSVG } from "uqr";
-import { Dialog } from "@/components/ui";
 import { formatMoney } from "@/lib/money";
 import {
   PAYMENT_META,
@@ -17,6 +16,8 @@ import {
 import type { PaymentMethod } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { LOCALE_INTL } from "@/lib/i18n/config";
+import { WalletPayButton } from "./WalletPayButton";
+import { walletEnabled } from "./WalletProvider";
 
 export type Payment = {
   fromName: string;
@@ -55,6 +56,16 @@ export function PaymentDialog({
   const [selected, setSelected] = useState(0);
   const [ln, setLn] = useState<LnState>({ status: "idle" });
   const [evm, setEvm] = useState<EvmState>({ status: "idle" });
+
+  // Close on Escape (this is a plain overlay, not a native <dialog>).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
 
   // Reset the chosen method whenever a new payment is opened.
   useEffect(() => {
@@ -143,7 +154,7 @@ export function PaymentDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, payment, method?.type, method?.value]);
 
-  if (!payment || !method) return null;
+  if (!open || !payment || !method) return null;
 
   const type: PaymentType = method.type;
   const rich = hasRichLink(type);
@@ -169,7 +180,30 @@ export function PaymentDialog({
   }
 
   return (
-    <Dialog open={open} onClose={onClose} title={t(dict.pay.title, { name: payment.toName })}>
+    // Plain overlay (z-50), NOT a native <dialog>.showModal(): the top layer
+    // would always paint above the WalletConnect modal regardless of z-index.
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="max-h-[90vh] w-full max-w-lg overflow-hidden rounded-2xl bg-surface shadow-2xl">
+        <div className="flex items-center justify-between border-b border-stone-100 px-5 py-4">
+          <h2 className="text-lg font-bold">
+            {t(dict.pay.title, { name: payment.toName })}
+          </h2>
+          <button
+            onClick={onClose}
+            aria-label={dict.common.close}
+            className="rounded-lg p-1.5 text-stone-400 hover:bg-stone-100 hover:text-ink"
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M5 5l10 10M15 5L5 15" />
+            </svg>
+          </button>
+        </div>
+        <div className="max-h-[calc(90vh-4rem)] overflow-y-auto px-5 py-4">
       <div className="flex flex-col items-center gap-4 text-center">
         <p className="text-stone-500">
           {t(dict.pay.via, {
@@ -347,12 +381,20 @@ export function PaymentDialog({
             </>
           )
         ) : isEvm ? (
-          // No wallet deeplink: MetaMask's send-deeplink parser proved broken
-          // three ways in field testing (in-app 404 on link.metamask.io,
-          // "network not found" on @1, silent no-op on @0x1). QR + copy is
-          // the honest, working flow.
           evm.status === "ready" && (
-            <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
+            <>
+              {/* One-tap prefilled USDC via WalletConnect when configured.
+                  QR + copy stay below as the no-WalletConnect fallback.
+                  (MetaMask's static send-deeplink was dropped — broken three
+                  ways in field testing.) */}
+              {walletEnabled && (
+                <>
+                  <WalletPayButton toAddress={evm.address} usd={evm.usd} />
+                  <p className="text-xs text-stone-400">{dict.pay.walletOr}</p>
+                </>
+              )}
+              <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
+            </>
           )
         ) : (
           <p className="text-sm text-stone-500">
@@ -362,6 +404,8 @@ export function PaymentDialog({
 
         <p className="text-xs text-stone-400">{dict.pay.reminder}</p>
       </div>
-    </Dialog>
+        </div>
+      </div>
+    </div>
   );
 }

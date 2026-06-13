@@ -168,6 +168,16 @@ const is: Dict = {
       "Ekki tókst að fletta upp vistfanginu núna — afritaðu það handvirkt og staðfestu við viðtakanda.",
     evmNote:
       "Skannaðu QR-kóðann með skanna veskisins (á forsíðunni — sendiskjáinn vantar oft skanna) eða afritaðu vistfangið. Komdu þér saman við viðtakanda um net (t.d. Base, Arbitrum, mainnet) og token (t.d. USDC) áður en þú sendir.",
+    walletChain: "Net",
+    walletConnect: "Tengja veski",
+    walletPay: "Greiða {amount} USDC",
+    walletPayGeneric: "Greiða með veski",
+    walletAwaiting: "Samþykktu í veskinu þínu…",
+    walletConfirming: "Staðfesti á keðjunni…",
+    walletSent: "Greiðsla send ✓ — mundu að merkja hana sem greidda.",
+    walletError: "Greiðslan var hætt við eða mistókst.",
+    walletOr: "— eða greiddu handvirkt —",
+    walletDisconnect: "Skipta um veski",
     changedWarning:
       "Greiðsluupplýsingum viðtakanda var breytt {date} og þær eru aðrar en þær sem fyrst voru skráðar. Staðfestu við viðtakanda í gegnum aðra leið áður en þú greiðir.",
     openOther:
