@@ -32,6 +32,11 @@ project and grown from there.
   rounding via the largest-remainder method.
 - **Smart settlements** — the minimum set of "A pays B" transfers, with
   **partial payments** ("pay all or part") and strike-through once settled.
+- **Don't settle too early** — see who has opened the split and who's marked
+  themselves done; the pay dialog warns if someone hasn't weighed in yet.
+- **Secure splits** *(optional, when signed in)* — bind participants to their
+  accounts: you can only edit your own payment details and enter your own
+  expenses. The creator picks who must log in, who can view, and how people join.
 - **Multi-currency** — enter expenses in any currency with the rate **locked at
   save** (Kittysplit-style); set a main currency per split. Includes **sats** —
   run a whole split in bitcoin if you like.
@@ -56,12 +61,14 @@ approves in their own app.
 | **Swish** 🇸🇪 | QR + app deep link, amount prefilled | Public `app.swish.nu` link + QR endpoint — no merchant contract |
 | **Lightning** ⚡ | QR + `lightning:` link, **exact amount baked in** | LNURL-pay (LUD-16): a lightning address → BOLT11 invoice |
 | **Ethereum / USDC** Ξ | **One-tap prefilled USDC** transfer | WalletConnect (Reown AppKit) — connect, pick chain, approve |
-| **Ethereum address** | Address QR + copy, ENS resolved | `0x…` or `name.eth` (resolved via viem at pay time) |
+| **Solana / USDC** ◎ | **One-tap prefilled USDC** SPL transfer | WalletConnect (Reown AppKit) — Phantom/Solflare, recipient ATA auto-created |
+| **Ethereum / Solana address** | Address QR + copy, ENS resolved | `0x…` / `name.eth` / base58 — for any wallet |
 | **Revolut** | Clickable `revolut.me` profile link | Opens the recipient's profile to pay |
 | **Vipps · MobilePay · IBAN** | Stored handle + copy button | No open P2P API — the payer finishes in their own app |
 
 **Why the difference?** Swish exposes a genuinely open prefilled deep link and
-QR endpoint; Lightning's LNURL and EVM/WalletConnect are open protocols. Vipps
+QR endpoint; Lightning's LNURL and EVM/Solana over WalletConnect are open
+protocols. Vipps
 and MobilePay (now Vipps MobilePay) only offer amount-prefilled flows through
 their **merchant** APIs — a business agreement that routes money to a company,
 not person-to-person — so for those Tollysplit does the honest thing and shows
@@ -94,7 +101,7 @@ it in is a small change. PRs welcome. 🤞
 ## Tech stack
 
 Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Supabase (Postgres,
-Auth) · wagmi + viem + Reown AppKit · Playwright · Vercel
+Auth) · wagmi + viem + @solana/web3.js + Reown AppKit · Playwright · Vercel
 
 ## Run it locally
 
