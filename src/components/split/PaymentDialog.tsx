@@ -17,6 +17,8 @@ import {
 import type { PaymentMethod } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { LOCALE_INTL } from "@/lib/i18n/config";
+import { WalletPayButton } from "./WalletPayButton";
+import { walletEnabled } from "./WalletProvider";
 
 export type Payment = {
   fromName: string;
@@ -347,12 +349,20 @@ export function PaymentDialog({
             </>
           )
         ) : isEvm ? (
-          // No wallet deeplink: MetaMask's send-deeplink parser proved broken
-          // three ways in field testing (in-app 404 on link.metamask.io,
-          // "network not found" on @1, silent no-op on @0x1). QR + copy is
-          // the honest, working flow.
           evm.status === "ready" && (
-            <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
+            <>
+              {/* One-tap prefilled USDC via WalletConnect when configured.
+                  QR + copy stay below as the no-WalletConnect fallback.
+                  (MetaMask's static send-deeplink was dropped — broken three
+                  ways in field testing.) */}
+              {walletEnabled && (
+                <>
+                  <WalletPayButton toAddress={evm.address} usd={evm.usd} />
+                  <p className="text-xs text-stone-400">{dict.pay.walletOr}</p>
+                </>
+              )}
+              <p className="text-sm text-stone-500">{dict.pay.evmNote}</p>
+            </>
           )
         ) : (
           <p className="text-sm text-stone-500">
