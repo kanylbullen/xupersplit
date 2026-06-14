@@ -153,8 +153,13 @@ cp .env.example .env       # ⚠️ byt hemligheterna — se noterna i filen
 docker compose up -d --build
 ```
 
-- App: **http://localhost:3000** · inloggningsmejlen hamnar i **Mailpit** på
-  **http://localhost:8025** (läs engångskoden där).
+- App: **http://localhost:3000**. Logga in med **e-post + lösenord** (funkar
+  direkt, inget SMTP behövs) — eller använd engångskoden, som hamnar i
+  **Mailpit** på **http://localhost:8025**.
+- **HTTPS** är en flagga bort: peka en domän mot maskinen, sätt `DOMAIN` +
+  `ACME_EMAIL` och `SITE_URL=https://…` i `.env`, kör sedan
+  `docker compose --profile tls up -d --build` — Caddy hämtar och förnyar
+  Let's Encrypt-certifikatet automatiskt.
 - Migrationerna i [`supabase/migrations/`](supabase/migrations) appliceras
   automatiskt vid första start.
 - `.env.example` levereras med **publika demo**-JWT-nycklar så det funkar direkt.

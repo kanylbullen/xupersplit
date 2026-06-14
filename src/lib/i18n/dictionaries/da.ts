@@ -103,6 +103,11 @@ const da: Dict = {
     errRate: "For mange forsøg lige nu — vent lidt og prøv igen.",
     errSend: "Kunne ikke sende e-mailen: {msg}",
     errCode: "Forkert kode, eller den er udløbet. Prøv igen.",
+    orPassword: "eller med adgangskode",
+    passwordLabel: "Adgangskode",
+    signIn: "Log ind",
+    createAccount: "Opret konto",
+    errPassword: "Forkert e-mail eller adgangskode.",
   },
   confirm: {
     heading: "Bekræft login",

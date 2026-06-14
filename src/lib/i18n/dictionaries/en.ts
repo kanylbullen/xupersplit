@@ -103,6 +103,11 @@ const en: Dict = {
     errRate: "Too many attempts right now — wait a moment and try again.",
     errSend: "Couldn't send the email: {msg}",
     errCode: "Wrong code, or it has expired. Try again.",
+    orPassword: "or with a password",
+    passwordLabel: "Password",
+    signIn: "Log in",
+    createAccount: "Create account",
+    errPassword: "Wrong email or password.",
   },
   confirm: {
     heading: "Confirm sign-in",

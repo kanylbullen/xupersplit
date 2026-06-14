@@ -150,8 +150,13 @@ cp .env.example .env       # ⚠️ change the secrets — see the notes in the 
 docker compose up -d --build
 ```
 
-- App: **http://localhost:3000** · login emails land in **Mailpit** at
-  **http://localhost:8025** (read the one-time code there).
+- App: **http://localhost:3000**. Sign in with **email + password** (works
+  instantly, no SMTP needed) — or use the magic code, which lands in **Mailpit**
+  at **http://localhost:8025**.
+- **HTTPS** is one flag away: point a domain at the host, set `DOMAIN` +
+  `ACME_EMAIL` and `SITE_URL=https://…` in `.env`, then
+  `docker compose --profile tls up -d --build` — Caddy fetches and renews a
+  Let's Encrypt certificate automatically.
 - The migrations in [`supabase/migrations/`](supabase/migrations) are applied
   automatically on first start.
 - `.env.example` ships with **public demo** JWT keys so it runs out of the box.

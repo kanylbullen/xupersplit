@@ -103,6 +103,11 @@ const is: Dict = {
     errRate: "Of margar tilraunir núna — bíddu aðeins og reyndu aftur.",
     errSend: "Ekki tókst að senda póstinn: {msg}",
     errCode: "Rangur kóði, eða hann er útrunninn. Reyndu aftur.",
+    orPassword: "eða með lykilorði",
+    passwordLabel: "Lykilorð",
+    signIn: "Skrá inn",
+    createAccount: "Stofna reikning",
+    errPassword: "Rangt netfang eða lykilorð.",
   },
   confirm: {
     heading: "Staðfesta innskráningu",
