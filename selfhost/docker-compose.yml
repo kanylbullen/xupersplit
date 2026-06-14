@@ -125,11 +125,17 @@ services:
   #   1. Point a domain's A record at this host.
   #   2. In .env set DOMAIN, ACME_EMAIL, and SITE_URL=https://<your-domain>
   #      (then rebuild the app: docker compose build app).
-  #   3. docker compose --profile tls up -d
+  #   3. docker compose --profile tls up -d --build
+  # By default this uses the HTTP-01 challenge (ports 80/443 must be reachable).
+  # To use Cloudflare DNS-01 instead (behind NAT, or for wildcard certs), set
+  # CF_API_TOKEN in .env — the image already bundles the Cloudflare DNS plugin.
   caddy:
-    image: caddy:2-alpine
+    build:
+      context: .
+      dockerfile: caddy.Dockerfile
     profiles: ["tls"]
     restart: unless-stopped
+    entrypoint: ["sh", "/caddy-entrypoint.sh"]
     depends_on:
       - app
     ports:
@@ -138,8 +144,10 @@ services:
     environment:
       DOMAIN: ${DOMAIN:-}
       ACME_EMAIL: ${ACME_EMAIL:-}
+      CF_API_TOKEN: ${CF_API_TOKEN:-}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-entrypoint.sh:/caddy-entrypoint.sh:ro
       - caddy-data:/data
       - caddy-config:/config
 

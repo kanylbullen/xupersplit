@@ -1,10 +1,16 @@
 # Automatic HTTPS via Let's Encrypt for the configured domain.
 # Used only with the `tls` compose profile. Caddy obtains + renews the
 # certificate on its own; just set DOMAIN and ACME_EMAIL in .env.
+#
+# By default Caddy uses the HTTP-01 challenge (needs ports 80/443 reachable).
+# Set CF_API_TOKEN in .env to switch to the Cloudflare DNS-01 challenge instead
+# — works behind NAT and supports wildcard certs. The entrypoint fills in the
+# tls block below based on whether that token is present.
 {
 	email {$ACME_EMAIL}
 }
 
 {$DOMAIN} {
 	reverse_proxy app:3000
+	{$CADDY_TLS_BLOCK:}
 }
