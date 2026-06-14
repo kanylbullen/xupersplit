@@ -108,6 +108,10 @@ const en: Dict = {
     signIn: "Log in",
     createAccount: "Create account",
     errPassword: "Wrong email or password.",
+    orWallet: "or with a wallet",
+    web3: "Sign in with Ethereum",
+    web3Signing: "Check your wallet…",
+    web3Error: "Wallet sign-in failed. Please try again.",
   },
   confirm: {
     heading: "Confirm sign-in",

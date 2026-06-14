@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getI18n } from "@/lib/i18n/server";
 import { LoginForm } from "./LoginForm";
+import { WalletProvider } from "@/components/split/WalletProvider";
+import { Web3LoginButton } from "@/components/auth/Web3LoginButton";
 
 export default async function LoginPage({
   searchParams,
@@ -36,6 +38,11 @@ export default async function LoginPage({
         </p>
       )}
       <LoginForm />
+      <div className="mt-4">
+        <WalletProvider>
+          <Web3LoginButton />
+        </WalletProvider>
+      </div>
     </main>
   );
 }
