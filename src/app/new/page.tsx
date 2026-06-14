@@ -15,7 +15,7 @@ export default async function NewSplitPage() {
         href="/"
         className="mb-10 text-xl font-black tracking-tight text-primary"
       >
-        tollysplit
+        xupersplit
       </Link>
       <h1 className="mb-2 text-2xl font-black tracking-tight">
         {dict.new.title}

@@ -33,7 +33,7 @@ function Web3LoginButtonInner() {
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithWeb3({
         chain: "ethereum",
-        statement: "Sign in to Tollysplit",
+        statement: "Sign in to Xupersplit",
         wallet: provider,
       } as Parameters<typeof supabase.auth.signInWithWeb3>[0]);
       if (error) throw error;

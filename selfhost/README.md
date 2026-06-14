@@ -1,6 +1,6 @@
-# Self-hosting Tollysplit
+# Self-hosting Xupersplit
 
-This directory brings up Tollysplit **and its own backend** — Postgres, auth
+This directory brings up Xupersplit **and its own backend** — Postgres, auth
 (GoTrue), the REST/RPC layer (PostgREST) and a local mailbox — with no external
 services. The app itself is the gateway, so the browser only ever talks to a
 single origin.
@@ -60,7 +60,7 @@ The app is configured as a **gateway** so the browser sees one origin:
   port, so the app calls **itself** on its internal port and uses the same
   rewrites.
 - Because the browser and server reach Supabase on different origins, the auth
-  cookie name is **pinned** to `sb-tollysplit-auth` (gated on
+  cookie name is **pinned** to `sb-xupersplit-auth` (gated on
   `NEXT_PUBLIC_SELFHOST=1`) so both sides agree on it. On Vercel this is unset,
   so nothing changes there.
 

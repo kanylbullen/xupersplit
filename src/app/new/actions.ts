@@ -46,7 +46,7 @@ export async function createSplitAction(
     headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     "";
   const ipHash = ip
-    ? createHash("sha256").update(`tollysplit:${ip}`).digest("hex").slice(0, 32)
+    ? createHash("sha256").update(`xupersplit:${ip}`).digest("hex").slice(0, 32)
     : null;
 
   const supabase = await createClient();

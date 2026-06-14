@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookie policy — Tollysplit",
+  title: "Cookie policy — Xupersplit",
 };
 
 export default function CookiesPage() {
@@ -12,11 +12,11 @@ export default function CookiesPage() {
         href="/"
         className="mb-10 inline-block text-xl font-black tracking-tight text-primary"
       >
-        tollysplit
+        xupersplit
       </Link>
       <h1 className="mb-2 text-3xl font-black tracking-tight">Cookie policy</h1>
       <p className="mb-8 text-stone-500">
-        Short version: Tollysplit only uses cookies that are needed for the
+        Short version: Xupersplit only uses cookies that are needed for the
         site to work. No tracking, no ads, no third-party cookies — and so no
         cookie consent is required.
       </p>
@@ -37,7 +37,7 @@ export default function CookiesPage() {
           <h2 className="mb-1.5 font-bold">Local storage</h2>
           <p className="text-sm leading-relaxed text-stone-500">
             Your browser saves a few things locally that are never sent to us:
-            the “Your tollysplits” list, your “who are you” choice per split,
+            the “Your xupersplits” list, your “who are you” choice per split,
             your chosen language, your light/dark preference, and the fact that
             you've dismissed the cookie notice. It all stays on your device and
             can be cleared from your browser settings.

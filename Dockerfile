@@ -1,4 +1,4 @@
-# Tollysplit app image (Next.js standalone). Used by the self-host stack in
+# Xupersplit app image (Next.js standalone). Used by the self-host stack in
 # selfhost/. NEXT_PUBLIC_* are inlined at build time, so they're build args.
 FROM node:22-alpine AS deps
 WORKDIR /app

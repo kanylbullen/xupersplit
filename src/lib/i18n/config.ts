@@ -2,7 +2,7 @@ export const LOCALES = ["sv", "nb", "da", "fi", "is", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "en";
-export const LOCALE_COOKIE = "tollysplit:locale";
+export const LOCALE_COOKIE = "xupersplit:locale";
 
 export const LOCALE_LABELS: Record<Locale, string> = {
   sv: "Svenska",

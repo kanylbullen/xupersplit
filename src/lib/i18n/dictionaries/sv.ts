@@ -20,10 +20,10 @@ const sv = {
     hero2: "Slipp tjafset.",
     subtitle:
       "Samla resans alla utlägg på ett ställe och se direkt vem som ska få tillbaka vad. Inga konton — bara en länk.",
-    create: "Skapa en ny tollysplit",
+    create: "Skapa en ny xupersplit",
     noLogin: "Ingen inloggning behövs.",
     step1Title: "1. Skapa",
-    step1Body: "Döp din tollysplit och lägg till vilka som är med.",
+    step1Body: "Döp din xupersplit och lägg till vilka som är med.",
     step2Title: "2. Dela länken",
     step2Body: "Alla med länken kan lägga in utgifter — utan konto.",
     step3Title: "3. Gör upp",
@@ -32,13 +32,13 @@ const sv = {
   },
   footer: {
     beer: "Buy me a beer",
-    tagline: "tollysplit · byggd med kärlek, kaffe och öl",
+    tagline: "xupersplit · byggd med kärlek, kaffe och öl",
     privacy: "integritetspolicy",
     cookies: "cookies",
     openSource: "Öppen källkod på GitHub",
   },
   mySplits: {
-    title: "Dina tollysplits",
+    title: "Dina xupersplits",
     participants: "{count} deltagare",
     entriesOne: "{count} post",
     entriesMany: "{count} poster",
@@ -49,9 +49,9 @@ const sv = {
     savedHint2: "om du vill att den följer med mellan enheter.",
   },
   new: {
-    title: "Ny tollysplit",
+    title: "Ny xupersplit",
     subtitle:
-      "Döp den efter resan eller tillfället och lägg till alla som ska dela på kostnaderna. Ingen inloggning behövs — men spara länken när du är klar, den är nyckeln till din tollysplit.",
+      "Döp den efter resan eller tillfället och lägg till alla som ska dela på kostnaderna. Ingen inloggning behövs — men spara länken när du är klar, den är nyckeln till din xupersplit.",
     name: "Namn",
     namePlaceholder: "t.ex. Skidresan 2026",
     currency: "Valuta",
@@ -59,7 +59,7 @@ const sv = {
     participantPlaceholder: "Deltagare {n}",
     addAnother: "+ Lägg till en till",
     addLaterHint: "Du kan lägga till fler deltagare senare också.",
-    submit: "Skapa tollysplit",
+    submit: "Skapa xupersplit",
     submitting: "Skapar…",
     secureTitle: "Säker split (kräver inloggning)",
     secureHint:
@@ -89,7 +89,7 @@ const sv = {
   login: {
     title: "Logga in",
     subtitle:
-      "Inloggning är valfri — den gör att tollysplits du skapar följer med mellan dina enheter. Ange din e-postadress så skickar vi en engångskod och en inloggningslänk.",
+      "Inloggning är valfri — den gör att xupersplits du skapar följer med mellan dina enheter. Ange din e-postadress så skickar vi en engångskod och en inloggningslänk.",
     invalidLink: "Länken är ogiltig eller har gått ut. Prova att logga in igen.",
     email: "E-postadress",
     emailPlaceholder: "din@mejl.se",
@@ -116,7 +116,7 @@ const sv = {
   },
   confirm: {
     heading: "Bekräfta inloggning",
-    body: "Tryck på knappen för att logga in på Tollysplit.",
+    body: "Tryck på knappen för att logga in på Xupersplit.",
     login: "Logga in",
     loggingIn: "Loggar in…",
     invalid: "Länken är ogiltig eller har gått ut.",
@@ -293,22 +293,22 @@ const sv = {
     systemHint: "System följer enhetens ljusa/mörka läge.",
     privacy: "Integritet",
     purgeToggle:
-      "Radera den här tollyspliten automatiskt efter 6 månader utan aktivitet",
+      "Radera den här xuperspliten automatiskt efter 6 månader utan aktivitet",
     purgeAnon:
-      "Den här tollyspliten raderas automatiskt efter 6 månader utan aktivitet. Skapa splits inloggad om du vill kunna stänga av gallringen.",
+      "Den här xuperspliten raderas automatiskt efter 6 månader utan aktivitet. Skapa splits inloggad om du vill kunna stänga av gallringen.",
     purgeHint1: "Betaluppgifter raderas automatiskt när alla är kvitt. Läs mer i",
     privacyLink: "integritetspolicyn",
     keepPaymentToggle: "Behåll betaluppgifter även när alla är kvitt",
     keepPaymentHint:
       "Bra för löpande splits — annars raderas de automatiskt när saldot nollas.",
     dataExport: "Exportera data",
-    dataExportHint: "Ladda ner hela den här tollyspliten.",
+    dataExportHint: "Ladda ner hela den här xuperspliten.",
     changeIdentity: "Byt vem du är på den här enheten",
     leaveSplit: "Lämna spliten (avbind din plats)",
   },
   notFound: {
     title: "Hittar inget här",
-    body: "Länken är fel eller så har den här tollyspliten tagits bort. Kolla att du fått hela länken.",
+    body: "Länken är fel eller så har den här xuperspliten tagits bort. Kolla att du fått hela länken.",
   },
   cookie: {
     notice: "Bara nödvändiga cookies — ingen spårning.",
@@ -316,7 +316,7 @@ const sv = {
     ok: "OK",
   },
   errors: {
-    split_not_found: "Den här tollyspliten finns inte längre.",
+    split_not_found: "Den här xuperspliten finns inte längre.",
     participant_has_entries:
       "Deltagaren har utgifter eller överföringar och kan inte tas bort.",
     participant_not_found: "Deltagaren hittades inte.",
@@ -339,9 +339,9 @@ const sv = {
     not_invited: "Den här platsen är reserverad för en annan e-postadress.",
     not_secure: "Det här är inte en säker split.",
     rate_limited:
-      "Det skapas ovanligt många tollysplits just nu — vänta en stund och prova igen.",
+      "Det skapas ovanligt många xupersplits just nu — vänta en stund och prova igen.",
     need_two_participants: "Lägg till minst två deltagare.",
-    title_required: "Ge din tollysplit ett namn.",
+    title_required: "Ge din xupersplit ett namn.",
     unknown: "Något gick fel. Försök igen.",
   },
   switcher: {

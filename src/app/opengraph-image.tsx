@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 // Branded social-share card (Open Graph + Twitter). Site-wide default; routes
 // can override. English, on-brand: cream background, teal wordmark + mark.
-export const alt = "Tollysplit — split shared expenses";
+export const alt = "Xupersplit — split shared expenses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -45,7 +45,7 @@ export default function Image() {
             </svg>
           </div>
           <div style={{ fontSize: 56, fontWeight: 800, color: "#0d9488", letterSpacing: -1 }}>
-            tollysplit
+            xupersplit
           </div>
         </div>
 

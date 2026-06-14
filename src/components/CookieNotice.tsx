@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/client";
 
-const STORAGE_KEY = "tollysplit:cookie-ok";
+const STORAGE_KEY = "xupersplit:cookie-ok";
 
 export function CookieNotice() {
   const { dict } = useI18n();

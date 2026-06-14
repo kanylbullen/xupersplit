@@ -1,8 +1,8 @@
-# Full self-host stack for Tollysplit — app + its own Supabase backend.
+# Full self-host stack for Xupersplit — app + its own Supabase backend.
 # Everything runs locally; no external services.  `docker compose up -d --build`
 #
 # ⚠️  Copy .env.example to .env and CHANGE THE SECRETS before any real use.
-name: tollysplit
+name: xupersplit
 
 services:
   db:
@@ -64,8 +64,8 @@ services:
       GOTRUE_MAILER_AUTOCONFIRM: ${GOTRUE_AUTOCONFIRM:-true}
       GOTRUE_SMTP_HOST: mailpit
       GOTRUE_SMTP_PORT: 1025
-      GOTRUE_SMTP_ADMIN_EMAIL: admin@tollysplit.local
-      GOTRUE_SMTP_SENDER_NAME: Tollysplit
+      GOTRUE_SMTP_ADMIN_EMAIL: admin@xupersplit.local
+      GOTRUE_SMTP_SENDER_NAME: Xupersplit
       GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/confirm
       GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/confirm
       GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/confirm

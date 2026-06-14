@@ -20,10 +20,10 @@ const is: Dict = {
     hero2: "Slepptu þrasinu.",
     subtitle:
       "Safnaðu öllum sameiginlegum útgjöldum á einn stað og sjáðu strax hver skuldar hvað. Engir reikningar — bara hlekkur.",
-    create: "Búa til nýjan tollysplit",
+    create: "Búa til nýjan xupersplit",
     noLogin: "Engin innskráning nauðsynleg.",
     step1Title: "1. Búa til",
-    step1Body: "Gefðu tollysplitnum nafn og bættu við hverjir eru með.",
+    step1Body: "Gefðu xupersplitnum nafn og bættu við hverjir eru með.",
     step2Title: "2. Deildu hlekknum",
     step2Body: "Allir með hlekkinn geta bætt við útgjöldum — án reiknings.",
     step3Title: "3. Gerið upp",
@@ -32,13 +32,13 @@ const is: Dict = {
   },
   footer: {
     beer: "Buy me a beer",
-    tagline: "tollysplit · gert með ást, kaffi og bjór",
+    tagline: "xupersplit · gert með ást, kaffi og bjór",
     privacy: "persónuvernd",
     cookies: "vafrakökur",
     openSource: "Opinn hugbúnaður á GitHub",
   },
   mySplits: {
-    title: "Tollysplitarnir þínir",
+    title: "Xupersplitarnir þínir",
     participants: "{count} þátttakendur",
     entriesOne: "{count} færsla",
     entriesMany: "{count} færslur",
@@ -49,9 +49,9 @@ const is: Dict = {
     savedHint2: "ef þú vilt að hann fylgi þér milli tækja.",
   },
   new: {
-    title: "Nýr tollysplit",
+    title: "Nýr xupersplit",
     subtitle:
-      "Nefndu hann eftir ferðinni eða tilefninu og bættu við öllum sem deila kostnaðinum. Engin innskráning nauðsynleg — en vistaðu hlekkinn þegar þú ert búin(n), hann er lykillinn að tollysplitnum þínum.",
+      "Nefndu hann eftir ferðinni eða tilefninu og bættu við öllum sem deila kostnaðinum. Engin innskráning nauðsynleg — en vistaðu hlekkinn þegar þú ert búin(n), hann er lykillinn að xupersplitnum þínum.",
     name: "Nafn",
     namePlaceholder: "t.d. Skíðaferð 2026",
     currency: "Gjaldmiðill",
@@ -59,7 +59,7 @@ const is: Dict = {
     participantPlaceholder: "Þátttakandi {n}",
     addAnother: "+ Bæta við öðrum",
     addLaterHint: "Þú getur bætt við fleiri þátttakendum síðar líka.",
-    submit: "Búa til tollysplit",
+    submit: "Búa til xupersplit",
     submitting: "Bý til …",
     secureTitle: "Örugg skipting (krefst innskráningar)",
     secureHint: "Þátttakendur tengjast reikningum sínum. Hver og einn breytir aðeins eigin greiðsluupplýsingum.",
@@ -88,7 +88,7 @@ const is: Dict = {
   login: {
     title: "Skrá inn",
     subtitle:
-      "Innskráning er valfrjáls — hún gerir tollysplitana sem þú býrð til fylgja þér milli tækja. Sláðu inn netfangið þitt og við sendum einnota kóða og innskráningarhlekk.",
+      "Innskráning er valfrjáls — hún gerir xupersplitana sem þú býrð til fylgja þér milli tækja. Sláðu inn netfangið þitt og við sendum einnota kóða og innskráningarhlekk.",
     invalidLink: "Hlekkurinn er ógildur eða útrunninn. Reyndu að skrá þig inn aftur.",
     email: "Netfang",
     emailPlaceholder: "þú@netfang.is",
@@ -115,7 +115,7 @@ const is: Dict = {
   },
   confirm: {
     heading: "Staðfesta innskráningu",
-    body: "Ýttu á hnappinn til að skrá þig inn á Tollysplit.",
+    body: "Ýttu á hnappinn til að skrá þig inn á Xupersplit.",
     login: "Skrá inn",
     loggingIn: "Skrái inn …",
     invalid: "Hlekkurinn er ógildur eða útrunninn.",
@@ -291,22 +291,22 @@ const is: Dict = {
     systemHint: "Kerfi fylgir ljósri/dökkri stillingu tækisins.",
     privacy: "Persónuvernd",
     purgeToggle:
-      "Eyða þessum tollysplit sjálfkrafa eftir 6 mánuði án virkni",
+      "Eyða þessum xupersplit sjálfkrafa eftir 6 mánuði án virkni",
     purgeAnon:
-      "Þessum tollysplit er eytt sjálfkrafa eftir 6 mánuði án virkni. Búðu til splitti innskráð(ur) ef þú vilt geta slökkt á eyðingunni.",
+      "Þessum xupersplit er eytt sjálfkrafa eftir 6 mánuði án virkni. Búðu til splitti innskráð(ur) ef þú vilt geta slökkt á eyðingunni.",
     purgeHint1: "Greiðsluupplýsingum er eytt sjálfkrafa þegar allir hafa gert upp. Lesið meira í",
     privacyLink: "persónuverndarstefnunni",
     keepPaymentToggle: "Halda greiðsluupplýsingum þótt allir séu kvittir",
     keepPaymentHint:
       "Hentugt fyrir viðvarandi skiptingar — annars eyðast þær sjálfkrafa þegar staðan núllast.",
     dataExport: "Flytja út gögn",
-    dataExportHint: "Sæktu allan þennan tollysplit.",
+    dataExportHint: "Sæktu allan þennan xupersplit.",
     changeIdentity: "Breyta hver þú ert á þessu tæki",
     leaveSplit: "Yfirgefa skiptinguna (sleppa sæti þínu)",
   },
   notFound: {
     title: "Ekkert hér",
-    body: "Hlekkurinn er rangur eða þessum tollysplit hefur verið eytt. Athugaðu hvort þú fékkst allan hlekkinn.",
+    body: "Hlekkurinn er rangur eða þessum xupersplit hefur verið eytt. Athugaðu hvort þú fékkst allan hlekkinn.",
   },
   cookie: {
     notice: "Aðeins nauðsynlegar vafrakökur — engin rakning.",
@@ -314,7 +314,7 @@ const is: Dict = {
     ok: "Í lagi",
   },
   errors: {
-    split_not_found: "Þessi tollysplit er ekki lengur til.",
+    split_not_found: "Þessi xupersplit er ekki lengur til.",
     participant_has_entries:
       "Þessi þátttakandi er með útgjöld eða millifærslur og ekki er hægt að fjarlægja hann.",
     participant_not_found: "Þátttakandi fannst ekki.",
@@ -337,9 +337,9 @@ const is: Dict = {
     not_invited: "Þetta sæti er frátekið fyrir annað netfang.",
     not_secure: "Þetta er ekki örugg skipting.",
     rate_limited:
-      "Óvenju margir tollysplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
+      "Óvenju margir xupersplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
     need_two_participants: "Bættu við að minnsta kosti tveimur þátttakendum.",
-    title_required: "Gefðu tollysplitnum þínum nafn.",
+    title_required: "Gefðu xupersplitnum þínum nafn.",
     unknown: "Eitthvað fór úrskeiðis. Reyndu aftur.",
   },
   switcher: {
