@@ -1,0 +1,10 @@
+# Automatic HTTPS via Let's Encrypt for the configured domain.
+# Used only with the `tls` compose profile. Caddy obtains + renews the
+# certificate on its own; just set DOMAIN and ACME_EMAIL in .env.
+{
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+	reverse_proxy app:3000
+}

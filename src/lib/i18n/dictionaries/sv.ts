@@ -104,6 +104,11 @@ const sv = {
     errRate: "För många försök just nu — vänta en stund och prova igen.",
     errSend: "Kunde inte skicka mejlet: {msg}",
     errCode: "Fel kod, eller så har den gått ut. Prova igen.",
+    orPassword: "eller med lösenord",
+    passwordLabel: "Lösenord",
+    signIn: "Logga in",
+    createAccount: "Skapa konto",
+    errPassword: "Fel e-post eller lösenord.",
   },
   confirm: {
     heading: "Bekräfta inloggning",

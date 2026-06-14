@@ -12,9 +12,13 @@ export function LoginForm() {
   const supabase = createClient();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
   const [step, setStep] = useState<"email" | "verify">("email");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Self-host builds can offer email + password sign-up so no SMTP is needed.
+  const selfhost = process.env.NEXT_PUBLIC_SELFHOST === "1";
 
   // The magic link usually opens in a new tab; poll for the session here so
   // this tab follows along instead of sitting on the code prompt forever.
@@ -51,6 +55,28 @@ export function LoginForm() {
       return;
     }
     setStep("verify");
+  }
+
+  async function passwordAuth(kind: "signin" | "signup") {
+    setBusy(true);
+    setError(null);
+    const creds = { email: email.trim(), password };
+    const { error } =
+      kind === "signup"
+        ? await supabase.auth.signUp(creds)
+        : await supabase.auth.signInWithPassword(creds);
+    setBusy(false);
+    if (error) {
+      setError(
+        kind === "signup"
+          ? t(dict.login.errSend, { msg: error.message })
+          : dict.login.errPassword
+      );
+      return;
+    }
+    // With autoconfirm (self-host) a session is returned immediately.
+    router.push("/");
+    router.refresh();
   }
 
   async function verifyCode(e: React.FormEvent) {
@@ -109,23 +135,64 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={sendCode} className="space-y-4">
-      <div>
-        <Label htmlFor="email">{dict.login.email}</Label>
-        <Input
-          id="email"
-          type="email"
-          autoComplete="email"
-          placeholder={dict.login.emailPlaceholder}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
+    <div className="space-y-4">
+      <form onSubmit={sendCode} className="space-y-4">
+        <div>
+          <Label htmlFor="email">{dict.login.email}</Label>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder={dict.login.emailPlaceholder}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <Button type="submit" disabled={busy} className="w-full">
+          {busy ? dict.login.sending : dict.login.send}
+        </Button>
+      </form>
+
+      {selfhost && (
+        <>
+          <div className="flex items-center gap-3 text-xs text-stone-400">
+            <span className="h-px flex-1 bg-stone-200" />
+            {dict.login.orPassword}
+            <span className="h-px flex-1 bg-stone-200" />
+          </div>
+          <div>
+            <Label htmlFor="password">{dict.login.passwordLabel}</Label>
+            <Input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => passwordAuth("signin")}
+              disabled={busy || !email.trim() || !password}
+              className="flex-1"
+            >
+              {dict.login.signIn}
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => passwordAuth("signup")}
+              disabled={busy || !email.trim() || password.length < 6}
+              className="flex-1"
+            >
+              {dict.login.createAccount}
+            </Button>
+          </div>
+        </>
+      )}
+
       {error && <p className="text-sm text-negative">{error}</p>}
-      <Button type="submit" disabled={busy} className="w-full">
-        {busy ? dict.login.sending : dict.login.send}
-      </Button>
-    </form>
+    </div>
   );
 }

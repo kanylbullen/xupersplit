@@ -103,6 +103,11 @@ const fi: Dict = {
     errRate: "Liian monta yritystä juuri nyt — odota hetki ja yritä uudelleen.",
     errSend: "Sähköpostin lähetys epäonnistui: {msg}",
     errCode: "Väärä koodi tai se on vanhentunut. Yritä uudelleen.",
+    orPassword: "tai salasanalla",
+    passwordLabel: "Salasana",
+    signIn: "Kirjaudu sisään",
+    createAccount: "Luo tili",
+    errPassword: "Väärä sähköposti tai salasana.",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",

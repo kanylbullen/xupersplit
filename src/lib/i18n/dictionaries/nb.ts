@@ -103,6 +103,11 @@ const nb: Dict = {
     errRate: "For mange forsøk akkurat nå — vent litt og prøv igjen.",
     errSend: "Klarte ikke å sende e-posten: {msg}",
     errCode: "Feil kode, eller så har den utløpt. Prøv igjen.",
+    orPassword: "eller med passord",
+    passwordLabel: "Passord",
+    signIn: "Logg inn",
+    createAccount: "Opprett konto",
+    errPassword: "Feil e-post eller passord.",
   },
   confirm: {
     heading: "Bekreft innlogging",

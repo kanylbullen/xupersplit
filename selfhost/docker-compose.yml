@@ -59,7 +59,9 @@ services:
       GOTRUE_JWT_ADMIN_ROLES: service_role
       GOTRUE_DISABLE_SIGNUP: "false"
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
-      GOTRUE_MAILER_AUTOCONFIRM: "false"
+      # Auto-confirm: email+password sign-up works instantly with no SMTP.
+      # (The magic-code login still works too, delivered to Mailpit.)
+      GOTRUE_MAILER_AUTOCONFIRM: ${GOTRUE_AUTOCONFIRM:-true}
       GOTRUE_SMTP_HOST: mailpit
       GOTRUE_SMTP_PORT: 1025
       GOTRUE_SMTP_ADMIN_EMAIL: admin@tollysplit.local
@@ -102,6 +104,7 @@ services:
         NEXT_PUBLIC_SUPABASE_URL: ${SITE_URL}
         NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
         NEXT_PUBLIC_REOWN_PROJECT_ID: ${REOWN_PROJECT_ID:-}
+        NEXT_PUBLIC_SELFHOST: "1"
         SUPABASE_LOCAL_GATEWAY: "1"
         SUPABASE_AUTH_URL: http://auth:9999
         SUPABASE_REST_URL: http://rest:3000
@@ -118,5 +121,29 @@ services:
     ports:
       - "${APP_PORT:-3000}:3000"
 
+  # Optional HTTPS with automatic Let's Encrypt certificates.
+  #   1. Point a domain's A record at this host.
+  #   2. In .env set DOMAIN, ACME_EMAIL, and SITE_URL=https://<your-domain>
+  #      (then rebuild the app: docker compose build app).
+  #   3. docker compose --profile tls up -d
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["tls"]
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:-}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
 volumes:
   db-data:
+  caddy-data:
+  caddy-config:
