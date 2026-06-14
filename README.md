@@ -168,6 +168,10 @@ docker compose up -d --build
 - Set `APP_PORT` / `MAILPIT_PORT` in `.env` to change host ports;
   `REOWN_PROJECT_ID` enables the WalletConnect pay buttons.
 
+See **[`selfhost/README.md`](selfhost/README.md)** for the full guide —
+secret regeneration, the gateway architecture, Cloudflare DNS-01, a config
+reference and troubleshooting.
+
 ## Tests & CI
 
 Playwright smoke tests (`npm run test:e2e`) run on every PR against a local
