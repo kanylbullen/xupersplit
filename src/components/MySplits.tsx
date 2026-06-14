@@ -16,7 +16,7 @@ export function MySplits({ server }: { server: SplitSummary[] }) {
   useEffect(() => {
     try {
       const raw = JSON.parse(
-        localStorage.getItem("tollysplit:visited") ?? "[]"
+        localStorage.getItem("xupersplit:visited") ?? "[]"
       ) as VisitedSplit[];
       setVisited(raw.filter((v) => v.key && v.title));
     } catch {

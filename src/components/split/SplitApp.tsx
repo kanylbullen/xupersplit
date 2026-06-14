@@ -19,7 +19,7 @@ type Tab = "entries" | "balances";
 export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolean }) {
   const { dict } = useI18n();
   const { split, participants, entries } = data;
-  const storageKey = `tollesplit:me:${split.key}`;
+  const storageKey = `xupersplit:me:${split.key}`;
   const secure = split.secure;
 
   const [tab, setTab] = useState<Tab>("balances");
@@ -38,15 +38,15 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
   useEffect(() => {
     try {
       const raw = JSON.parse(
-        localStorage.getItem("tollysplit:visited") ?? "[]"
+        localStorage.getItem("xupersplit:visited") ?? "[]"
       ) as { key: string; title: string; at: number }[];
       const rest = raw.filter((v) => v.key !== split.key);
       rest.unshift({ key: split.key, title: split.title, at: Date.now() });
-      localStorage.setItem("tollysplit:visited", JSON.stringify(rest.slice(0, 50)));
+      localStorage.setItem("xupersplit:visited", JSON.stringify(rest.slice(0, 50)));
     } catch {
       // corrupt entry — overwrite with just this split
       localStorage.setItem(
-        "tollysplit:visited",
+        "xupersplit:visited",
         JSON.stringify([{ key: split.key, title: split.title, at: Date.now() }])
       );
     }

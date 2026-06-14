@@ -60,7 +60,7 @@ The app is configured as a **gateway** so the browser sees one origin:
   port, so the app calls **itself** on its internal port and uses the same
   rewrites.
 - Because the browser and server reach Supabase on different origins, the auth
-  cookie name is **pinned** to `sb-tollysplit-auth` (gated on
+  cookie name is **pinned** to `sb-xupersplit-auth` (gated on
   `NEXT_PUBLIC_SELFHOST=1`) so both sides agree on it. On Vercel this is unset,
   so nothing changes there.
 

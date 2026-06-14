@@ -8,6 +8,6 @@
 // forced logout for existing users.
 export function supabaseCookieOptions(): { name: string } | undefined {
   return process.env.NEXT_PUBLIC_SELFHOST === "1"
-    ? { name: "sb-tollysplit-auth" }
+    ? { name: "sb-xupersplit-auth" }
     : undefined;
 }
