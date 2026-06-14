@@ -137,6 +137,30 @@ Self-hostable on the free tiers of **Supabase + Vercel**.
    to `cname.vercel-dns.com`, and add the domain's `…/auth/confirm` to the
    Supabase redirect allowlist if using email sign-in.
 
+## Full self-host with Docker
+
+Prefer to own the whole stack? [`selfhost/`](selfhost) brings up the app **and
+its own backend** — Postgres, auth (GoTrue), the REST/RPC layer (PostgREST) and
+a local mailbox — with no external services. The app itself acts as the gateway,
+so the browser only ever talks to one origin.
+
+```bash
+cd selfhost
+cp .env.example .env       # ⚠️ change the secrets — see the notes in the file
+docker compose up -d --build
+```
+
+- App: **http://localhost:3000** · login emails land in **Mailpit** at
+  **http://localhost:8025** (read the one-time code there).
+- The migrations in [`supabase/migrations/`](supabase/migrations) are applied
+  automatically on first start.
+- `.env.example` ships with **public demo** JWT keys so it runs out of the box.
+  For anything internet-facing, change `JWT_SECRET` + the passwords and
+  regenerate `ANON_KEY`/`SERVICE_ROLE_KEY` (any JWT tool works — sign
+  `{"role":"anon",...}` / `{"role":"service_role",...}` with the new secret).
+- Set `APP_PORT` / `MAILPIT_PORT` in `.env` to change host ports;
+  `REOWN_PROJECT_ID` enables the WalletConnect pay buttons.
+
 ## Tests & CI
 
 Playwright smoke tests (`npm run test:e2e`) run on every PR against a local

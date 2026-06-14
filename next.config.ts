@@ -1,5 +1,19 @@
 import type { NextConfig } from "next";
 
+// The browser talks to Supabase at NEXT_PUBLIC_SUPABASE_URL. On Vercel that's
+// https://<ref>.supabase.co (matched by *.supabase.co below); in the self-host
+// Docker stack it's e.g. http://localhost:8000 — add that origin to connect-src
+// so CSP doesn't block it.
+function supabaseConnectSrc(): string {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  try {
+    if (url) return ` ${new URL(url).origin}`;
+  } catch {
+    /* ignore malformed */
+  }
+  return "";
+}
+
 // Security headers. Referrer-Policy is the important one here: the secret
 // kitty key lives in the URL (/k/<key>), and no-referrer keeps it out of the
 // Referer header on any outbound navigation (e.g. the buy-me-a-beer link).
@@ -25,7 +39,8 @@ const securityHeaders = [
       "font-src 'self'",
       // Supabase REST/Auth + Vercel analytics + WalletConnect/Reown relay,
       // RPC proxy and config API (only contacted once the wallet flow opens).
-      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://vitals.vercel-insights.com https://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.reown.com https://api.web3modal.org https://*.solana.com https://solana-rpc.publicnode.com",
+      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://vitals.vercel-insights.com https://*.walletconnect.org https://*.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.reown.com https://api.web3modal.org https://*.solana.com https://solana-rpc.publicnode.com" +
+        supabaseConnectSrc(),
       // WalletConnect's attestation iframe.
       "frame-src 'self' https://verify.walletconnect.org https://secure.walletconnect.org",
       "form-action 'self'",
@@ -37,8 +52,23 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Self-contained server bundle for the Docker image (selfhost/).
+  output: "standalone",
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  // Self-host only: Next acts as the Supabase gateway, routing /auth/v1 →
+  // GoTrue and /rest/v1 → PostgREST. The browser then talks to the app's own
+  // origin (no CORS), and NEXT_PUBLIC_SUPABASE_URL is just the app URL. On
+  // Vercel this is off and the client talks to *.supabase.co directly.
+  async rewrites() {
+    if (process.env.SUPABASE_LOCAL_GATEWAY !== "1") return [];
+    const auth = process.env.SUPABASE_AUTH_URL ?? "http://auth:9999";
+    const rest = process.env.SUPABASE_REST_URL ?? "http://rest:3000";
+    return [
+      { source: "/auth/v1/:path*", destination: `${auth}/:path*` },
+      { source: "/rest/v1/:path*", destination: `${rest}/:path*` },
+    ];
   },
   turbopack: {
     // wagmi's experimental "tempo" connector does an optional

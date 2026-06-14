@@ -42,6 +42,8 @@ export async function createSplitAction(
   const ip =
     headerStore.get("x-vercel-forwarded-for")?.trim() ||
     headerStore.get("x-real-ip")?.trim() ||
+    // Self-host behind a reverse proxy: first hop of x-forwarded-for.
+    headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     "";
   const ipHash = ip
     ? createHash("sha256").update(`tollysplit:${ip}`).digest("hex").slice(0, 32)
