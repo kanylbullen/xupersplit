@@ -108,6 +108,10 @@ const is: Dict = {
     signIn: "Skrá inn",
     createAccount: "Stofna reikning",
     errPassword: "Rangt netfang eða lykilorð.",
+    orWallet: "eða með veski",
+    web3: "Skrá inn með Ethereum",
+    web3Signing: "Athugaðu veskið þitt…",
+    web3Error: "Innskráning með veski mistókst. Reyndu aftur.",
   },
   confirm: {
     heading: "Staðfesta innskráningu",

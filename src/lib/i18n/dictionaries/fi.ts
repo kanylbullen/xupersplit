@@ -108,6 +108,10 @@ const fi: Dict = {
     signIn: "Kirjaudu sisään",
     createAccount: "Luo tili",
     errPassword: "Väärä sähköposti tai salasana.",
+    orWallet: "tai lompakolla",
+    web3: "Kirjaudu Ethereumilla",
+    web3Signing: "Tarkista lompakkosi…",
+    web3Error: "Lompakkokirjautuminen epäonnistui. Yritä uudelleen.",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",

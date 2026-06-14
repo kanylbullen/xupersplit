@@ -108,6 +108,10 @@ const nb: Dict = {
     signIn: "Logg inn",
     createAccount: "Opprett konto",
     errPassword: "Feil e-post eller passord.",
+    orWallet: "eller med en lommebok",
+    web3: "Logg inn med Ethereum",
+    web3Signing: "Sjekk lommeboken din…",
+    web3Error: "Lommebokinnlogging mislyktes. Prøv igjen.",
   },
   confirm: {
     heading: "Bekreft innlogging",

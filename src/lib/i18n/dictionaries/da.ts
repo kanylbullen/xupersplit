@@ -108,6 +108,10 @@ const da: Dict = {
     signIn: "Log ind",
     createAccount: "Opret konto",
     errPassword: "Forkert e-mail eller adgangskode.",
+    orWallet: "eller med en wallet",
+    web3: "Log ind med Ethereum",
+    web3Signing: "Tjek din wallet…",
+    web3Error: "Wallet-login mislykkedes. Prøv igen.",
   },
   confirm: {
     heading: "Bekræft login",

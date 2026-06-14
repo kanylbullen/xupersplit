@@ -109,6 +109,10 @@ const sv = {
     signIn: "Logga in",
     createAccount: "Skapa konto",
     errPassword: "Fel e-post eller lösenord.",
+    orWallet: "eller med en plånbok",
+    web3: "Logga in med Ethereum",
+    web3Signing: "Kolla din plånbok…",
+    web3Error: "Plånboksinloggning misslyckades. Försök igen.",
   },
   confirm: {
     heading: "Bekräfta inloggning",
