@@ -6,9 +6,9 @@ const SMOKE_KEY = process.env.SMOKE_SPLIT_KEY;
 
 test("landing page renders with a create button", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/Tollysplit/);
+  await expect(page).toHaveTitle(/Xupersplit/);
   await expect(
-    page.getByRole("link", { name: /create a new tollysplit/i })
+    page.getByRole("link", { name: /create a new xupersplit/i })
   ).toBeVisible();
 });
 
@@ -27,10 +27,10 @@ test.describe(() => {
   // Pre-select an identity so the "Who are you?" dialog doesn't block.
   test.beforeEach(async ({ page }) => {
     await page.addInitScript((key) => {
-      // Identity key keeps the legacy "tollesplit:" prefix (see SplitApp).
-      localStorage.setItem(`tollesplit:me:${key}`, "viewer");
+      // Identity key prefix (see SplitApp).
+      localStorage.setItem(`xupersplit:me:${key}`, "viewer");
       // Dismiss the cookie notice so it doesn't overlap the bottom action bar.
-      localStorage.setItem("tollysplit:cookie-ok", "1");
+      localStorage.setItem("xupersplit:cookie-ok", "1");
     }, SMOKE_KEY);
   });
 
