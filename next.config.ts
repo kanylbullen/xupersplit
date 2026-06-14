@@ -57,6 +57,19 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // Rebrand: the canonical domain is split.xuper.fun. Permanently redirect the
+  // old tollysplit.xuper.fun host (query string preserved, so magic-link
+  // /auth/confirm?token_hash=… still works). Inert on every other host.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "tollysplit.xuper.fun" }],
+        destination: "https://split.xuper.fun/:path*",
+        permanent: true,
+      },
+    ];
+  },
   // Self-host only: Next acts as the Supabase gateway, routing /auth/v1 →
   // GoTrue and /rest/v1 → PostgREST. The browser then talks to the app's own
   // origin (no CORS), and NEXT_PUBLIC_SUPABASE_URL is just the app URL. On
