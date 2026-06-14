@@ -30,7 +30,7 @@ async function fetchJson(url: string): Promise<Record<string, unknown> | null> {
         Accept: "application/json",
         // Some providers (e.g. Alby behind Cloudflare) 429 the default
         // node fetch user-agent.
-        "User-Agent": "Tollysplit/1.0 (+https://tollysplit.xuper.fun)",
+        "User-Agent": "Xupersplit/1.0 (+https://split.xuper.fun)",
       },
     });
     if (!res.ok) return null;

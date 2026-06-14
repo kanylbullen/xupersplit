@@ -16,21 +16,21 @@ const DESCRIPTION =
   "Split expenses with friends without the fuss. Create a split, share the link and let everyone add what they paid — no accounts needed.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tollysplit.xuper.fun"),
-  title: "Tollysplit — split shared expenses",
+  metadataBase: new URL("https://split.xuper.fun"),
+  title: "Xupersplit — split shared expenses",
   description: DESCRIPTION,
   // The opengraph-image / twitter-image files attach the card automatically.
   openGraph: {
     type: "website",
-    siteName: "Tollysplit",
-    title: "Tollysplit — split shared expenses",
+    siteName: "Xupersplit",
+    title: "Xupersplit — split shared expenses",
     description: DESCRIPTION,
     url: "/",
     locale: "en",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tollysplit — split shared expenses",
+    title: "Xupersplit — split shared expenses",
     description: DESCRIPTION,
   },
 };

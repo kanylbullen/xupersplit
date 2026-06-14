@@ -20,10 +20,10 @@ const fi: Dict = {
     hero2: "Vältä riidat.",
     subtitle:
       "Kokoa kaikki yhteiset kulut yhteen paikkaan ja näe heti, kuka on velkaa kenelle. Ei tilejä — vain linkki.",
-    create: "Luo uusi tollysplit",
+    create: "Luo uusi xupersplit",
     noLogin: "Kirjautumista ei tarvita.",
     step1Title: "1. Luo",
-    step1Body: "Anna tollysplitille nimi ja lisää, ketkä ovat mukana.",
+    step1Body: "Anna xupersplitille nimi ja lisää, ketkä ovat mukana.",
     step2Title: "2. Jaa linkki",
     step2Body: "Kuka tahansa linkillä voi lisätä kuluja — ilman tiliä.",
     step3Title: "3. Selvittäkää",
@@ -32,13 +32,13 @@ const fi: Dict = {
   },
   footer: {
     beer: "Buy me a beer",
-    tagline: "tollysplit · tehty rakkaudella, kahvilla ja oluella",
+    tagline: "xupersplit · tehty rakkaudella, kahvilla ja oluella",
     privacy: "tietosuoja",
     cookies: "evästeet",
     openSource: "Avoin lähdekoodi GitHubissa",
   },
   mySplits: {
-    title: "Sinun tollysplitisi",
+    title: "Sinun xupersplitisi",
     participants: "{count} osallistujaa",
     entriesOne: "{count} merkintä",
     entriesMany: "{count} merkintää",
@@ -49,9 +49,9 @@ const fi: Dict = {
     savedHint2: "jos haluat sen seuraavan mukana laitteiden välillä.",
   },
   new: {
-    title: "Uusi tollysplit",
+    title: "Uusi xupersplit",
     subtitle:
-      "Nimeä se matkan tai tilaisuuden mukaan ja lisää kaikki, jotka jakavat kulut. Kirjautumista ei tarvita — mutta tallenna linkki, kun olet valmis, se on tollysplitisi avain.",
+      "Nimeä se matkan tai tilaisuuden mukaan ja lisää kaikki, jotka jakavat kulut. Kirjautumista ei tarvita — mutta tallenna linkki, kun olet valmis, se on xupersplitisi avain.",
     name: "Nimi",
     namePlaceholder: "esim. Hiihtoreissu 2026",
     currency: "Valuutta",
@@ -59,7 +59,7 @@ const fi: Dict = {
     participantPlaceholder: "Osallistuja {n}",
     addAnother: "+ Lisää toinen",
     addLaterHint: "Voit lisätä osallistujia myös myöhemmin.",
-    submit: "Luo tollysplit",
+    submit: "Luo xupersplit",
     submitting: "Luodaan …",
     secureTitle: "Suojattu jako (vaatii kirjautumisen)",
     secureHint: "Osallistujat sidotaan tileihinsä. Jokainen muokkaa vain omia maksutietojaan.",
@@ -88,7 +88,7 @@ const fi: Dict = {
   login: {
     title: "Kirjaudu sisään",
     subtitle:
-      "Kirjautuminen on valinnaista — sen ansiosta luomasi tollysplitit seuraavat mukana laitteidesi välillä. Anna sähköpostiosoitteesi, niin lähetämme kertakäyttökoodin ja kirjautumislinkin.",
+      "Kirjautuminen on valinnaista — sen ansiosta luomasi xupersplitit seuraavat mukana laitteidesi välillä. Anna sähköpostiosoitteesi, niin lähetämme kertakäyttökoodin ja kirjautumislinkin.",
     invalidLink: "Linkki on virheellinen tai vanhentunut. Yritä kirjautua uudelleen.",
     email: "Sähköpostiosoite",
     emailPlaceholder: "sinä@sahkoposti.fi",
@@ -115,7 +115,7 @@ const fi: Dict = {
   },
   confirm: {
     heading: "Vahvista kirjautuminen",
-    body: "Paina painiketta kirjautuaksesi Tollysplitiin.",
+    body: "Paina painiketta kirjautuaksesi Xupersplitiin.",
     login: "Kirjaudu sisään",
     loggingIn: "Kirjaudutaan …",
     invalid: "Linkki on virheellinen tai vanhentunut.",
@@ -291,22 +291,22 @@ const fi: Dict = {
     systemHint: "Järjestelmä noudattaa laitteen vaaleaa/tummaa tilaa.",
     privacy: "Tietosuoja",
     purgeToggle:
-      "Poista tämä tollysplit automaattisesti 6 kuukauden käyttämättömyyden jälkeen",
+      "Poista tämä xupersplit automaattisesti 6 kuukauden käyttämättömyyden jälkeen",
     purgeAnon:
-      "Tämä tollysplit poistetaan automaattisesti 6 kuukauden käyttämättömyyden jälkeen. Luo splitit kirjautuneena, jos haluat voida poistaa automaattipoiston käytöstä.",
+      "Tämä xupersplit poistetaan automaattisesti 6 kuukauden käyttämättömyyden jälkeen. Luo splitit kirjautuneena, jos haluat voida poistaa automaattipoiston käytöstä.",
     purgeHint1: "Maksutiedot poistetaan automaattisesti, kun kaikki on selvitetty. Lue lisää",
     privacyLink: "tietosuojaselosteesta",
     keepPaymentToggle: "Säilytä maksutiedot, vaikka kaikki olisivat tasoissa",
     keepPaymentHint:
       "Kätevä jatkuviin jakoihin — muuten ne poistetaan automaattisesti, kun saldo nollautuu.",
     dataExport: "Vie tiedot",
-    dataExportHint: "Lataa koko tämä tollysplit.",
+    dataExportHint: "Lataa koko tämä xupersplit.",
     changeIdentity: "Vaihda, kuka olet tällä laitteella",
     leaveSplit: "Poistu jaosta (vapauta paikkasi)",
   },
   notFound: {
     title: "Täällä ei ole mitään",
-    body: "Linkki on väärä tai tämä tollysplit on poistettu. Tarkista, että sait koko linkin.",
+    body: "Linkki on väärä tai tämä xupersplit on poistettu. Tarkista, että sait koko linkin.",
   },
   cookie: {
     notice: "Vain välttämättömät evästeet — ei seurantaa.",
@@ -314,7 +314,7 @@ const fi: Dict = {
     ok: "OK",
   },
   errors: {
-    split_not_found: "Tätä tollysplitiä ei ole enää olemassa.",
+    split_not_found: "Tätä xupersplitiä ei ole enää olemassa.",
     participant_has_entries:
       "Tällä osallistujalla on kuluja tai siirtoja, eikä häntä voi poistaa.",
     participant_not_found: "Osallistujaa ei löytynyt.",
@@ -337,9 +337,9 @@ const fi: Dict = {
     not_invited: "Tämä paikka on varattu toiselle sähköpostille.",
     not_secure: "Tämä ei ole suojattu jako.",
     rate_limited:
-      "Tollysplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
+      "Xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
     need_two_participants: "Lisää vähintään kaksi osallistujaa.",
-    title_required: "Anna tollysplitillesi nimi.",
+    title_required: "Anna xupersplitillesi nimi.",
     unknown: "Jokin meni pieleen. Yritä uudelleen.",
   },
   switcher: {

@@ -21,10 +21,10 @@ if (wagmiAdapter && solanaAdapter && projectId) {
     networks: allNetworks,
     projectId,
     metadata: {
-      name: "Tollysplit",
+      name: "Xupersplit",
       description: "Split shared expenses",
-      url: "https://tollysplit.xuper.fun",
-      icons: ["https://tollysplit.xuper.fun/icon.svg"],
+      url: "https://split.xuper.fun",
+      icons: ["https://split.xuper.fun/icon.svg"],
     },
     features: { analytics: false, email: false, socials: false },
     // Match the app: Geist (the same --font-geist-sans set on <html>) and our

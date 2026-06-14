@@ -20,10 +20,10 @@ const da: Dict = {
     hero2: "Slip for skænderiet.",
     subtitle:
       "Saml alle fælles udgifter ét sted og se med det samme, hvem der skylder hvad. Ingen konti — bare et link.",
-    create: "Opret en ny tollysplit",
+    create: "Opret en ny xupersplit",
     noLogin: "Ingen login nødvendig.",
     step1Title: "1. Opret",
-    step1Body: "Giv din tollysplit et navn og tilføj, hvem der er med.",
+    step1Body: "Giv din xupersplit et navn og tilføj, hvem der er med.",
     step2Title: "2. Del linket",
     step2Body: "Alle med linket kan tilføje udgifter — uden konto.",
     step3Title: "3. Gør op",
@@ -32,13 +32,13 @@ const da: Dict = {
   },
   footer: {
     beer: "Buy me a beer",
-    tagline: "tollysplit · lavet med kærlighed, kaffe og øl",
+    tagline: "xupersplit · lavet med kærlighed, kaffe og øl",
     privacy: "privatliv",
     cookies: "cookies",
     openSource: "Open source på GitHub",
   },
   mySplits: {
-    title: "Dine tollysplits",
+    title: "Dine xupersplits",
     participants: "{count} deltagere",
     entriesOne: "{count} post",
     entriesMany: "{count} poster",
@@ -49,9 +49,9 @@ const da: Dict = {
     savedHint2: "hvis du vil have den med på tværs af enheder.",
   },
   new: {
-    title: "Ny tollysplit",
+    title: "Ny xupersplit",
     subtitle:
-      "Giv den navn efter turen eller anledningen, og tilføj alle, der skal dele udgifterne. Ingen login nødvendig — men gem linket, når du er færdig, det er nøglen til din tollysplit.",
+      "Giv den navn efter turen eller anledningen, og tilføj alle, der skal dele udgifterne. Ingen login nødvendig — men gem linket, når du er færdig, det er nøglen til din xupersplit.",
     name: "Navn",
     namePlaceholder: "f.eks. Skitur 2026",
     currency: "Valuta",
@@ -59,7 +59,7 @@ const da: Dict = {
     participantPlaceholder: "Deltager {n}",
     addAnother: "+ Tilføj en mere",
     addLaterHint: "Du kan også tilføje flere deltagere senere.",
-    submit: "Opret tollysplit",
+    submit: "Opret xupersplit",
     submitting: "Opretter …",
     secureTitle: "Sikker split (kræver login)",
     secureHint: "Deltagere knyttes til deres konti. Hver person redigerer kun sine egne betalingsoplysninger.",
@@ -88,7 +88,7 @@ const da: Dict = {
   login: {
     title: "Log ind",
     subtitle:
-      "Login er valgfrit — det gør, at de tollysplits, du opretter, følger med på tværs af dine enheder. Indtast din e-mailadresse, så sender vi en engangskode og et login-link.",
+      "Login er valgfrit — det gør, at de xupersplits, du opretter, følger med på tværs af dine enheder. Indtast din e-mailadresse, så sender vi en engangskode og et login-link.",
     invalidLink: "Linket er ugyldigt eller udløbet. Prøv at logge ind igen.",
     email: "E-mailadresse",
     emailPlaceholder: "dig@mail.dk",
@@ -115,7 +115,7 @@ const da: Dict = {
   },
   confirm: {
     heading: "Bekræft login",
-    body: "Tryk på knappen for at logge ind på Tollysplit.",
+    body: "Tryk på knappen for at logge ind på Xupersplit.",
     login: "Log ind",
     loggingIn: "Logger ind …",
     invalid: "Linket er ugyldigt eller udløbet.",
@@ -291,22 +291,22 @@ const da: Dict = {
     systemHint: "System følger enhedens lyse/mørke tilstand.",
     privacy: "Privatliv",
     purgeToggle:
-      "Slet denne tollysplit automatisk efter 6 måneder uden aktivitet",
+      "Slet denne xupersplit automatisk efter 6 måneder uden aktivitet",
     purgeAnon:
-      "Denne tollysplit slettes automatisk efter 6 måneder uden aktivitet. Opret splits, mens du er logget ind, hvis du vil kunne slå sletningen fra.",
+      "Denne xupersplit slettes automatisk efter 6 måneder uden aktivitet. Opret splits, mens du er logget ind, hvis du vil kunne slå sletningen fra.",
     purgeHint1: "Betalingsoplysninger slettes automatisk, når alle har gjort op. Læs mere i",
     privacyLink: "privatlivspolitikken",
     keepPaymentToggle: "Behold betalingsoplysninger, også når alle er kvit",
     keepPaymentHint:
       "Praktisk til løbende splits — ellers slettes de automatisk, når saldoen nulstilles.",
     dataExport: "Eksportér data",
-    dataExportHint: "Download hele denne tollysplit.",
+    dataExportHint: "Download hele denne xupersplit.",
     changeIdentity: "Skift hvem du er på denne enhed",
     leaveSplit: "Forlad splitten (frigør din plads)",
   },
   notFound: {
     title: "Intet her",
-    body: "Linket er forkert, eller denne tollysplit er fjernet. Tjek at du fik hele linket.",
+    body: "Linket er forkert, eller denne xupersplit er fjernet. Tjek at du fik hele linket.",
   },
   cookie: {
     notice: "Kun nødvendige cookies — ingen sporing.",
@@ -314,7 +314,7 @@ const da: Dict = {
     ok: "OK",
   },
   errors: {
-    split_not_found: "Denne tollysplit findes ikke længere.",
+    split_not_found: "Denne xupersplit findes ikke længere.",
     participant_has_entries:
       "Denne deltager har udgifter eller overførsler og kan ikke fjernes.",
     participant_not_found: "Deltager ikke fundet.",
@@ -337,9 +337,9 @@ const da: Dict = {
     not_invited: "Denne plads er reserveret til en anden e-mail.",
     not_secure: "Dette er ikke en sikker split.",
     rate_limited:
-      "Usædvanligt mange tollysplits oprettes lige nu — vent lidt og prøv igen.",
+      "Usædvanligt mange xupersplits oprettes lige nu — vent lidt og prøv igen.",
     need_two_participants: "Tilføj mindst to deltagere.",
-    title_required: "Giv din tollysplit et navn.",
+    title_required: "Giv din xupersplit et navn.",
     unknown: "Noget gik galt. Prøv igen.",
   },
   switcher: {

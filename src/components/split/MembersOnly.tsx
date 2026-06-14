@@ -15,7 +15,7 @@ export async function MembersOnly({ splitKey }: { splitKey: string }) {
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-4 py-16 text-center">
       <Link href="/" className="mb-10 text-xl font-black tracking-tight text-primary">
-        tollysplit
+        xupersplit
       </Link>
       <div className="text-4xl">🔒</div>
       <h1 className="mt-3 text-2xl font-black tracking-tight">

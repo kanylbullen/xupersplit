@@ -29,7 +29,7 @@ export default async function Home() {
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-10 sm:py-16">
       <header className="mb-10 flex items-center justify-between gap-3">
         <span className="text-xl font-black tracking-tight text-primary">
-          tollysplit
+          xupersplit
         </span>
         <div className="flex items-center gap-3">
           <LocaleSwitcher />

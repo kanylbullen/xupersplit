@@ -20,10 +20,10 @@ const en: Dict = {
     hero2: "Skip the squabble.",
     subtitle:
       "Gather every shared cost in one place and see at a glance who owes what. No accounts — just a link.",
-    create: "Create a new tollysplit",
+    create: "Create a new xupersplit",
     noLogin: "No sign-in needed.",
     step1Title: "1. Create",
-    step1Body: "Name your tollysplit and add who's in.",
+    step1Body: "Name your xupersplit and add who's in.",
     step2Title: "2. Share the link",
     step2Body: "Anyone with the link can add expenses — no account.",
     step3Title: "3. Settle up",
@@ -32,13 +32,13 @@ const en: Dict = {
   },
   footer: {
     beer: "Buy me a beer",
-    tagline: "tollysplit · built with love, coffee and beer",
+    tagline: "xupersplit · built with love, coffee and beer",
     privacy: "privacy policy",
     cookies: "cookies",
     openSource: "Open source on GitHub",
   },
   mySplits: {
-    title: "Your tollysplits",
+    title: "Your xupersplits",
     participants: "{count} participants",
     entriesOne: "{count} entry",
     entriesMany: "{count} entries",
@@ -49,9 +49,9 @@ const en: Dict = {
     savedHint2: "if you want it to follow you across devices.",
   },
   new: {
-    title: "New tollysplit",
+    title: "New xupersplit",
     subtitle:
-      "Name it after the trip or occasion and add everyone splitting the costs. No sign-in needed — but save the link when you're done, it's the key to your tollysplit.",
+      "Name it after the trip or occasion and add everyone splitting the costs. No sign-in needed — but save the link when you're done, it's the key to your xupersplit.",
     name: "Name",
     namePlaceholder: "e.g. Ski trip 2026",
     currency: "Currency",
@@ -59,7 +59,7 @@ const en: Dict = {
     participantPlaceholder: "Participant {n}",
     addAnother: "+ Add another",
     addLaterHint: "You can add more participants later too.",
-    submit: "Create tollysplit",
+    submit: "Create xupersplit",
     submitting: "Creating…",
     secureTitle: "Secure split (sign-in required)",
     secureHint: "Participants are bound to their accounts. Each person edits only their own payment details.",
@@ -88,7 +88,7 @@ const en: Dict = {
   login: {
     title: "Log in",
     subtitle:
-      "Signing in is optional — it makes the tollysplits you create follow you across devices. Enter your email and we'll send a one-time code and a sign-in link.",
+      "Signing in is optional — it makes the xupersplits you create follow you across devices. Enter your email and we'll send a one-time code and a sign-in link.",
     invalidLink: "The link is invalid or has expired. Try logging in again.",
     email: "Email address",
     emailPlaceholder: "you@email.com",
@@ -115,7 +115,7 @@ const en: Dict = {
   },
   confirm: {
     heading: "Confirm sign-in",
-    body: "Press the button to log in to Tollysplit.",
+    body: "Press the button to log in to Xupersplit.",
     login: "Log in",
     loggingIn: "Logging in…",
     invalid: "The link is invalid or has expired.",
@@ -291,22 +291,22 @@ const en: Dict = {
     systemHint: "System follows your device's light/dark mode.",
     privacy: "Privacy",
     purgeToggle:
-      "Automatically delete this tollysplit after 6 months of inactivity",
+      "Automatically delete this xupersplit after 6 months of inactivity",
     purgeAnon:
-      "This tollysplit is deleted automatically after 6 months of inactivity. Create splits while signed in if you want to turn off purging.",
+      "This xupersplit is deleted automatically after 6 months of inactivity. Create splits while signed in if you want to turn off purging.",
     purgeHint1: "Payment details are wiped automatically once everyone is square. Read more in the",
     privacyLink: "privacy policy",
     keepPaymentToggle: "Keep payment info even after everyone is square",
     keepPaymentHint:
       "Handy for ongoing splits — otherwise it's wiped automatically when balances hit zero.",
     dataExport: "Export data",
-    dataExportHint: "Download this whole tollysplit.",
+    dataExportHint: "Download this whole xupersplit.",
     changeIdentity: "Change who you are on this device",
     leaveSplit: "Leave the split (release your spot)",
   },
   notFound: {
     title: "Nothing here",
-    body: "The link is wrong or this tollysplit has been removed. Check that you got the whole link.",
+    body: "The link is wrong or this xupersplit has been removed. Check that you got the whole link.",
   },
   cookie: {
     notice: "Only necessary cookies — no tracking.",
@@ -314,7 +314,7 @@ const en: Dict = {
     ok: "OK",
   },
   errors: {
-    split_not_found: "This tollysplit no longer exists.",
+    split_not_found: "This xupersplit no longer exists.",
     participant_has_entries:
       "This participant has expenses or transfers and can't be removed.",
     participant_not_found: "Participant not found.",
@@ -337,9 +337,9 @@ const en: Dict = {
     not_invited: "This spot is reserved for a different email.",
     not_secure: "This isn't a secure split.",
     rate_limited:
-      "Unusually many tollysplits are being created right now — wait a moment and try again.",
+      "Unusually many xupersplits are being created right now — wait a moment and try again.",
     need_two_participants: "Add at least two participants.",
-    title_required: "Give your tollysplit a name.",
+    title_required: "Give your xupersplit a name.",
     unknown: "Something went wrong. Please try again.",
   },
   switcher: {

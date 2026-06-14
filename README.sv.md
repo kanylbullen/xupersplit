@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="docs/cover.png" alt="Tollysplit — dela utgifter, slipp tjafset" width="640" />
+<img src="docs/cover.png" alt="Xupersplit — dela utgifter, slipp tjafset" width="640" />
 
-# Tollysplit
+# Xupersplit
 
 **Dela utgifter i grupp utan krångel.** Skapa en split, dela länken och låt
 alla lägga in vad de betalat — saldon och vem-betalar-vem räknas ut
 automatiskt, med betalning på ett tryck direkt från saldovyn.
 
-[**tollysplit.xuper.fun**](https://tollysplit.xuper.fun) · [English](README.md) · Svenska
+[**split.xuper.fun**](https://split.xuper.fun) · [English](README.md) · Svenska
 
 [![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
@@ -51,10 +51,10 @@ Byggd som ett en-prompt-projekt och vidareutvecklad därifrån.
 
 ## Betalsätt
 
-Tollysplit lagrar varje mottagares betaluppgift(er) och, där ett betalnätverk
+Xupersplit lagrar varje mottagares betaluppgift(er) och, där ett betalnätverk
 erbjuder ett **öppet, avtalsfritt** gränssnitt, gör saldoraden till en riktig
 betalning på ett tryck — **förifylld med exakt belopp**. Inga pengar passerar
-någonsin Tollysplit; appen bygger bara länken/fakturan/transaktionen som
+någonsin Xupersplit; appen bygger bara länken/fakturan/transaktionen som
 betalaren godkänner i sin egen app.
 
 | Betalsätt | Upplevelse | Hur |
@@ -72,7 +72,7 @@ QR-endpoint; Lightnings LNURL och EVM/Solana via WalletConnect är öppna
 protokoll. Vipps
 och MobilePay (numera Vipps MobilePay) erbjuder bara beloppsförifyllda flöden
 via sina **handlar-API:er** — ett företagsavtal som dirigerar pengar till ett
-bolag, inte person-till-person — så för dem gör Tollysplit det ärliga och visar
+bolag, inte person-till-person — så för dem gör Xupersplit det ärliga och visar
 uppgiften med en kopiera-knapp. Skulle de någon gång släppa en öppen
 P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
 
@@ -194,7 +194,7 @@ MIT — se [LICENSE](LICENSE).
 
 <div align="center">
 
-Om Tollysplit besparade din grupp lite tjafs kan du
+Om Xupersplit besparade din grupp lite tjafs kan du
 
 [![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
 
