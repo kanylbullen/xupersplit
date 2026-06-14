@@ -33,6 +33,11 @@ Byggd som ett en-prompt-projekt och vidareutvecklad därifrån.
 - **Smart avräkning** — minsta antal "A betalar B"-överföringar, med
   **delbetalningar** ("betala allt eller en del") och överstrykning när det är
   gjort.
+- **Gör inte upp för tidigt** — se vilka som öppnat spliten och vilka som
+  markerat sig klara; betaldialogen varnar om någon inte vägt in ännu.
+- **Säkra splits** *(valfritt, inloggad)* — bind deltagare till sina konton:
+  du kan bara redigera dina egna betaluppgifter och bokföra dina egna utlägg.
+  Skaparen väljer vilka som måste logga in, vem som kan se, och hur man går med.
 - **Multivaluta** — lägg in utgifter i valfri valuta med kursen **låst vid
   spara** (Kittysplit-modell); sätt en huvudvaluta per split. Inklusive **sats**
   — kör en hel split i bitcoin om du vill.
@@ -57,12 +62,14 @@ betalaren godkänner i sin egen app.
 | **Swish** 🇸🇪 | QR + app-deeplänk, belopp förifyllt | Öppen `app.swish.nu`-länk + QR-endpoint — inget handlaravtal |
 | **Lightning** ⚡ | QR + `lightning:`-länk, **exakt belopp inbakat** | LNURL-pay (LUD-16): en lightning-adress → BOLT11-faktura |
 | **Ethereum / USDC** Ξ | **Förifylld USDC** på ett tryck | WalletConnect (Reown AppKit) — anslut, välj kedja, godkänn |
-| **Ethereum-adress** | Adress-QR + kopiera, ENS löses | `0x…` eller `namn.eth` (löses via viem vid betaltillfället) |
+| **Solana / USDC** ◎ | **Förifylld USDC** (SPL) på ett tryck | WalletConnect (Reown AppKit) — Phantom/Solflare, mottagarens ATA skapas automatiskt |
+| **Ethereum-/Solana-adress** | Adress-QR + kopiera, ENS löses | `0x…` / `namn.eth` / base58 — för valfri plånbok |
 | **Revolut** | Klickbar `revolut.me`-profillänk | Öppnar mottagarens profil för att betala |
 | **Vipps · MobilePay · IBAN** | Lagrad uppgift + kopiera-knapp | Inget öppet P2P-API — betalaren avslutar i sin egen app |
 
 **Varför skillnaden?** Swish har en genuint öppen förifylld deeplänk och
-QR-endpoint; Lightnings LNURL och EVM/WalletConnect är öppna protokoll. Vipps
+QR-endpoint; Lightnings LNURL och EVM/Solana via WalletConnect är öppna
+protokoll. Vipps
 och MobilePay (numera Vipps MobilePay) erbjuder bara beloppsförifyllda flöden
 via sina **handlar-API:er** — ett företagsavtal som dirigerar pengar till ett
 bolag, inte person-till-person — så för dem gör Tollysplit det ärliga och visar
@@ -96,7 +103,7 @@ P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
 ## Teknikstack
 
 Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Supabase (Postgres,
-Auth) · wagmi + viem + Reown AppKit · Playwright · Vercel
+Auth) · wagmi + viem + @solana/web3.js + Reown AppKit · Playwright · Vercel
 
 ## Kör lokalt
 
