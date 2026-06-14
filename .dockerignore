@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.github
+.vercel
+playwright-report
+test-results
+tests
+selfhost
+*.md
+.env*
+DEPLOY.md
+docs

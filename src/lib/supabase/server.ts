@@ -4,8 +4,15 @@ import { cookies } from "next/headers";
 export async function createClient() {
   const cookieStore = await cookies();
 
+  // Server-side calls can use an internal URL (set in the self-host Docker
+  // stack, where the browser reaches the gateway on localhost but the app
+  // container reaches it over the compose network). Falls back to the public
+  // URL on Vercel where they're the same.
+  const url =
+    process.env.SUPABASE_INTERNAL_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL!;
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    url,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {

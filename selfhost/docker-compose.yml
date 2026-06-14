@@ -1,0 +1,122 @@
+# Full self-host stack for Tollysplit — app + its own Supabase backend.
+# Everything runs locally; no external services.  `docker compose up -d --build`
+#
+# ⚠️  Copy .env.example to .env and CHANGE THE SECRETS before any real use.
+name: tollysplit
+
+services:
+  db:
+    image: supabase/postgres:15.8.1.060
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # One-shot: bootstrap roles/auth helpers + apply the app migrations, then exit.
+  migrate:
+    image: postgres:16-alpine
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./init:/init:ro
+      - ./migrate.sh:/migrate.sh:ro
+      - ../supabase/migrations:/migrations:ro
+    entrypoint: ["sh", "/migrate.sh"]
+    restart: "no"
+
+  # Auth (GoTrue) — magic-link / one-time-code email login.
+  auth:
+    image: supabase/auth:v2.151.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      GOTRUE_API_HOST: 0.0.0.0
+      PORT: 9999
+      API_EXTERNAL_URL: ${SITE_URL}
+      GOTRUE_API_EXTERNAL_URL: ${SITE_URL}
+      GOTRUE_SITE_URL: ${SITE_URL}
+      GOTRUE_URI_ALLOW_LIST: ${SITE_URL},${SITE_URL}/auth/confirm
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+      GOTRUE_JWT_EXP: 3600
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_DISABLE_SIGNUP: "false"
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: "false"
+      GOTRUE_SMTP_HOST: mailpit
+      GOTRUE_SMTP_PORT: 1025
+      GOTRUE_SMTP_ADMIN_EMAIL: admin@tollysplit.local
+      GOTRUE_SMTP_SENDER_NAME: Tollysplit
+      GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/confirm
+      GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/confirm
+      GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/confirm
+      GOTRUE_MAILER_URLPATHS_INVITE: /auth/confirm
+
+  # REST/RPC layer (PostgREST) — what supabase.rpc() talks to.
+  rest:
+    image: postgrest/postgrest:v12.2.3
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@db:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+      PGRST_SERVER_PORT: 3000
+
+  # Local mailbox — catches login emails so you can read the code/link.
+  # Web UI at http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "${MAILPIT_PORT:-8025}:8025"
+
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${SITE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
+        NEXT_PUBLIC_REOWN_PROJECT_ID: ${REOWN_PROJECT_ID:-}
+        SUPABASE_LOCAL_GATEWAY: "1"
+        SUPABASE_AUTH_URL: http://auth:9999
+        SUPABASE_REST_URL: http://rest:3000
+    restart: unless-stopped
+    depends_on:
+      - auth
+      - rest
+    environment:
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${ANON_KEY}
+      # Server-side Supabase calls go through the app's own rewrite gateway
+      # (the browser uses the public NEXT_PUBLIC_SUPABASE_URL; the container
+      # can't reach the host port, so it calls itself on the internal port).
+      SUPABASE_INTERNAL_URL: http://localhost:3000
+    ports:
+      - "${APP_PORT:-3000}:3000"
+
+volumes:
+  db-data:
