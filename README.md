@@ -156,7 +156,9 @@ docker compose up -d --build
 - **HTTPS** is one flag away: point a domain at the host, set `DOMAIN` +
   `ACME_EMAIL` and `SITE_URL=https://…` in `.env`, then
   `docker compose --profile tls up -d --build` — Caddy fetches and renews a
-  Let's Encrypt certificate automatically.
+  Let's Encrypt certificate automatically. Behind NAT or want a wildcard cert?
+  Set `CF_API_TOKEN` (a scoped Cloudflare token) and Caddy uses the DNS-01
+  challenge instead — no port 80 exposure needed.
 - The migrations in [`supabase/migrations/`](supabase/migrations) are applied
   automatically on first start.
 - `.env.example` ships with **public demo** JWT keys so it runs out of the box.
