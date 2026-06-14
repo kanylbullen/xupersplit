@@ -98,7 +98,7 @@ export default async function Home() {
           </Link>
         </span>
         <a
-          href="https://github.com/kanylbullen/tollysplit"
+          href="https://github.com/kanylbullen/xupersplit"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 hover:text-ink"
