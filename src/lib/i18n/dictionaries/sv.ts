@@ -14,6 +14,9 @@ const sv = {
     signedInAs: "Inloggad som {email}",
     logout: "Logga ut",
     login: "Logga in",
+    addPasskey: "Lägg till passkey",
+    passkeyDone: "Passkey tillagd ✓",
+    passkeyError: "Kunde inte lägga till passkey",
   },
   landing: {
     hero1: "Dela utgifter.",
@@ -134,6 +137,10 @@ const sv = {
     web3Signing: "Kolla din plånbok…",
     web3Error: "Plånboksinloggning misslyckades. Försök igen.",
     farcaster: "Logga in med Farcaster",
+    solana: "Logga in med Solana",
+    passkey: "Logga in med passkey",
+    passkeySigning: "Kollar din passkey…",
+    passkeyError: "Passkey-inloggning misslyckades. Försök igen.",
   },
   confirm: {
     heading: "Bekräfta inloggning",

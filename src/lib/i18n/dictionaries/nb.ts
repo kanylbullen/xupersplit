@@ -14,6 +14,9 @@ const nb: Dict = {
     signedInAs: "Logget inn som {email}",
     logout: "Logg ut",
     login: "Logg inn",
+    addPasskey: "Legg til passkey",
+    passkeyDone: "Passkey lagt til ✓",
+    passkeyError: "Kunne ikke legge til passkey",
   },
   landing: {
     hero1: "Del utgifter.",
@@ -133,6 +136,10 @@ const nb: Dict = {
     web3Signing: "Sjekk lommeboken din…",
     web3Error: "Lommebokinnlogging mislyktes. Prøv igjen.",
     farcaster: "Logg inn med Farcaster",
+    solana: "Logg inn med Solana",
+    passkey: "Logg inn med passkey",
+    passkeySigning: "Sjekker passkeyen din…",
+    passkeyError: "Passkey-innlogging mislyktes. Prøv igjen.",
   },
   confirm: {
     heading: "Bekreft innlogging",

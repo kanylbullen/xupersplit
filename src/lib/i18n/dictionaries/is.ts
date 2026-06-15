@@ -14,6 +14,9 @@ const is: Dict = {
     signedInAs: "Skráð(ur) inn sem {email}",
     logout: "Skrá út",
     login: "Skrá inn",
+    addPasskey: "Bæta við aðgangslykli",
+    passkeyDone: "Aðgangslykli bætt við ✓",
+    passkeyError: "Tókst ekki að bæta við aðgangslykli",
   },
   landing: {
     hero1: "Skiptu kostnaði.",
@@ -133,6 +136,10 @@ const is: Dict = {
     web3Signing: "Athugaðu veskið þitt…",
     web3Error: "Innskráning með veski mistókst. Reyndu aftur.",
     farcaster: "Skrá inn með Farcaster",
+    solana: "Skrá inn með Solana",
+    passkey: "Skrá inn með aðgangslykli",
+    passkeySigning: "Athuga aðgangslykilinn…",
+    passkeyError: "Innskráning með aðgangslykli mistókst. Reyndu aftur.",
   },
   confirm: {
     heading: "Staðfesta innskráningu",

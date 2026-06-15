@@ -14,6 +14,9 @@ const en: Dict = {
     signedInAs: "Signed in as {email}",
     logout: "Log out",
     login: "Log in",
+    addPasskey: "Add a passkey",
+    passkeyDone: "Passkey added ✓",
+    passkeyError: "Couldn't add passkey",
   },
   landing: {
     hero1: "Split expenses.",
@@ -133,6 +136,10 @@ const en: Dict = {
     web3Signing: "Check your wallet…",
     web3Error: "Wallet sign-in failed. Please try again.",
     farcaster: "Sign in with Farcaster",
+    solana: "Sign in with Solana",
+    passkey: "Sign in with a passkey",
+    passkeySigning: "Checking your passkey…",
+    passkeyError: "Passkey sign-in failed. Please try again.",
   },
   confirm: {
     heading: "Confirm sign-in",

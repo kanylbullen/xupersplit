@@ -14,6 +14,9 @@ const da: Dict = {
     signedInAs: "Logget ind som {email}",
     logout: "Log ud",
     login: "Log ind",
+    addPasskey: "Tilføj passkey",
+    passkeyDone: "Passkey tilføjet ✓",
+    passkeyError: "Kunne ikke tilføje passkey",
   },
   landing: {
     hero1: "Del udgifter.",
@@ -133,6 +136,10 @@ const da: Dict = {
     web3Signing: "Tjek din wallet…",
     web3Error: "Wallet-login mislykkedes. Prøv igen.",
     farcaster: "Log ind med Farcaster",
+    solana: "Log ind med Solana",
+    passkey: "Log ind med passkey",
+    passkeySigning: "Tjekker din passkey…",
+    passkeyError: "Passkey-login mislykkedes. Prøv igen.",
   },
   confirm: {
     heading: "Bekræft login",

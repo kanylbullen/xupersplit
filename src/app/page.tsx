@@ -4,6 +4,7 @@ import type { SplitSummary } from "@/lib/types";
 import { BeerButton } from "@/components/BeerButton";
 import { MySplits } from "@/components/MySplits";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { RegisterPasskeyButton } from "@/components/auth/RegisterPasskeyButton";
 import { getI18n } from "@/lib/i18n/server";
 
 export default async function Home() {
@@ -34,14 +35,17 @@ export default async function Home() {
         <div className="flex items-center gap-3">
           <LocaleSwitcher />
           {user ? (
-            <form action="/auth/signout" method="post" className="flex items-center gap-3">
-              <span className="hidden text-sm text-stone-400 sm:inline">
-                {t(dict.nav.signedInAs, { email: user.email ?? "" })}
-              </span>
-              <button className="text-sm font-medium text-stone-500 hover:text-ink">
-                {dict.nav.logout}
-              </button>
-            </form>
+            <div className="flex items-center gap-3">
+              <RegisterPasskeyButton />
+              <form action="/auth/signout" method="post" className="flex items-center gap-3">
+                <span className="hidden text-sm text-stone-400 sm:inline">
+                  {t(dict.nav.signedInAs, { email: user.email ?? "" })}
+                </span>
+                <button className="text-sm font-medium text-stone-500 hover:text-ink">
+                  {dict.nav.logout}
+                </button>
+              </form>
+            </div>
           ) : (
             <Link
               href="/login"

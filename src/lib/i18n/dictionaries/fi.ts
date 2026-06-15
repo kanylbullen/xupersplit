@@ -14,6 +14,9 @@ const fi: Dict = {
     signedInAs: "Kirjautunut tunnuksella {email}",
     logout: "Kirjaudu ulos",
     login: "Kirjaudu sisään",
+    addPasskey: "Lisää passkey",
+    passkeyDone: "Passkey lisätty ✓",
+    passkeyError: "Passkeyn lisäys epäonnistui",
   },
   landing: {
     hero1: "Jaa kulut.",
@@ -133,6 +136,10 @@ const fi: Dict = {
     web3Signing: "Tarkista lompakkosi…",
     web3Error: "Lompakkokirjautuminen epäonnistui. Yritä uudelleen.",
     farcaster: "Kirjaudu Farcasterilla",
+    solana: "Kirjaudu Solanalla",
+    passkey: "Kirjaudu passkeyllä",
+    passkeySigning: "Tarkistetaan passkey…",
+    passkeyError: "Passkey-kirjautuminen epäonnistui. Yritä uudelleen.",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",

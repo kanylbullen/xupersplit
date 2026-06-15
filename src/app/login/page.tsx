@@ -5,6 +5,8 @@ import { getI18n } from "@/lib/i18n/server";
 import { LoginForm } from "./LoginForm";
 import { WalletProvider } from "@/components/split/WalletProvider";
 import { Web3LoginButton } from "@/components/auth/Web3LoginButton";
+import { SolanaLoginButton } from "@/components/auth/SolanaLoginButton";
+import { PasskeyLoginButton } from "@/components/auth/PasskeyLoginButton";
 
 export default async function LoginPage({
   searchParams,
@@ -38,9 +40,13 @@ export default async function LoginPage({
         </p>
       )}
       <LoginForm />
-      <div className="mt-4">
+      <div className="mt-3">
+        <PasskeyLoginButton />
+      </div>
+      <div className="mt-3 space-y-3">
         <WalletProvider>
           <Web3LoginButton />
+          <SolanaLoginButton />
         </WalletProvider>
       </div>
     </main>
