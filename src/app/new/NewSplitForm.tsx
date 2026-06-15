@@ -300,8 +300,18 @@ function ConfiguredForm({
             <legend className="mb-1.5 text-xs font-semibold text-stone-500">
               {dict.new.whoCanView}
             </legend>
-            <Radio name="visibility" value="link" defaultChecked label={dict.new.visLink} />
-            <Radio name="visibility" value="members" label={dict.new.visMembers} />
+            <Radio
+              name="visibility"
+              value="link"
+              defaultChecked={type !== "farcaster"}
+              label={dict.new.visLink}
+            />
+            <Radio
+              name="visibility"
+              value="members"
+              defaultChecked={type === "farcaster"}
+              label={dict.new.visMembers}
+            />
           </fieldset>
         </div>
       )}
