@@ -139,7 +139,7 @@ const fi: Dict = {
     solana: "Kirjaudu Solanalla",
     passkey: "Kirjaudu passkeyllä",
     passkeySigning: "Tarkistetaan passkey…",
-    passkeyError: "Passkey-kirjautuminen epäonnistui. Yritä uudelleen.",
+    passkeyError: "Passkeytä ei löytynyt. Kirjaudu toisella tavalla ja lisää passkey etusivulla ensin.",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",

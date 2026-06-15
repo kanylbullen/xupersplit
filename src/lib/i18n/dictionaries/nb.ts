@@ -139,7 +139,7 @@ const nb: Dict = {
     solana: "Logg inn med Solana",
     passkey: "Logg inn med passkey",
     passkeySigning: "Sjekker passkeyen din…",
-    passkeyError: "Passkey-innlogging mislyktes. Prøv igjen.",
+    passkeyError: "Ingen passkey funnet. Logg inn på en annen måte og legg til en passkey på startsiden først.",
   },
   confirm: {
     heading: "Bekreft innlogging",

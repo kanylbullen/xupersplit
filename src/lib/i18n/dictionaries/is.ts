@@ -139,7 +139,7 @@ const is: Dict = {
     solana: "Skrá inn með Solana",
     passkey: "Skrá inn með aðgangslykli",
     passkeySigning: "Athuga aðgangslykilinn…",
-    passkeyError: "Innskráning með aðgangslykli mistókst. Reyndu aftur.",
+    passkeyError: "Enginn aðgangslykill fannst. Skráðu þig inn á annan hátt og bættu við aðgangslykli á forsíðunni fyrst.",
   },
   confirm: {
     heading: "Staðfesta innskráningu",

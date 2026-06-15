@@ -32,6 +32,12 @@ export async function MembersOnly({ splitKey }: { splitKey: string }) {
           {dict.nav.login}
         </Link>
       )}
+      <Link
+        href="/new"
+        className="mt-4 text-sm font-medium text-primary hover:text-primary-dark"
+      >
+        {dict.landing.create}
+      </Link>
     </main>
   );
 }

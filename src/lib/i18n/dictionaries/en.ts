@@ -139,7 +139,7 @@ const en: Dict = {
     solana: "Sign in with Solana",
     passkey: "Sign in with a passkey",
     passkeySigning: "Checking your passkey…",
-    passkeyError: "Passkey sign-in failed. Please try again.",
+    passkeyError: "No passkey found. Sign in another way, then add one from the home screen first.",
   },
   confirm: {
     heading: "Confirm sign-in",
