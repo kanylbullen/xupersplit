@@ -135,6 +135,9 @@ export function NewSplitForm({
         >
           {dict.new.addAnother}
         </button>
+        {invite && fcInvite && (
+          <p className="mt-2 text-xs text-[#855DCD]">{dict.new.fcInviteHint}</p>
+        )}
         <p className="mt-1 text-xs text-stone-400">{dict.new.addLaterHint}</p>
       </div>
 
