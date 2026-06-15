@@ -76,6 +76,10 @@ const fi: Dict = {
     requireFarcasterHint: "Kaikki liittyvät Farcaster-tilillään — valitse paikka Warpcastissa.",
     inviteEmailPlaceholder: "osallistujan sähköposti",
     inviteHandlePlaceholder: "sähköposti tai @farcaster",
+    fcPickFollows: "+ Kutsu seuraamistasi",
+    fcSearchPlaceholder: "Hae @käyttäjänimi",
+    fcLoading: "Haetaan seuraamiasi…",
+    fcNoFollows: "Ei osumia.",
   },
   members: {
     title: "Vain jäsenille",

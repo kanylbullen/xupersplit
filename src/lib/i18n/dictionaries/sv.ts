@@ -77,6 +77,10 @@ const sv = {
     requireFarcasterHint: "Alla går med via sitt Farcaster-konto — välj din plats inifrån Warpcast.",
     inviteEmailPlaceholder: "e-post till deltagaren",
     inviteHandlePlaceholder: "e-post eller @farcaster",
+    fcPickFollows: "+ Bjud in från dina följda",
+    fcSearchPlaceholder: "Sök @användarnamn",
+    fcLoading: "Hämtar dina följda…",
+    fcNoFollows: "Inga träffar.",
   },
   members: {
     title: "Endast för medlemmar",

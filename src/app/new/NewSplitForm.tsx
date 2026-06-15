@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { Button, Input, Label, Select } from "@/components/ui";
 import { CURRENCIES } from "@/lib/money";
 import { useI18n } from "@/lib/i18n/client";
+import { FarcasterFollowPicker } from "@/components/new/FarcasterFollowPicker";
 import { createSplitAction } from "./actions";
 
 export function NewSplitForm({
@@ -17,7 +18,13 @@ export function NewSplitForm({
 }) {
   const { dict, t, te } = useI18n();
   const [state, formAction, pending] = useActionState(createSplitAction, null);
-  const [nameCount, setNameCount] = useState(3);
+  const [rows, setRows] = useState<{ name: string; invite: string }[]>([
+    { name: "", invite: "" },
+    { name: "", invite: "" },
+    { name: "", invite: "" },
+  ]);
+  const setRow = (i: number, patch: Partial<{ name: string; invite: string }>) =>
+    setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...patch } : r)));
   const [secure, setSecure] = useState(false);
   const [claimMode, setClaimMode] = useState<"self" | "invite">("self");
   const invite = secure && claimMode === "invite";
@@ -74,10 +81,12 @@ export function NewSplitForm({
       <div>
         <Label>{dict.new.participants}</Label>
         <div className="space-y-2">
-          {Array.from({ length: nameCount }, (_, i) => (
+          {rows.map((row, i) => (
             <div key={i} className="space-y-1">
               <Input
                 name="name"
+                value={row.name}
+                onChange={(e) => setRow(i, { name: e.target.value })}
                 placeholder={t(dict.new.participantPlaceholder, { n: i + 1 })}
                 maxLength={40}
                 required={i < 2}
@@ -85,6 +94,8 @@ export function NewSplitForm({
               {invite && (
                 <Input
                   name="email"
+                  value={row.invite}
+                  onChange={(e) => setRow(i, { invite: e.target.value })}
                   type={fcInvite ? "text" : "email"}
                   inputMode={fcInvite ? "text" : "email"}
                   placeholder={
@@ -101,11 +112,24 @@ export function NewSplitForm({
         </div>
         <button
           type="button"
-          onClick={() => setNameCount((n) => n + 1)}
+          onClick={() => setRows((rs) => [...rs, { name: "", invite: "" }])}
           className="mt-2 text-sm font-medium text-primary hover:text-primary-dark"
         >
           {dict.new.addAnother}
         </button>
+        {fcInvite && invite && (
+          <FarcasterFollowPicker
+            onPick={(u) =>
+              setRows((rs) => {
+                // Fill the first empty row, else append.
+                const idx = rs.findIndex((r) => !r.name.trim());
+                const next = { name: u.username, invite: `@${u.username}` };
+                if (idx === -1) return [...rs, next];
+                return rs.map((r, j) => (j === idx ? next : r));
+              })
+            }
+          />
+        )}
         <p className="mt-1 text-xs text-stone-400">{dict.new.addLaterHint}</p>
       </div>
 
