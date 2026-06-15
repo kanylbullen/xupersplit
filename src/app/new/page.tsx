@@ -13,16 +13,23 @@ export default async function NewSplitPage() {
   } = await supabase.auth.getUser();
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 py-10">
-      <Link
-        href="/"
-        className="mb-10 text-xl font-black tracking-tight text-primary"
-      >
-        xupersplit
-      </Link>
-      <h1 className="mb-2 text-2xl font-black tracking-tight">
+      <div className="mb-8 flex items-center justify-between">
+        <Link
+          href="/"
+          className="text-xl font-black tracking-tight text-primary"
+        >
+          xupersplit
+        </Link>
+        <Link
+          href="/"
+          className="text-sm font-medium text-stone-500 hover:text-ink"
+        >
+          ← {dict.new.toHome}
+        </Link>
+      </div>
+      <h1 className="mb-6 text-2xl font-black tracking-tight">
         {dict.new.title}
       </h1>
-      <p className="mb-6 text-stone-500">{dict.new.subtitle}</p>
       <NewSplitForm
         loggedIn={Boolean(user)}
         defaultCurrency={localeDefaultCurrency(locale)}

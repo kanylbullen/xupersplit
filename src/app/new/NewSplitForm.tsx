@@ -1,12 +1,18 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Button, Input, Label, Select } from "@/components/ui";
 import { CURRENCIES } from "@/lib/money";
 import { useI18n } from "@/lib/i18n/client";
 import { FarcasterFollowPicker } from "@/components/new/FarcasterFollowPicker";
 import { createSplitAction } from "./actions";
 
+type SplitType = "simple" | "email" | "farcaster";
+
+// Two-step wizard: pick a split type, then configure it. The type sets the
+// identity model (simple = accountless; email / farcaster = a secure split with
+// invite-mode reservations). Ethereum/EVM is a planned third reserved type.
 export function NewSplitForm({
   loggedIn,
   defaultCurrency,
@@ -15,6 +21,109 @@ export function NewSplitForm({
   loggedIn: boolean;
   defaultCurrency: string;
   fcInvite: boolean;
+}) {
+  const { dict } = useI18n();
+  const [step, setStep] = useState<1 | 2>(1);
+  const [type, setType] = useState<SplitType>("simple");
+
+  // Viewer's Farcaster FID (Mini App only) — gates the Farcaster type + picker.
+  const [fcFid, setFcFid] = useState<number | null>(null);
+  useEffect(() => {
+    let active = true;
+    import("@farcaster/miniapp-sdk")
+      .then(async ({ sdk }) => {
+        if (!(await sdk.isInMiniApp())) return;
+        const ctx = await sdk.context;
+        if (active && ctx?.user?.fid) setFcFid(ctx.user.fid);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const farcasterAvailable = fcInvite && fcFid !== null;
+
+  if (step === 2) {
+    return (
+      <ConfiguredForm
+        type={type}
+        defaultCurrency={defaultCurrency}
+        fcFid={fcFid}
+        onBack={() => setStep(1)}
+      />
+    );
+  }
+
+  const pick = (ty: SplitType) => {
+    setType(ty);
+    setStep(2);
+  };
+
+  const cards: {
+    ty: SplitType;
+    icon: string;
+    title: string;
+    desc: string;
+    needsLogin: boolean;
+    show: boolean;
+  }[] = [
+    { ty: "simple", icon: "🪙", title: dict.new.typeSimple, desc: dict.new.typeSimpleDesc, needsLogin: false, show: true },
+    { ty: "email", icon: "✉️", title: dict.new.typeEmail, desc: dict.new.typeEmailDesc, needsLogin: true, show: true },
+    { ty: "farcaster", icon: "🟣", title: dict.new.typeFarcaster, desc: dict.new.typeFarcasterDesc, needsLogin: true, show: farcasterAvailable },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm font-semibold text-stone-500">
+        {dict.new.typeHeading}
+      </p>
+      {cards
+        .filter((c) => c.show)
+        .map((c) =>
+          c.needsLogin && !loggedIn ? (
+            <Link
+              key={c.ty}
+              href="/login?next=/new"
+              className="flex items-start gap-3 rounded-2xl border border-stone-200 p-4 text-left transition-colors hover:border-primary"
+            >
+              <span className="text-2xl">{c.icon}</span>
+              <span>
+                <span className="block text-sm font-semibold">{c.title}</span>
+                <span className="block text-xs text-stone-400">
+                  {c.desc} · {dict.new.signInRequired}
+                </span>
+              </span>
+            </Link>
+          ) : (
+            <button
+              key={c.ty}
+              type="button"
+              onClick={() => pick(c.ty)}
+              className="flex w-full items-start gap-3 rounded-2xl border border-stone-200 p-4 text-left transition-colors hover:border-primary"
+            >
+              <span className="text-2xl">{c.icon}</span>
+              <span>
+                <span className="block text-sm font-semibold">{c.title}</span>
+                <span className="block text-xs text-stone-400">{c.desc}</span>
+              </span>
+            </button>
+          )
+        )}
+    </div>
+  );
+}
+
+function ConfiguredForm({
+  type,
+  defaultCurrency,
+  fcFid,
+  onBack,
+}: {
+  type: SplitType;
+  defaultCurrency: string;
+  fcFid: number | null;
+  onBack: () => void;
 }) {
   const { dict, t, te } = useI18n();
   const [state, formAction, pending] = useActionState(createSplitAction, null);
@@ -25,25 +134,20 @@ export function NewSplitForm({
   ]);
   const setRow = (i: number, patch: Partial<{ name: string; invite: string }>) =>
     setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...patch } : r)));
-  const [secure, setSecure] = useState(false);
-  const [claimMode, setClaimMode] = useState<"self" | "invite">("self");
-  const invite = secure && claimMode === "invite";
+  const [pickerRow, setPickerRow] = useState<number | null>(null);
 
-  // Currency starts from the locale-based guess; in a Farcaster Mini App people
-  // settle in USDC, so default to USD instead — unless the user already picked.
+  const secure = type !== "simple";
+  const showInvite = type === "email" || type === "farcaster";
+
+  // Currency: locale guess, but USD inside a Farcaster Mini App (settle in USDC).
   const [currency, setCurrency] = useState(defaultCurrency);
   const currencyTouched = useRef(false);
-  // Viewer's Farcaster FID (Mini App only) — enables the per-row follow picker.
-  const [fcFid, setFcFid] = useState<number | null>(null);
-  const [pickerRow, setPickerRow] = useState<number | null>(null);
   useEffect(() => {
     let active = true;
     import("@farcaster/miniapp-sdk")
-      .then(async ({ sdk }) => {
-        if (!(await sdk.isInMiniApp())) return;
-        if (active && !currencyTouched.current) setCurrency("USD");
-        const ctx = await sdk.context;
-        if (active && ctx?.user?.fid) setFcFid(ctx.user.fid);
+      .then(({ sdk }) => sdk.isInMiniApp())
+      .then((m) => {
+        if (active && m && !currencyTouched.current) setCurrency("USD");
       })
       .catch(() => {});
     return () => {
@@ -53,6 +157,21 @@ export function NewSplitForm({
 
   return (
     <form action={formAction} className="space-y-5">
+      {/* Hidden config derived from the chosen type. */}
+      {secure && <input type="hidden" name="secure" value="on" />}
+      {showInvite && <input type="hidden" name="claim_mode" value="invite" />}
+      {type === "farcaster" && (
+        <input type="hidden" name="require_farcaster" value="on" />
+      )}
+
+      <button
+        type="button"
+        onClick={onBack}
+        className="text-sm font-medium text-stone-500 hover:text-ink"
+      >
+        ← {dict.new.back}
+      </button>
+
       <div>
         <Label htmlFor="title">{dict.new.name}</Label>
         <Input
@@ -87,7 +206,7 @@ export function NewSplitForm({
         <Label>{dict.new.participants}</Label>
         <div className="space-y-2">
           {rows.map((row, i) => (
-            <div key={i} className="space-y-1">
+            <div key={i} className="flex gap-2">
               <Input
                 name="name"
                 value={row.name}
@@ -95,35 +214,31 @@ export function NewSplitForm({
                 placeholder={t(dict.new.participantPlaceholder, { n: i + 1 })}
                 maxLength={40}
                 required={i < 2}
+                className="flex-1"
               />
-              {invite && (
-                <div className="flex gap-2">
-                  <Input
-                    name="email"
-                    value={row.invite}
-                    onChange={(e) => setRow(i, { invite: e.target.value })}
-                    type={fcInvite ? "text" : "email"}
-                    inputMode={fcInvite ? "text" : "email"}
-                    placeholder={
-                      fcInvite
-                        ? dict.new.inviteHandlePlaceholder
-                        : dict.new.inviteEmailPlaceholder
-                    }
-                    maxLength={120}
-                    className="flex-1 text-sm"
-                  />
-                  {fcFid !== null && (
-                    <button
-                      type="button"
-                      onClick={() => setPickerRow(i)}
-                      title={dict.new.fcPickFollows}
-                      className="shrink-0 rounded-lg border border-stone-300 px-3 text-base text-[#855DCD] hover:border-[#855DCD]"
-                      aria-label={dict.new.fcPickFollows}
-                    >
-                      👥
-                    </button>
-                  )}
-                </div>
+              {type === "email" && (
+                <Input
+                  name="email"
+                  value={row.invite}
+                  onChange={(e) => setRow(i, { invite: e.target.value })}
+                  type="email"
+                  inputMode="email"
+                  placeholder={dict.new.inviteEmailPlaceholder}
+                  maxLength={120}
+                  className="flex-1 text-sm"
+                />
+              )}
+              {type === "farcaster" && (
+                <>
+                  <input type="hidden" name="email" value={row.invite} />
+                  <button
+                    type="button"
+                    onClick={() => setPickerRow(i)}
+                    className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-stone-300 px-3 text-sm font-semibold text-[#855DCD] hover:border-[#855DCD]"
+                  >
+                    {row.invite ? row.invite : `👥 ${dict.new.fcPickFollows}`}
+                  </button>
+                </>
               )}
             </div>
           ))}
@@ -135,8 +250,8 @@ export function NewSplitForm({
         >
           {dict.new.addAnother}
         </button>
-        {invite && fcInvite && (
-          <p className="mt-2 text-xs text-[#855DCD]">{dict.new.fcInviteHint}</p>
+        {type === "email" && (
+          <p className="mt-2 text-xs text-stone-400">{dict.new.emailInviteHint}</p>
         )}
         <p className="mt-1 text-xs text-stone-400">{dict.new.addLaterHint}</p>
       </div>
@@ -157,78 +272,23 @@ export function NewSplitForm({
         />
       )}
 
-      {loggedIn && (
-        <div className="rounded-2xl border border-stone-200 p-4">
-          <label className="flex cursor-pointer items-start gap-2.5">
-            <input
-              type="checkbox"
-              name="secure"
-              checked={secure}
-              onChange={(e) => setSecure(e.target.checked)}
-              className="mt-0.5 h-4 w-4 accent-teal-600"
-            />
-            <span>
-              <span className="text-sm font-semibold">{dict.new.secureTitle}</span>
-              <span className="block text-xs text-stone-400">
-                {dict.new.secureHint}
-              </span>
-            </span>
-          </label>
-
-          {secure && (
-            <div className="mt-4 space-y-4 border-t border-stone-100 pt-4">
-              <fieldset>
-                <legend className="mb-1.5 text-xs font-semibold text-stone-500">
-                  {dict.new.whoMustLogin}
-                </legend>
-                <Radio name="access_mode" value="payers" defaultChecked label={dict.new.modePayers} />
-                <Radio name="access_mode" value="all" label={dict.new.modeAll} />
-              </fieldset>
-
-              <fieldset>
-                <legend className="mb-1.5 text-xs font-semibold text-stone-500">
-                  {dict.new.whoCanView}
-                </legend>
-                <Radio name="visibility" value="link" defaultChecked label={dict.new.visLink} />
-                <Radio name="visibility" value="members" label={dict.new.visMembers} />
-              </fieldset>
-
-              <fieldset>
-                <legend className="mb-1.5 text-xs font-semibold text-stone-500">
-                  {dict.new.howToJoin}
-                </legend>
-                <Radio
-                  name="claim_mode"
-                  value="self"
-                  defaultChecked
-                  label={dict.new.claimSelf}
-                  onSelect={() => setClaimMode("self")}
-                />
-                <Radio
-                  name="claim_mode"
-                  value="invite"
-                  label={dict.new.claimInvite}
-                  onSelect={() => setClaimMode("invite")}
-                />
-              </fieldset>
-
-              <label className="flex cursor-pointer items-start gap-2.5 border-t border-stone-100 pt-4">
-                <input
-                  type="checkbox"
-                  name="require_farcaster"
-                  className="mt-0.5 h-4 w-4 accent-teal-600"
-                />
-                <span>
-                  <span className="text-sm font-semibold">
-                    {dict.new.requireFarcaster}
-                  </span>
-                  <span className="block text-xs text-stone-400">
-                    {dict.new.requireFarcasterHint}
-                  </span>
-                </span>
-              </label>
-            </div>
-          )}
+      {/* Secure-split options (who must sign in / who can view). */}
+      {secure && (
+        <div className="space-y-4 rounded-2xl border border-stone-200 p-4">
+          <fieldset>
+            <legend className="mb-1.5 text-xs font-semibold text-stone-500">
+              {dict.new.whoMustLogin}
+            </legend>
+            <Radio name="access_mode" value="payers" defaultChecked label={dict.new.modePayers} />
+            <Radio name="access_mode" value="all" label={dict.new.modeAll} />
+          </fieldset>
+          <fieldset>
+            <legend className="mb-1.5 text-xs font-semibold text-stone-500">
+              {dict.new.whoCanView}
+            </legend>
+            <Radio name="visibility" value="link" defaultChecked label={dict.new.visLink} />
+            <Radio name="visibility" value="members" label={dict.new.visMembers} />
+          </fieldset>
         </div>
       )}
 
@@ -246,13 +306,11 @@ function Radio({
   value,
   label,
   defaultChecked,
-  onSelect,
 }: {
   name: string;
   value: string;
   label: string;
   defaultChecked?: boolean;
-  onSelect?: () => void;
 }) {
   return (
     <label className="flex cursor-pointer items-center gap-2 py-1 text-sm">
@@ -261,7 +319,6 @@ function Radio({
         name={name}
         value={value}
         defaultChecked={defaultChecked}
-        onChange={onSelect}
         className="h-4 w-4 accent-teal-600"
       />
       {label}
