@@ -31,13 +31,8 @@ export function GET() {
             }}
           >
             <svg width="60" height="60" viewBox="0 0 64 64" fill="none">
-              <path
-                d="M28 13v27a9 9 0 0 0 9 9h4"
-                stroke="#fff"
-                strokeWidth="9"
-                strokeLinecap="round"
-              />
-              <path d="M17 26h22" stroke="#fff" strokeWidth="9" strokeLinecap="round" />
+              <path d="M16 16 L16 48 L32 32 Z" fill="#fff" />
+              <path d="M48 16 L48 48 L32 32 Z" fill="#f59e0b" />
             </svg>
           </div>
           <div style={{ fontSize: 56, fontWeight: 800, color: "#0d9488", letterSpacing: -1 }}>
