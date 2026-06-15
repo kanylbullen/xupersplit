@@ -140,6 +140,9 @@ const fi: Dict = {
     passkey: "Kirjaudu passkeyllä",
     passkeySigning: "Tarkistetaan passkey…",
     passkeyError: "Passkeytä ei löytynyt. Kirjaudu toisella tavalla ja lisää passkey etusivulla ensin.",
+    passkeyCreate: "Luo tili passkeyllä",
+    passkeyCreating: "Luodaan tiliäsi…",
+    passkeyCreateError: "Passkey-tilin luonti epäonnistui. Yritä uudelleen.",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",

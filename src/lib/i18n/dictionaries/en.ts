@@ -140,6 +140,9 @@ const en: Dict = {
     passkey: "Sign in with a passkey",
     passkeySigning: "Checking your passkey…",
     passkeyError: "No passkey found. Sign in another way, then add one from the home screen first.",
+    passkeyCreate: "Create an account with a passkey",
+    passkeyCreating: "Creating your account…",
+    passkeyCreateError: "Couldn't create a passkey account. Please try again.",
   },
   confirm: {
     heading: "Confirm sign-in",
