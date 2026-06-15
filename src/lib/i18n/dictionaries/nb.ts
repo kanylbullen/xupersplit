@@ -137,7 +137,7 @@ const nb: Dict = {
     web3Error: "Lommebokinnlogging mislyktes. Prøv igjen.",
     farcaster: "Logg inn med Farcaster",
     solana: "Logg inn med Solana",
-    passkey: "Logg inn med passkey",
+    passkey: "Fortsett med passkey",
     passkeySigning: "Sjekker passkeyen din…",
     passkeyError: "Ingen passkey funnet. Logg inn på en annen måte og legg til en passkey på startsiden først.",
     passkeyCreate: "Opprett konto med passkey",
