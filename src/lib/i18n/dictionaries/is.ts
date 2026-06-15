@@ -75,6 +75,7 @@ const is: Dict = {
     requireFarcaster: "Krefjast Farcaster-innskráningar",
     requireFarcasterHint: "Allir taka þátt með Farcaster-reikningnum — veldu sæti inni í Warpcast.",
     inviteEmailPlaceholder: "netfang þátttakanda",
+    inviteHandlePlaceholder: "netfang eða @farcaster",
   },
   members: {
     title: "Aðeins fyrir meðlimi",
@@ -343,6 +344,7 @@ const is: Dict = {
     not_invited: "Þetta sæti er frátekið fyrir annað netfang.",
     not_secure: "Þetta er ekki örugg skipting.",
     farcaster_required: "Þessi skipting krefst Farcaster-reiknings — opnaðu hana í Warpcast.",
+    fc_user_not_found: "Enginn Farcaster-notandi með það nafn — athugaðu stafsetninguna.",
     rate_limited:
       "Óvenju margir xupersplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
     need_two_participants: "Bættu við að minnsta kosti tveimur þátttakendum.",

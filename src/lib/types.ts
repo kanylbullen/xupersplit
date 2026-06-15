@@ -24,6 +24,9 @@ export type Participant = {
   /** Farcaster identity attached when claimed from a Farcaster Mini App. */
   fc_username: string | null;
   fc_pfp_url: string | null;
+  /** Secure invite-mode: this slot is reserved for a specific Farcaster user. */
+  invite_fc_username: string | null;
+  invite_fc_pfp_url: string | null;
 };
 
 export type AccessMode = "all" | "payers";

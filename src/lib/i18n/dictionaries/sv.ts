@@ -76,6 +76,7 @@ const sv = {
     requireFarcaster: "Kräv Farcaster-inloggning",
     requireFarcasterHint: "Alla går med via sitt Farcaster-konto — välj din plats inifrån Warpcast.",
     inviteEmailPlaceholder: "e-post till deltagaren",
+    inviteHandlePlaceholder: "e-post eller @farcaster",
   },
   members: {
     title: "Endast för medlemmar",
@@ -345,6 +346,7 @@ const sv = {
     not_invited: "Den här platsen är reserverad för en annan e-postadress.",
     not_secure: "Det här är inte en säker split.",
     farcaster_required: "Den här spliten kräver ett Farcaster-konto — öppna den i Warpcast.",
+    fc_user_not_found: "Ingen Farcaster-användare med det namnet — kolla stavningen.",
     rate_limited:
       "Det skapas ovanligt många xupersplits just nu — vänta en stund och prova igen.",
     need_two_participants: "Lägg till minst två deltagare.",
