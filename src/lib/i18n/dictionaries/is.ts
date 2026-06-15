@@ -72,6 +72,8 @@ const is: Dict = {
     howToJoin: "Hvernig gengur maður til liðs?",
     claimSelf: "Velja eigið nafn",
     claimInvite: "Bjóða með tölvupósti",
+    requireFarcaster: "Krefjast Farcaster-innskráningar",
+    requireFarcasterHint: "Allir taka þátt með Farcaster-reikningnum — veldu sæti inni í Warpcast.",
     inviteEmailPlaceholder: "netfang þátttakanda",
   },
   members: {
@@ -84,6 +86,7 @@ const is: Dict = {
     loginFirst: "Skráðu þig inn til að velja sæti þitt í þessari skiptingu.",
     pickName: "Hver ert þú? Veldu sæti þitt:",
     noneLeft: "Öll sæti eru þegar tekin. Biddu höfundinn að bæta þér við.",
+    farcasterOnly: "Þessi skipting er fyrir Farcaster-reikninga — opnaðu hana í Warpcast til að taka þátt.",
   },
   login: {
     title: "Skrá inn",
@@ -175,6 +178,8 @@ const is: Dict = {
     readyMark: "Ég er búin(n) — engin fleiri útgjöld",
     readyUndo: "Afturkalla — ég á fleiri útgjöld",
     notAllSeenHint: "Ekki hafa allir séð skiptinguna enn.",
+    inviteFarcaster: "Bjóða á Farcaster",
+    inviteFarcasterText: "Skiptum {title} á xupersplit — bættu við því sem þú borgaðir og gerðu upp 👇",
   },
   settle: {
     title: "{from} greiðir {to}",
@@ -337,6 +342,7 @@ const is: Dict = {
     slot_taken: "Þetta sæti er þegar tekið.",
     not_invited: "Þetta sæti er frátekið fyrir annað netfang.",
     not_secure: "Þetta er ekki örugg skipting.",
+    farcaster_required: "Þessi skipting krefst Farcaster-reiknings — opnaðu hana í Warpcast.",
     rate_limited:
       "Óvenju margir xupersplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
     need_two_participants: "Bættu við að minnsta kosti tveimur þátttakendum.",

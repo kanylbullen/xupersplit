@@ -31,6 +31,7 @@ const ERROR_CODES = [
   "slot_taken",
   "not_invited",
   "not_secure",
+  "farcaster_required",
 ];
 
 function errorCode(message: string | undefined): string {
@@ -51,9 +52,16 @@ async function rpc(
 
 export async function claimParticipantAction(
   key: string,
-  participantId: string
+  participantId: string,
+  fc?: { fid: number; username?: string | null; pfp?: string | null }
 ): Promise<ActionResult> {
-  return rpc(key, "claim_participant", { p_key: key, p_id: participantId });
+  return rpc(key, "claim_participant", {
+    p_key: key,
+    p_id: participantId,
+    p_fid: fc?.fid ?? null,
+    p_username: fc?.username ?? null,
+    p_pfp: fc?.pfp ?? null,
+  });
 }
 
 export async function unclaimParticipantAction(key: string): Promise<ActionResult> {

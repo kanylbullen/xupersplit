@@ -72,6 +72,8 @@ const fi: Dict = {
     howToJoin: "Miten mukaan liitytään?",
     claimSelf: "Valita oma nimi",
     claimInvite: "Kutsua sähköpostitse",
+    requireFarcaster: "Vaadi Farcaster-kirjautuminen",
+    requireFarcasterHint: "Kaikki liittyvät Farcaster-tilillään — valitse paikka Warpcastissa.",
     inviteEmailPlaceholder: "osallistujan sähköposti",
   },
   members: {
@@ -84,6 +86,7 @@ const fi: Dict = {
     loginFirst: "Kirjaudu sisään valitaksesi paikkasi tässä jaossa.",
     pickName: "Kuka olet? Valitse paikkasi:",
     noneLeft: "Kaikki paikat on jo varattu. Pyydä luojaa lisäämään sinut.",
+    farcasterOnly: "Tämä jako on Farcaster-tileille — avaa se Warpcastissa liittyäksesi.",
   },
   login: {
     title: "Kirjaudu sisään",
@@ -175,6 +178,8 @@ const fi: Dict = {
     readyMark: "Olen valmis — ei enempää kuluja",
     readyUndo: "Kumoa — minulla on lisää kuluja",
     notAllSeenHint: "Kaikki eivät ole vielä nähneet jakoa.",
+    inviteFarcaster: "Kutsu Farcasterissa",
+    inviteFarcasterText: "Jaetaan {title} xupersplitissä — lisää maksusi ja selvitä 👇",
   },
   settle: {
     title: "{from} maksaa {to}",
@@ -337,6 +342,7 @@ const fi: Dict = {
     slot_taken: "Paikka on jo varattu.",
     not_invited: "Tämä paikka on varattu toiselle sähköpostille.",
     not_secure: "Tämä ei ole suojattu jako.",
+    farcaster_required: "Tämä jako vaatii Farcaster-tilin — avaa se Warpcastissa.",
     rate_limited:
       "Xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
     need_two_participants: "Lisää vähintään kaksi osallistujaa.",

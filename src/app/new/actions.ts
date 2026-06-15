@@ -27,6 +27,7 @@ export async function createSplitAction(
   const accessMode = String(formData.get("access_mode") ?? "payers");
   const visibility = String(formData.get("visibility") ?? "link");
   const claimMode = String(formData.get("claim_mode") ?? "self");
+  const requireFarcaster = secure && formData.get("require_farcaster") === "on";
   const emails =
     secure && claimMode === "invite" ? rows.map((r) => r.email) : null;
 
@@ -69,6 +70,7 @@ export async function createSplitAction(
     p_visibility: visibility,
     p_claim_mode: claimMode,
     p_emails: emails,
+    p_require_farcaster: requireFarcaster,
   });
 
   if (error || !key) {
