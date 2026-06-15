@@ -76,6 +76,10 @@ const is: Dict = {
     requireFarcasterHint: "Allir taka þátt með Farcaster-reikningnum — veldu sæti inni í Warpcast.",
     inviteEmailPlaceholder: "netfang þátttakanda",
     inviteHandlePlaceholder: "netfang eða @farcaster",
+    fcPickFollows: "+ Bjóða þeim sem þú fylgir",
+    fcSearchPlaceholder: "Leita @notandanafn",
+    fcLoading: "Sæki þá sem þú fylgir…",
+    fcNoFollows: "Engar niðurstöður.",
   },
   members: {
     title: "Aðeins fyrir meðlimi",

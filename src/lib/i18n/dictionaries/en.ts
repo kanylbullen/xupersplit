@@ -76,6 +76,10 @@ const en: Dict = {
     requireFarcasterHint: "Everyone joins with their Farcaster account — claim a spot inside Warpcast.",
     inviteEmailPlaceholder: "participant's email",
     inviteHandlePlaceholder: "email or @farcaster",
+    fcPickFollows: "+ Invite from who you follow",
+    fcSearchPlaceholder: "Search @username",
+    fcLoading: "Loading your follows…",
+    fcNoFollows: "No matches.",
   },
   members: {
     title: "Members only",

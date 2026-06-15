@@ -76,6 +76,10 @@ const nb: Dict = {
     requireFarcasterHint: "Alle blir med via Farcaster-kontoen sin — velg plass inne i Warpcast.",
     inviteEmailPlaceholder: "deltakerens e-post",
     inviteHandlePlaceholder: "e-post eller @farcaster",
+    fcPickFollows: "+ Inviter fra dem du følger",
+    fcSearchPlaceholder: "Søk @brukernavn",
+    fcLoading: "Henter dem du følger…",
+    fcNoFollows: "Ingen treff.",
   },
   members: {
     title: "Bare for medlemmer",
