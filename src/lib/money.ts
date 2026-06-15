@@ -14,6 +14,25 @@ export const CURRENCIES = [
   "SATS",
 ] as const;
 
+// Best-guess default currency for a new split from the (auto-detected) UI
+// locale: each Nordic language maps to its own currency, everything else —
+// including English and Finnish (euro) — falls back to EUR. In a Farcaster
+// Mini App the form overrides this to USD (settled in USDC). See NewSplitForm.
+export function localeDefaultCurrency(locale: string): string {
+  switch (locale) {
+    case "sv":
+      return "SEK";
+    case "nb":
+      return "NOK";
+    case "da":
+      return "DKK";
+    case "is":
+      return "ISK";
+    default:
+      return "EUR";
+  }
+}
+
 export function formatMoney(
   cents: number,
   currency: string,
