@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { track } from "@vercel/analytics";
 import type { Entry, Participant } from "@/lib/types";
 import {
@@ -77,6 +77,7 @@ export function BalancesView({
   );
   const [payInput, setPayInput] = useState("");
   const [payError, setPayError] = useState<string | null>(null);
+  const payTouched = useRef(false);
 
   const me = meId ? participants.find((p) => p.id === meId) : null;
   const showPaymentPrompt =
@@ -87,14 +88,29 @@ export function BalancesView({
   const engaged = (p: Participant) => Boolean(p.seen_at || p.ready_at);
   const allSeen = participants.every(engaged);
 
-  // Creator-only Farcaster invite (compose a cast that @-mentions people, with
-  // the split link). Only meaningful inside a Farcaster client.
+  // In a Farcaster Mini App the viewer has a connected (EVM) wallet — default
+  // the settle-up method to Ethereum and pre-fill their address, so others can
+  // pay them in USDC with one tap. Also gates the creator-only Farcaster invite.
   const [inMiniApp, setInMiniApp] = useState(false);
   useEffect(() => {
     let active = true;
     import("@farcaster/miniapp-sdk")
-      .then(({ sdk }) => sdk.isInMiniApp())
-      .then((v) => active && setInMiniApp(v))
+      .then(async ({ sdk }) => {
+        if (!(await sdk.isInMiniApp()) || !active) return;
+        setInMiniApp(true);
+        if (payTouched.current) return;
+        setPayType("evm");
+        try {
+          const provider = await sdk.wallet.getEthereumProvider();
+          const accounts = (await provider?.request({
+            method: "eth_accounts",
+          })) as string[] | undefined;
+          if (active && !payTouched.current && accounts?.[0])
+            setPayInput(accounts[0]);
+        } catch {
+          /* no address available — leave the field empty */
+        }
+      })
       .catch(() => {});
     return () => {
       active = false;
@@ -181,7 +197,10 @@ export function BalancesView({
             <div className="flex gap-2">
               <select
                 value={payType}
-                onChange={(e) => setPayType(e.target.value as PaymentType)}
+                onChange={(e) => {
+                  payTouched.current = true;
+                  setPayType(e.target.value as PaymentType);
+                }}
                 className="rounded-xl border border-stone-300 bg-surface px-2 py-2 text-sm outline-none focus:border-primary"
               >
                 {PAYMENT_TYPES.map((t) => (
@@ -194,7 +213,10 @@ export function BalancesView({
                 inputMode={PAYMENT_META[payType].kind === "phone" ? "tel" : "text"}
                 placeholder={PAYMENT_META[payType].placeholder}
                 value={payInput}
-                onChange={(e) => setPayInput(e.target.value)}
+                onChange={(e) => {
+                  payTouched.current = true;
+                  setPayInput(e.target.value);
+                }}
                 className="min-w-0 flex-1 rounded-xl border border-stone-300 bg-surface px-3 py-2 text-sm outline-none focus:border-primary"
               />
               <button
