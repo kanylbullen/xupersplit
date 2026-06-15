@@ -75,6 +75,7 @@ const fi: Dict = {
     requireFarcaster: "Vaadi Farcaster-kirjautuminen",
     requireFarcasterHint: "Kaikki liittyvät Farcaster-tilillään — valitse paikka Warpcastissa.",
     inviteEmailPlaceholder: "osallistujan sähköposti",
+    inviteHandlePlaceholder: "sähköposti tai @farcaster",
   },
   members: {
     title: "Vain jäsenille",
@@ -343,6 +344,7 @@ const fi: Dict = {
     not_invited: "Tämä paikka on varattu toiselle sähköpostille.",
     not_secure: "Tämä ei ole suojattu jako.",
     farcaster_required: "Tämä jako vaatii Farcaster-tilin — avaa se Warpcastissa.",
+    fc_user_not_found: "Ei Farcaster-käyttäjää tällä nimellä — tarkista kirjoitusasu.",
     rate_limited:
       "Xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
     need_two_participants: "Lisää vähintään kaksi osallistujaa.",

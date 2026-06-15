@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NewSplitForm } from "./NewSplitForm";
 import { getI18n } from "@/lib/i18n/server";
 import { localeDefaultCurrency } from "@/lib/money";
+import { neynarEnabled } from "@/lib/neynar";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function NewSplitPage() {
@@ -25,6 +26,7 @@ export default async function NewSplitPage() {
       <NewSplitForm
         loggedIn={Boolean(user)}
         defaultCurrency={localeDefaultCurrency(locale)}
+        fcInvite={neynarEnabled()}
       />
     </main>
   );

@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { track } from "@vercel/analytics/server";
 import { createClient } from "@/lib/supabase/server";
+import { resolveFarcasterHandle } from "@/lib/neynar";
 
 export type CreateState = { error: string } | null;
 
@@ -28,8 +29,31 @@ export async function createSplitAction(
   const visibility = String(formData.get("visibility") ?? "link");
   const claimMode = String(formData.get("claim_mode") ?? "self");
   const requireFarcaster = secure && formData.get("require_farcaster") === "on";
-  const emails =
-    secure && claimMode === "invite" ? rows.map((r) => r.email) : null;
+
+  // Invite mode: each row's field holds an email OR a Farcaster @handle. Resolve
+  // handles to FIDs via Neynar (free by_username) and split them into the two
+  // reservation channels, aligned to `names` by position.
+  let emails: (string | null)[] | null = null;
+  let fcInvites:
+    | ({ fid: number; username: string; pfp: string | null } | null)[]
+    | null = null;
+  if (secure && claimMode === "invite") {
+    emails = [];
+    fcInvites = [];
+    for (const r of rows) {
+      const v = r.email.trim();
+      const looksEmail = /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v);
+      if (v && !looksEmail) {
+        const u = await resolveFarcasterHandle(v);
+        if (!u) return { error: "fc_user_not_found" };
+        emails.push(null);
+        fcInvites.push({ fid: u.fid, username: u.username, pfp: u.pfp });
+      } else {
+        emails.push(v || null);
+        fcInvites.push(null);
+      }
+    }
+  }
 
   // Errors are returned as codes; the client translates them via dict.errors.
   if (!title) return { error: "title_required" };
@@ -71,6 +95,7 @@ export async function createSplitAction(
     p_claim_mode: claimMode,
     p_emails: emails,
     p_require_farcaster: requireFarcaster,
+    p_fc_invites: fcInvites,
   });
 
   if (error || !key) {

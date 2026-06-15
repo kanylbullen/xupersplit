@@ -75,6 +75,7 @@ const en: Dict = {
     requireFarcaster: "Require Farcaster login",
     requireFarcasterHint: "Everyone joins with their Farcaster account — claim a spot inside Warpcast.",
     inviteEmailPlaceholder: "participant's email",
+    inviteHandlePlaceholder: "email or @farcaster",
   },
   members: {
     title: "Members only",
@@ -343,6 +344,7 @@ const en: Dict = {
     not_invited: "This spot is reserved for a different email.",
     not_secure: "This isn't a secure split.",
     farcaster_required: "This split needs a Farcaster account — open it in Warpcast.",
+    fc_user_not_found: "No Farcaster user with that handle — check the spelling.",
     rate_limited:
       "Unusually many xupersplits are being created right now — wait a moment and try again.",
     need_two_participants: "Add at least two participants.",

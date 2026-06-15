@@ -9,9 +9,11 @@ import { createSplitAction } from "./actions";
 export function NewSplitForm({
   loggedIn,
   defaultCurrency,
+  fcInvite,
 }: {
   loggedIn: boolean;
   defaultCurrency: string;
+  fcInvite: boolean;
 }) {
   const { dict, t, te } = useI18n();
   const [state, formAction, pending] = useActionState(createSplitAction, null);
@@ -83,9 +85,13 @@ export function NewSplitForm({
               {invite && (
                 <Input
                   name="email"
-                  type="email"
-                  inputMode="email"
-                  placeholder={dict.new.inviteEmailPlaceholder}
+                  type={fcInvite ? "text" : "email"}
+                  inputMode={fcInvite ? "text" : "email"}
+                  placeholder={
+                    fcInvite
+                      ? dict.new.inviteHandlePlaceholder
+                      : dict.new.inviteEmailPlaceholder
+                  }
                   maxLength={120}
                   className="text-sm"
                 />

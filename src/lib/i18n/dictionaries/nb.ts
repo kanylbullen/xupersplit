@@ -75,6 +75,7 @@ const nb: Dict = {
     requireFarcaster: "Krev Farcaster-innlogging",
     requireFarcasterHint: "Alle blir med via Farcaster-kontoen sin — velg plass inne i Warpcast.",
     inviteEmailPlaceholder: "deltakerens e-post",
+    inviteHandlePlaceholder: "e-post eller @farcaster",
   },
   members: {
     title: "Bare for medlemmer",
@@ -343,6 +344,7 @@ const nb: Dict = {
     not_invited: "Denne plassen er reservert for en annen e-postadresse.",
     not_secure: "Dette er ikke en sikker splitt.",
     farcaster_required: "Denne splitten krever en Farcaster-konto — åpne den i Warpcast.",
+    fc_user_not_found: "Ingen Farcaster-bruker med det navnet — sjekk stavingen.",
     rate_limited:
       "Uvanlig mange xupersplits opprettes akkurat nå — vent litt og prøv igjen.",
     need_two_participants: "Legg til minst to deltakere.",

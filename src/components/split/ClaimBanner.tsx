@@ -94,6 +94,11 @@ export function ClaimBanner({
                 className="rounded-xl border border-stone-300 bg-surface px-3 py-2 text-sm font-semibold hover:border-primary hover:text-primary-dark disabled:opacity-50"
               >
                 {p.name}
+                {p.invite_fc_username && (
+                  <span className="ml-1 text-xs font-normal text-stone-400">
+                    @{p.invite_fc_username}
+                  </span>
+                )}
               </button>
             ))}
           </div>
