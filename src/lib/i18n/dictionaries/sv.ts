@@ -180,7 +180,7 @@ const sv = {
     readyUndo: "Ångra — jag har fler utlägg",
     notAllSeenHint: "Alla har inte sett spliten ännu.",
     inviteFarcaster: "Bjud in på Farcaster",
-    inviteFarcasterText: "Vi delar {title} på xupersplit — lägg in vad du betalat och gör upp 👇",
+    inviteFarcasterCopied: "Länk kopierad — skicka den som en Direct Cast 🟣",
   },
   settle: {
     title: "{from} betalar {to}",

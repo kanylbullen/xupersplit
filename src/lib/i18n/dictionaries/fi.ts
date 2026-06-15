@@ -179,7 +179,7 @@ const fi: Dict = {
     readyUndo: "Kumoa — minulla on lisää kuluja",
     notAllSeenHint: "Kaikki eivät ole vielä nähneet jakoa.",
     inviteFarcaster: "Kutsu Farcasterissa",
-    inviteFarcasterText: "Jaetaan {title} xupersplitissä — lisää maksusi ja selvitä 👇",
+    inviteFarcasterCopied: "Linkki kopioitu — lähetä se Direct Castina 🟣",
   },
   settle: {
     title: "{from} maksaa {to}",
