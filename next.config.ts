@@ -14,12 +14,19 @@ function supabaseConnectSrc(): string {
   return "";
 }
 
+// Farcaster Mini App clients embed the app in an iframe, so we can't blanket-
+// deny framing (that would block the Mini App from ever loading → its splash
+// hangs because sdk.actions.ready() never runs). Allow the known clients via
+// CSP frame-ancestors and drop the legacy X-Frame-Options (it can only say
+// DENY/SAMEORIGIN, no allowlist, and would override the CSP for these clients).
+const FRAME_ANCESTORS =
+  "frame-ancestors 'self' https://farcaster.xyz https://*.farcaster.xyz https://warpcast.com https://*.warpcast.com https://base.org https://*.base.org https://wallet.coinbase.com https://*.coinbase.com";
+
 // Security headers. Referrer-Policy is the important one here: the secret
 // kitty key lives in the URL (/k/<key>), and no-referrer keeps it out of the
 // Referer header on any outbound navigation (e.g. the buy-me-a-beer link).
 const securityHeaders = [
   { key: "Referrer-Policy", value: "no-referrer" },
-  { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   {
     key: "Permissions-Policy",
@@ -44,7 +51,7 @@ const securityHeaders = [
       // WalletConnect's attestation iframe.
       "frame-src 'self' https://verify.walletconnect.org https://secure.walletconnect.org",
       "form-action 'self'",
-      "frame-ancestors 'none'",
+      FRAME_ANCESTORS,
       "base-uri 'self'",
       "object-src 'none'",
     ].join("; "),
