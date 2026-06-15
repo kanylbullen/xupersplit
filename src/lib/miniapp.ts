@@ -3,7 +3,9 @@
 // embed below; the app calls sdk.actions.ready() once mounted (MiniAppReady).
 // See /.well-known/farcaster.json for the manifest.
 
-export const MINIAPP_NAME = "Xupersplit";
+// Lowercase to match the wordmark — the brand is styled lowercase wherever it
+// appears as a name/label (Mini App listing name + launch button).
+export const MINIAPP_NAME = "xupersplit";
 
 // The app's public origin (absolute URLs are required in the embed/manifest).
 export const APP_ORIGIN =
@@ -24,7 +26,7 @@ export function miniappEmbed(launchUrl: string): string {
     version: "1",
     imageUrl: MINIAPP_IMAGE,
     button: {
-      title: "Open Xupersplit",
+      title: "Open xupersplit",
       action: {
         type: "launch_frame",
         name: MINIAPP_NAME,
