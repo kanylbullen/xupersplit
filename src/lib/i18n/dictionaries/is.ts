@@ -112,6 +112,7 @@ const is: Dict = {
     web3: "Skrá inn með Ethereum",
     web3Signing: "Athugaðu veskið þitt…",
     web3Error: "Innskráning með veski mistókst. Reyndu aftur.",
+    farcaster: "Skrá inn með Farcaster",
   },
   confirm: {
     heading: "Staðfesta innskráningu",

@@ -113,6 +113,7 @@ const sv = {
     web3: "Logga in med Ethereum",
     web3Signing: "Kolla din plånbok…",
     web3Error: "Plånboksinloggning misslyckades. Försök igen.",
+    farcaster: "Logga in med Farcaster",
   },
   confirm: {
     heading: "Bekräfta inloggning",

@@ -112,6 +112,7 @@ const fi: Dict = {
     web3: "Kirjaudu Ethereumilla",
     web3Signing: "Tarkista lompakkosi…",
     web3Error: "Lompakkokirjautuminen epäonnistui. Yritä uudelleen.",
+    farcaster: "Kirjaudu Farcasterilla",
   },
   confirm: {
     heading: "Vahvista kirjautuminen",
