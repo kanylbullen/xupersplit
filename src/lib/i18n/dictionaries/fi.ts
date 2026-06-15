@@ -137,7 +137,7 @@ const fi: Dict = {
     web3Error: "Lompakkokirjautuminen epäonnistui. Yritä uudelleen.",
     farcaster: "Kirjaudu Farcasterilla",
     solana: "Kirjaudu Solanalla",
-    passkey: "Jatka passkeyllä",
+    passkey: "Kirjaudu passkeyllä",
     passkeySigning: "Tarkistetaan passkey…",
     passkeyError: "Passkeytä ei löytynyt. Kirjaudu toisella tavalla ja lisää passkey etusivulla ensin.",
     passkeyCreate: "Luo tili passkeyllä",

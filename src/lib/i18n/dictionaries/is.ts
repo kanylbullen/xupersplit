@@ -137,7 +137,7 @@ const is: Dict = {
     web3Error: "Innskráning með veski mistókst. Reyndu aftur.",
     farcaster: "Skrá inn með Farcaster",
     solana: "Skrá inn með Solana",
-    passkey: "Halda áfram með aðgangslykli",
+    passkey: "Skrá inn með aðgangslykli",
     passkeySigning: "Athuga aðgangslykilinn…",
     passkeyError: "Enginn aðgangslykill fannst. Skráðu þig inn á annan hátt og bættu við aðgangslykli á forsíðunni fyrst.",
     passkeyCreate: "Stofna reikning með aðgangslykli",

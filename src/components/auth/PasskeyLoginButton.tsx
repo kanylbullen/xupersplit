@@ -6,43 +6,30 @@ import { track } from "@vercel/analytics";
 import { createClient } from "@/lib/supabase/client";
 import { useI18n } from "@/lib/i18n/client";
 
-// One passkey button (WebAuthn): sign in with an existing passkey, or — if
-// there isn't one — create an account and register a passkey to it
-// (signInAnonymously → registerPasskey, since Supabase has no direct passkey
-// sign-up). Works on the real domain (RP id = split.xuper.fun), not localhost.
+// Passwordless sign-in with a passkey (WebAuthn). Authenticates an existing
+// passkey only — Supabase has no passkey sign-up (anonymous users can't
+// register passkeys), so a passkey is added to an account created another way
+// (email/wallet) via "Add a passkey" on the home screen, then used here.
+// Works on the real domain (RP id = split.xuper.fun), not localhost.
 export function PasskeyLoginButton() {
   const { dict } = useI18n();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function go() {
+  async function signIn() {
     setBusy(true);
     setError(null);
-    const supabase = createClient();
     try {
-      // 1) Try an existing passkey.
-      const { data, error } = await supabase.auth.signInWithPasskey();
-      if (!error && data?.session) {
+      const { data, error } = await createClient().auth.signInWithPasskey();
+      if (error) throw error;
+      if (data?.session) {
         track("passkey_login");
         router.push("/");
         router.refresh();
-        return;
       }
-      // 2) None usable → create an account and register a passkey to it.
-      const { error: anonErr } = await supabase.auth.signInAnonymously();
-      if (anonErr) throw anonErr;
-      const { error: regErr } = await supabase.auth.registerPasskey();
-      if (regErr) {
-        await supabase.auth.signOut();
-        throw regErr;
-      }
-      track("passkey_signup");
-      router.push("/");
-      router.refresh();
     } catch (e) {
-      // Surface the real message while we stabilise the passkey flow.
-      setError(e instanceof Error ? e.message : dict.login.passkeyError);
+      setError(dict.login.passkeyError);
       if (e instanceof Error && process.env.NODE_ENV !== "production") {
         console.error(e);
       }
@@ -55,7 +42,7 @@ export function PasskeyLoginButton() {
     <div className="space-y-2">
       <button
         type="button"
-        onClick={go}
+        onClick={signIn}
         disabled={busy}
         className="flex w-full items-center justify-center gap-2 rounded-xl border border-stone-300 bg-surface px-4 py-3 font-semibold text-ink transition-colors hover:border-primary disabled:opacity-50"
       >

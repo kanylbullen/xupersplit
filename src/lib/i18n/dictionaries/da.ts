@@ -137,7 +137,7 @@ const da: Dict = {
     web3Error: "Wallet-login mislykkedes. Prøv igen.",
     farcaster: "Log ind med Farcaster",
     solana: "Log ind med Solana",
-    passkey: "Fortsæt med passkey",
+    passkey: "Log ind med passkey",
     passkeySigning: "Tjekker din passkey…",
     passkeyError: "Ingen passkey fundet. Log ind på en anden måde, og tilføj en passkey på startsiden først.",
     passkeyCreate: "Opret konto med passkey",

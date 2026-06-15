@@ -138,7 +138,7 @@ const sv = {
     web3Error: "Plånboksinloggning misslyckades. Försök igen.",
     farcaster: "Logga in med Farcaster",
     solana: "Logga in med Solana",
-    passkey: "Fortsätt med passkey",
+    passkey: "Logga in med passkey",
     passkeySigning: "Kollar din passkey…",
     passkeyError: "Ingen passkey hittades. Logga in på annat sätt och lägg till en passkey på startsidan först.",
     passkeyCreate: "Skapa konto med passkey",

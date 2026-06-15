@@ -137,7 +137,7 @@ const en: Dict = {
     web3Error: "Wallet sign-in failed. Please try again.",
     farcaster: "Sign in with Farcaster",
     solana: "Sign in with Solana",
-    passkey: "Continue with passkey",
+    passkey: "Sign in with a passkey",
     passkeySigning: "Checking your passkey…",
     passkeyError: "No passkey found. Sign in another way, then add one from the home screen first.",
     passkeyCreate: "Create an account with a passkey",
