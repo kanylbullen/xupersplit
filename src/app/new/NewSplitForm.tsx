@@ -1,18 +1,41 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Button, Input, Label, Select } from "@/components/ui";
 import { CURRENCIES } from "@/lib/money";
 import { useI18n } from "@/lib/i18n/client";
 import { createSplitAction } from "./actions";
 
-export function NewSplitForm({ loggedIn }: { loggedIn: boolean }) {
+export function NewSplitForm({
+  loggedIn,
+  defaultCurrency,
+}: {
+  loggedIn: boolean;
+  defaultCurrency: string;
+}) {
   const { dict, t, te } = useI18n();
   const [state, formAction, pending] = useActionState(createSplitAction, null);
   const [nameCount, setNameCount] = useState(3);
   const [secure, setSecure] = useState(false);
   const [claimMode, setClaimMode] = useState<"self" | "invite">("self");
   const invite = secure && claimMode === "invite";
+
+  // Currency starts from the locale-based guess; in a Farcaster Mini App people
+  // settle in USDC, so default to USD instead — unless the user already picked.
+  const [currency, setCurrency] = useState(defaultCurrency);
+  const currencyTouched = useRef(false);
+  useEffect(() => {
+    let active = true;
+    import("@farcaster/miniapp-sdk")
+      .then(({ sdk }) => sdk.isInMiniApp())
+      .then((inMiniApp) => {
+        if (active && inMiniApp && !currencyTouched.current) setCurrency("USD");
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <form action={formAction} className="space-y-5">
@@ -29,7 +52,15 @@ export function NewSplitForm({ loggedIn }: { loggedIn: boolean }) {
 
       <div>
         <Label htmlFor="currency">{dict.new.currency}</Label>
-        <Select id="currency" name="currency" defaultValue="SEK">
+        <Select
+          id="currency"
+          name="currency"
+          value={currency}
+          onChange={(e) => {
+            currencyTouched.current = true;
+            setCurrency(e.target.value);
+          }}
+        >
           {CURRENCIES.map((c) => (
             <option key={c} value={c}>
               {c}
