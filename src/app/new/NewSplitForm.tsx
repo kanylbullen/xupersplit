@@ -9,6 +9,7 @@ import { FarcasterFollowPicker } from "@/components/new/FarcasterFollowPicker";
 import { createSplitAction } from "./actions";
 
 type SplitType = "simple" | "email" | "farcaster";
+type FcUser = { fid: number; username: string; pfp: string | null };
 
 // Two-step wizard: pick a split type, then configure it. The type sets the
 // identity model (simple = accountless; email / farcaster = a secure split with
@@ -26,15 +27,24 @@ export function NewSplitForm({
   const [step, setStep] = useState<1 | 2>(1);
   const [type, setType] = useState<SplitType>("simple");
 
-  // Viewer's Farcaster FID (Mini App only) — gates the Farcaster type + picker.
+  // Viewer's Farcaster identity (Mini App only) — gates the Farcaster type +
+  // picker, and lets the creator pick themselves into a slot.
   const [fcFid, setFcFid] = useState<number | null>(null);
+  const [fcSelf, setFcSelf] = useState<FcUser | null>(null);
   useEffect(() => {
     let active = true;
     import("@farcaster/miniapp-sdk")
       .then(async ({ sdk }) => {
         if (!(await sdk.isInMiniApp())) return;
         const ctx = await sdk.context;
-        if (active && ctx?.user?.fid) setFcFid(ctx.user.fid);
+        if (!active || !ctx?.user?.fid) return;
+        setFcFid(ctx.user.fid);
+        if (ctx.user.username)
+          setFcSelf({
+            fid: ctx.user.fid,
+            username: ctx.user.username,
+            pfp: ctx.user.pfpUrl ?? null,
+          });
       })
       .catch(() => {});
     return () => {
@@ -50,6 +60,7 @@ export function NewSplitForm({
         type={type}
         defaultCurrency={defaultCurrency}
         fcFid={fcFid}
+        fcSelf={fcSelf}
         onBack={() => setStep(1)}
       />
     );
@@ -118,11 +129,13 @@ function ConfiguredForm({
   type,
   defaultCurrency,
   fcFid,
+  fcSelf,
   onBack,
 }: {
   type: SplitType;
   defaultCurrency: string;
   fcFid: number | null;
+  fcSelf: FcUser | null;
   onBack: () => void;
 }) {
   const { dict, t, te } = useI18n();
@@ -259,6 +272,7 @@ function ConfiguredForm({
       {fcFid !== null && (
         <FarcasterFollowPicker
           fid={fcFid}
+          self={fcSelf}
           open={pickerRow !== null}
           onClose={() => setPickerRow(null)}
           onPick={(u) => {

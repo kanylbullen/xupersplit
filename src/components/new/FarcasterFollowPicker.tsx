@@ -10,11 +10,13 @@ type FcUser = { fid: number; username: string; pfp: string | null };
 // bulk). Anyone not in the list is still reachable by typing their @handle.
 export function FarcasterFollowPicker({
   fid,
+  self,
   open,
   onClose,
   onPick,
 }: {
   fid: number;
+  self?: FcUser | null;
   open: boolean;
   onClose: () => void;
   onPick: (u: FcUser) => void;
@@ -39,9 +41,13 @@ export function FarcasterFollowPicker({
   if (!open) return null;
 
   const needle = q.toLowerCase().replace(/^@/, "");
-  const filtered = needle
-    ? users.filter((u) => u.username.includes(needle))
+  // The creator can pick themselves — they aren't in their own follow list.
+  const all = self
+    ? [self, ...users.filter((u) => u.fid !== self.fid)]
     : users;
+  const filtered = needle
+    ? all.filter((u) => u.username.includes(needle))
+    : all;
 
   return (
     <div
@@ -59,11 +65,7 @@ export function FarcasterFollowPicker({
           placeholder={dict.new.fcSearchPlaceholder}
           className="mb-2 w-full rounded-lg border border-stone-300 bg-cream px-3 py-2 text-sm outline-none focus:border-primary"
         />
-        {loading ? (
-          <p className="px-1 py-3 text-sm text-stone-400">{dict.new.fcLoading}</p>
-        ) : filtered.length === 0 ? (
-          <p className="px-1 py-3 text-sm text-stone-400">{dict.new.fcNoFollows}</p>
-        ) : (
+        {filtered.length > 0 && (
           <div className="max-h-72 space-y-0.5 overflow-y-auto">
             {filtered.slice(0, 100).map((u) => (
               <button
@@ -81,9 +83,18 @@ export function FarcasterFollowPicker({
                   />
                 )}
                 <span className="font-medium">@{u.username}</span>
+                {self && u.fid === self.fid && (
+                  <span className="text-xs text-stone-400">({dict.common.you})</span>
+                )}
               </button>
             ))}
           </div>
+        )}
+        {loading && (
+          <p className="px-1 py-3 text-sm text-stone-400">{dict.new.fcLoading}</p>
+        )}
+        {!loading && filtered.length === 0 && (
+          <p className="px-1 py-3 text-sm text-stone-400">{dict.new.fcNoFollows}</p>
         )}
         <button
           type="button"
