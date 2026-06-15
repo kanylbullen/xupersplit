@@ -204,6 +204,7 @@ const nb: Dict = {
     notAllSeenHint: "Ikke alle har sett splitten ennå.",
     inviteFarcaster: "Inviter på Farcaster",
     inviteFarcasterCopied: "Lenke kopiert — send den som en Direct Cast 🟣",
+    inviteFarcasterCast: "— vi deler {title} på xupersplit. Legg inn det du betalte og gjør opp 👇",
   },
   settle: {
     title: "{from} betaler {to}",

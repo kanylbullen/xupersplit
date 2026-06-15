@@ -206,6 +206,11 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             meId={meId}
             isCreator={split.is_creator}
             secure={secure}
+            fcInviteSafe={
+              split.secure &&
+              split.visibility === "members" &&
+              split.claim_mode === "invite"
+            }
             onEditEntry={(entry) =>
               setEntryDialog({ open: true, entry, kind: entry.kind })
             }

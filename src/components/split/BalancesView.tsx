@@ -43,6 +43,7 @@ export function BalancesView({
   meId,
   isCreator,
   secure,
+  fcInviteSafe,
   onEditEntry,
 }: {
   splitKey: string;
@@ -53,6 +54,7 @@ export function BalancesView({
   meId: string | null;
   isCreator: boolean;
   secure: boolean;
+  fcInviteSafe: boolean;
   onEditEntry: (entry: Entry) => void;
 }) {
   const { dict, t, te, locale } = useI18n();
@@ -117,13 +119,31 @@ export function BalancesView({
     };
   }, []);
 
-  // Private invite: copy the link so the creator can send it as a Direct Cast.
-  // (A composed cast would be public — and the link is the capability, so we
-  // don't want it in a public post.)
   const [inviteCopied, setInviteCopied] = useState(false);
+
+  // Invite on Farcaster. For a members-only, FID-reserved split the link is
+  // safe to post publicly (only reserved FIDs can view or claim), so we compose
+  // a cast that @-mentions the reserved invitees — that notifies them, the
+  // native invite. Otherwise we just copy the link for a manual (private) DM.
   function inviteOnFarcaster() {
+    const url = `${window.location.origin}/k/${splitKey}`;
+    if (fcInviteSafe) {
+      const mentions = participants
+        .filter((p) => !p.claimed && p.invite_fc_username)
+        .map((p) => `@${p.invite_fc_username}`)
+        .join(" ");
+      import("@farcaster/miniapp-sdk")
+        .then(({ sdk }) => {
+          sdk.actions.composeCast({
+            text: `${mentions ? mentions + " " : ""}${t(dict.bal.inviteFarcasterCast, { title: splitTitle })}`,
+            embeds: [url],
+          });
+        })
+        .catch(() => {});
+      return;
+    }
     navigator.clipboard
-      ?.writeText(`${window.location.origin}/k/${splitKey}`)
+      ?.writeText(url)
       .then(() => {
         setInviteCopied(true);
         setTimeout(() => setInviteCopied(false), 4000);
@@ -446,7 +466,9 @@ export function BalancesView({
             onClick={inviteOnFarcaster}
             className="mt-2 ml-4 text-sm font-semibold text-[#855DCD] hover:underline"
           >
-            {inviteCopied ? dict.bal.inviteFarcasterCopied : dict.bal.inviteFarcaster}
+            {!fcInviteSafe && inviteCopied
+              ? dict.bal.inviteFarcasterCopied
+              : dict.bal.inviteFarcaster}
           </button>
         )}
         {!allSeen && (

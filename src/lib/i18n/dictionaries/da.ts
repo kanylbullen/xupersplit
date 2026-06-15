@@ -204,6 +204,7 @@ const da: Dict = {
     notAllSeenHint: "Ikke alle har set splitten endnu.",
     inviteFarcaster: "Invitér på Farcaster",
     inviteFarcasterCopied: "Link kopieret — send det som en Direct Cast 🟣",
+    inviteFarcasterCast: "— vi deler {title} på xupersplit. Tilføj hvad du betalte og gør op 👇",
   },
   settle: {
     title: "{from} betaler {to}",
