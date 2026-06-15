@@ -10,58 +10,101 @@ import { walletEnabled } from "@/components/split/WalletProvider";
 import { useI18n } from "@/lib/i18n/client";
 
 // Sign in with Ethereum (EIP-4361 / SIWE) via Supabase Auth's Web3 provider.
-// Reuses the same Reown/wagmi wallet the payment flow already uses — the wallet
-// signs a SIWE message, Supabase verifies the signature and issues a session.
-// No password, no email. Only shown when WalletConnect is configured.
+// On the web this uses the Reown/wagmi wallet; inside a Farcaster Mini App it
+// uses the host wallet the SDK exposes — one tap, no modal ("Sign in with
+// Farcaster"). Either way the wallet signs a SIWE message and Supabase issues a
+// session. No password, no email. Only shown when WalletConnect is configured.
 function Web3LoginButtonInner() {
   const { dict } = useI18n();
   const router = useRouter();
   const { open } = useAppKit();
   const { isConnected, connector } = useAccount();
   const [busy, setBusy] = useState(false);
+  const [inMiniApp, setInMiniApp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // Set when the user clicked our button, so we know to continue into signing
   // as soon as the wallet finishes connecting (the modal has no callback).
   const intent = useRef(false);
 
-  const signIn = useCallback(async () => {
+  // Detect the Farcaster Mini App host so we can offer one-tap sign-in.
+  useEffect(() => {
+    let active = true;
+    import("@farcaster/miniapp-sdk")
+      .then(({ sdk }) => sdk.isInMiniApp())
+      .then((v) => active && setInMiniApp(v))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // SIWE over whatever EIP-1193 provider we were handed.
+  const siweWith = useCallback(
+    async (provider: unknown, via: "wallet" | "farcaster") => {
+      setBusy(true);
+      setError(null);
+      try {
+        const supabase = createClient();
+        const { error } = await supabase.auth.signInWithWeb3({
+          chain: "ethereum",
+          statement: "Sign in to Xupersplit",
+          wallet: provider,
+        } as Parameters<typeof supabase.auth.signInWithWeb3>[0]);
+        if (error) throw error;
+        track("web3_login", { via });
+        router.push("/");
+        router.refresh();
+      } catch (e) {
+        setError(dict.login.web3Error);
+        if (e instanceof Error && process.env.NODE_ENV !== "production") {
+          console.error(e);
+        }
+      } finally {
+        setBusy(false);
+        intent.current = false;
+      }
+    },
+    [dict.login.web3Error, router]
+  );
+
+  // Web path: SIWE with the connected Reown/wagmi wallet.
+  const signInWallet = useCallback(async () => {
     if (!connector) return;
+    const provider = await connector.getProvider();
+    await siweWith(provider, "wallet");
+  }, [connector, siweWith]);
+
+  // Mini App path: SIWE with the Farcaster host wallet (no modal).
+  const signInFarcaster = useCallback(async () => {
     setBusy(true);
     setError(null);
     try {
-      const provider = await connector.getProvider();
-      const supabase = createClient();
-      const { error } = await supabase.auth.signInWithWeb3({
-        chain: "ethereum",
-        statement: "Sign in to Xupersplit",
-        wallet: provider,
-      } as Parameters<typeof supabase.auth.signInWithWeb3>[0]);
-      if (error) throw error;
-      track("web3_login");
-      router.push("/");
-      router.refresh();
+      const { sdk } = await import("@farcaster/miniapp-sdk");
+      const provider = await sdk.wallet.getEthereumProvider();
+      if (!provider) throw new Error("No Farcaster wallet available");
+      await siweWith(provider, "farcaster");
     } catch (e) {
       setError(dict.login.web3Error);
       if (e instanceof Error && process.env.NODE_ENV !== "production") {
         console.error(e);
       }
-    } finally {
       setBusy(false);
-      intent.current = false;
     }
-  }, [connector, dict.login.web3Error, router]);
+  }, [siweWith, dict.login.web3Error]);
 
-  // Continue into signing once the wallet connects (if the user started it).
+  // Continue into signing once the wallet connects (web modal has no callback).
   useEffect(() => {
-    if (intent.current && isConnected && connector && !busy) {
-      void signIn();
+    if (!inMiniApp && intent.current && isConnected && connector && !busy) {
+      void signInWallet();
     }
-  }, [isConnected, connector, busy, signIn]);
+  }, [inMiniApp, isConnected, connector, busy, signInWallet]);
 
   function onClick() {
     setError(null);
-    if (isConnected && connector) {
-      void signIn();
+    if (inMiniApp) {
+      void signInFarcaster();
+    } else if (isConnected && connector) {
+      void signInWallet();
     } else {
       intent.current = true;
       open();
@@ -81,15 +124,31 @@ function Web3LoginButtonInner() {
         disabled={busy}
         className="flex w-full items-center justify-center gap-2 rounded-xl border border-stone-300 bg-surface px-4 py-3 font-semibold text-ink transition-colors hover:border-primary disabled:opacity-50"
       >
-        <svg width="16" height="16" viewBox="0 0 256 417" aria-hidden="true">
-          <path fill="#8a92b2" d="M127.96 0l-2.79 9.5v275.67l2.79 2.78 127.96-75.64z" />
-          <path fill="#62688f" d="M127.96 0L0 212.32l127.96 75.64V0z" />
-          <path fill="#8a92b2" d="M127.96 312.19l-1.57 1.92v98.2l1.57 4.6 128.04-180.32z" />
-          <path fill="#62688f" d="M127.96 416.91V312.19L0 236.59z" />
-          <path fill="#454a75" d="M127.96 287.96l127.96-75.64-127.96-58.18z" />
-          <path fill="#797596" d="M0 212.32l127.96 75.64V154.14z" />
-        </svg>
-        {busy ? dict.login.web3Signing : dict.login.web3}
+        {inMiniApp ? (
+          <svg width="16" height="16" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="7" fill="#855DCD" />
+            <path
+              d="M10 10h12M11 10v13M21 10v13M8.5 14h3M20.5 14h3"
+              stroke="#fff"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 256 417" aria-hidden="true">
+            <path fill="#8a92b2" d="M127.96 0l-2.79 9.5v275.67l2.79 2.78 127.96-75.64z" />
+            <path fill="#62688f" d="M127.96 0L0 212.32l127.96 75.64V0z" />
+            <path fill="#8a92b2" d="M127.96 312.19l-1.57 1.92v98.2l1.57 4.6 128.04-180.32z" />
+            <path fill="#62688f" d="M127.96 416.91V312.19L0 236.59z" />
+            <path fill="#454a75" d="M127.96 287.96l127.96-75.64-127.96-58.18z" />
+            <path fill="#797596" d="M0 212.32l127.96 75.64V154.14z" />
+          </svg>
+        )}
+        {busy
+          ? dict.login.web3Signing
+          : inMiniApp
+            ? dict.login.farcaster
+            : dict.login.web3}
       </button>
       {error && <p className="text-sm text-negative">{error}</p>}
     </div>

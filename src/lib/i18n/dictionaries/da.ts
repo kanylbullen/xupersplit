@@ -112,6 +112,7 @@ const da: Dict = {
     web3: "Log ind med Ethereum",
     web3Signing: "Tjek din wallet…",
     web3Error: "Wallet-login mislykkedes. Prøv igen.",
+    farcaster: "Log ind med Farcaster",
   },
   confirm: {
     heading: "Bekræft login",

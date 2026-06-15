@@ -112,6 +112,7 @@ const en: Dict = {
     web3: "Sign in with Ethereum",
     web3Signing: "Check your wallet…",
     web3Error: "Wallet sign-in failed. Please try again.",
+    farcaster: "Sign in with Farcaster",
   },
   confirm: {
     heading: "Confirm sign-in",

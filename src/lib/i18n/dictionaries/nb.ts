@@ -112,6 +112,7 @@ const nb: Dict = {
     web3: "Logg inn med Ethereum",
     web3Signing: "Sjekk lommeboken din…",
     web3Error: "Lommebokinnlogging mislyktes. Prøv igjen.",
+    farcaster: "Logg inn med Farcaster",
   },
   confirm: {
     heading: "Bekreft innlogging",
