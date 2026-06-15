@@ -101,13 +101,16 @@ export function BalancesView({
     };
   }, []);
 
+  // Private invite: copy the link so the creator can send it as a Direct Cast.
+  // (A composed cast would be public — and the link is the capability, so we
+  // don't want it in a public post.)
+  const [inviteCopied, setInviteCopied] = useState(false);
   function inviteOnFarcaster() {
-    import("@farcaster/miniapp-sdk")
-      .then(({ sdk }) => {
-        sdk.actions.composeCast({
-          text: t(dict.bal.inviteFarcasterText, { title: splitTitle }),
-          embeds: [`${window.location.origin}/k/${splitKey}`],
-        });
+    navigator.clipboard
+      ?.writeText(`${window.location.origin}/k/${splitKey}`)
+      .then(() => {
+        setInviteCopied(true);
+        setTimeout(() => setInviteCopied(false), 4000);
       })
       .catch(() => {});
   }
@@ -421,7 +424,7 @@ export function BalancesView({
             onClick={inviteOnFarcaster}
             className="mt-2 ml-4 text-sm font-semibold text-[#855DCD] hover:underline"
           >
-            {dict.bal.inviteFarcaster}
+            {inviteCopied ? dict.bal.inviteFarcasterCopied : dict.bal.inviteFarcaster}
           </button>
         )}
         {!allSeen && (

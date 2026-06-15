@@ -179,7 +179,7 @@ const is: Dict = {
     readyUndo: "Afturkalla — ég á fleiri útgjöld",
     notAllSeenHint: "Ekki hafa allir séð skiptinguna enn.",
     inviteFarcaster: "Bjóða á Farcaster",
-    inviteFarcasterText: "Skiptum {title} á xupersplit — bættu við því sem þú borgaðir og gerðu upp 👇",
+    inviteFarcasterCopied: "Hlekkur afritaður — sendu hann sem Direct Cast 🟣",
   },
   settle: {
     title: "{from} greiðir {to}",

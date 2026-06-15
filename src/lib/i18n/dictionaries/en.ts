@@ -179,7 +179,7 @@ const en: Dict = {
     readyUndo: "Undo — I have more expenses",
     notAllSeenHint: "Not everyone has seen the split yet.",
     inviteFarcaster: "Invite on Farcaster",
-    inviteFarcasterText: "Splitting {title} on xupersplit — add what you paid and settle up 👇",
+    inviteFarcasterCopied: "Link copied — send it as a Direct Cast 🟣",
   },
   settle: {
     title: "{from} pays {to}",
