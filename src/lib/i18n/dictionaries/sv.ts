@@ -141,6 +141,9 @@ const sv = {
     passkey: "Logga in med passkey",
     passkeySigning: "Kollar din passkey…",
     passkeyError: "Ingen passkey hittades. Logga in på annat sätt och lägg till en passkey på startsidan först.",
+    passkeyCreate: "Skapa konto med passkey",
+    passkeyCreating: "Skapar ditt konto…",
+    passkeyCreateError: "Kunde inte skapa passkey-konto. Försök igen.",
   },
   confirm: {
     heading: "Bekräfta inloggning",

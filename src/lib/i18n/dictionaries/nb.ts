@@ -140,6 +140,9 @@ const nb: Dict = {
     passkey: "Logg inn med passkey",
     passkeySigning: "Sjekker passkeyen din…",
     passkeyError: "Ingen passkey funnet. Logg inn på en annen måte og legg til en passkey på startsiden først.",
+    passkeyCreate: "Opprett konto med passkey",
+    passkeyCreating: "Oppretter kontoen din…",
+    passkeyCreateError: "Kunne ikke opprette passkey-konto. Prøv igjen.",
   },
   confirm: {
     heading: "Bekreft innlogging",

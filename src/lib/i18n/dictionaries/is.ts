@@ -140,6 +140,9 @@ const is: Dict = {
     passkey: "Skrá inn með aðgangslykli",
     passkeySigning: "Athuga aðgangslykilinn…",
     passkeyError: "Enginn aðgangslykill fannst. Skráðu þig inn á annan hátt og bættu við aðgangslykli á forsíðunni fyrst.",
+    passkeyCreate: "Stofna reikning með aðgangslykli",
+    passkeyCreating: "Stofna reikninginn þinn…",
+    passkeyCreateError: "Tókst ekki að stofna aðgangslykla-reikning. Reyndu aftur.",
   },
   confirm: {
     heading: "Staðfesta innskráningu",
