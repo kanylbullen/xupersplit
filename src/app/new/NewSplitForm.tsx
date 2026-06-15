@@ -33,12 +33,17 @@ export function NewSplitForm({
   // settle in USDC, so default to USD instead — unless the user already picked.
   const [currency, setCurrency] = useState(defaultCurrency);
   const currencyTouched = useRef(false);
+  // Viewer's Farcaster FID (Mini App only) — enables the per-row follow picker.
+  const [fcFid, setFcFid] = useState<number | null>(null);
+  const [pickerRow, setPickerRow] = useState<number | null>(null);
   useEffect(() => {
     let active = true;
     import("@farcaster/miniapp-sdk")
-      .then(({ sdk }) => sdk.isInMiniApp())
-      .then((inMiniApp) => {
-        if (active && inMiniApp && !currencyTouched.current) setCurrency("USD");
+      .then(async ({ sdk }) => {
+        if (!(await sdk.isInMiniApp())) return;
+        if (active && !currencyTouched.current) setCurrency("USD");
+        const ctx = await sdk.context;
+        if (active && ctx?.user?.fid) setFcFid(ctx.user.fid);
       })
       .catch(() => {});
     return () => {
@@ -92,20 +97,33 @@ export function NewSplitForm({
                 required={i < 2}
               />
               {invite && (
-                <Input
-                  name="email"
-                  value={row.invite}
-                  onChange={(e) => setRow(i, { invite: e.target.value })}
-                  type={fcInvite ? "text" : "email"}
-                  inputMode={fcInvite ? "text" : "email"}
-                  placeholder={
-                    fcInvite
-                      ? dict.new.inviteHandlePlaceholder
-                      : dict.new.inviteEmailPlaceholder
-                  }
-                  maxLength={120}
-                  className="text-sm"
-                />
+                <div className="flex gap-2">
+                  <Input
+                    name="email"
+                    value={row.invite}
+                    onChange={(e) => setRow(i, { invite: e.target.value })}
+                    type={fcInvite ? "text" : "email"}
+                    inputMode={fcInvite ? "text" : "email"}
+                    placeholder={
+                      fcInvite
+                        ? dict.new.inviteHandlePlaceholder
+                        : dict.new.inviteEmailPlaceholder
+                    }
+                    maxLength={120}
+                    className="flex-1 text-sm"
+                  />
+                  {fcFid !== null && (
+                    <button
+                      type="button"
+                      onClick={() => setPickerRow(i)}
+                      title={dict.new.fcPickFollows}
+                      className="shrink-0 rounded-lg border border-stone-300 px-3 text-base text-[#855DCD] hover:border-[#855DCD]"
+                      aria-label={dict.new.fcPickFollows}
+                    >
+                      👥
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           ))}
@@ -117,21 +135,24 @@ export function NewSplitForm({
         >
           {dict.new.addAnother}
         </button>
-        {fcInvite && invite && (
-          <FarcasterFollowPicker
-            onPick={(u) =>
-              setRows((rs) => {
-                // Fill the first empty row, else append.
-                const idx = rs.findIndex((r) => !r.name.trim());
-                const next = { name: u.username, invite: `@${u.username}` };
-                if (idx === -1) return [...rs, next];
-                return rs.map((r, j) => (j === idx ? next : r));
-              })
-            }
-          />
-        )}
         <p className="mt-1 text-xs text-stone-400">{dict.new.addLaterHint}</p>
       </div>
+
+      {fcFid !== null && (
+        <FarcasterFollowPicker
+          fid={fcFid}
+          open={pickerRow !== null}
+          onClose={() => setPickerRow(null)}
+          onPick={(u) => {
+            if (pickerRow !== null)
+              setRow(pickerRow, {
+                invite: `@${u.username}`,
+                name: rows[pickerRow].name.trim() || u.username,
+              });
+            setPickerRow(null);
+          }}
+        />
+      )}
 
       {loggedIn && (
         <div className="rounded-2xl border border-stone-200 p-4">
