@@ -19,12 +19,19 @@ export function GET() {
     iconUrl: MINIAPP_SPLASH,
     homeUrl: APP_ORIGIN,
     imageUrl: MINIAPP_IMAGE,
+    buttonTitle: "Open Xupersplit",
     splashImageUrl: MINIAPP_SPLASH,
     splashBackgroundColor: SPLASH_BG,
     subtitle: "Split bills, settle onchain",
     description:
       "Split shared expenses and settle in USDC or sats — no account, just a link.",
     primaryCategory: "finance",
+    tags: ["payments", "crypto", "expenses", "usdc", "onchain"],
+    tagline: "Split bills, settle onchain",
+    ogTitle: "Xupersplit",
+    ogDescription: "Split shared expenses, settle in USDC or sats.",
+    ogImageUrl: `${APP_ORIGIN}/opengraph-image`,
+    heroImageUrl: `${APP_ORIGIN}/opengraph-image`,
   };
 
   const body: Record<string, unknown> = { frame };
