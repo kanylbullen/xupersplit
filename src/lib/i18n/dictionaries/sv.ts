@@ -140,7 +140,7 @@ const sv = {
     solana: "Logga in med Solana",
     passkey: "Logga in med passkey",
     passkeySigning: "Kollar din passkey…",
-    passkeyError: "Passkey-inloggning misslyckades. Försök igen.",
+    passkeyError: "Ingen passkey hittades. Logga in på annat sätt och lägg till en passkey på startsidan först.",
   },
   confirm: {
     heading: "Bekräfta inloggning",
