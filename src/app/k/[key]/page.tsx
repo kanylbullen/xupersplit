@@ -30,22 +30,22 @@ export async function generateMetadata({
   // Keep the split out of search engines, but give link-unfurlers a clean,
   // generic English card (the OG image is inherited from the app root).
   const inviteDescription =
-    "You've been invited to split shared expenses on Xupersplit. Open the link to add what you paid and see who owes what.";
+    "You've been invited to split shared expenses on xupersplit. Open the link to add what you paid and see who owes what.";
   return {
     title:
       data && data !== "forbidden"
-        ? `${data.split.title} — Xupersplit`
-        : "Xupersplit",
+        ? `${data.split.title} — xupersplit`
+        : "xupersplit",
     robots: { index: false, follow: false },
     openGraph: {
       type: "website",
-      siteName: "Xupersplit",
-      title: "You've been invited to a Xupersplit",
+      siteName: "xupersplit",
+      title: "You've been invited to a xupersplit",
       description: inviteDescription,
     },
     twitter: {
       card: "summary_large_image",
-      title: "You've been invited to a Xupersplit",
+      title: "You've been invited to a xupersplit",
       description: inviteDescription,
     },
     // Farcaster Mini App: sharing this split opens it as a launch card in-feed.
