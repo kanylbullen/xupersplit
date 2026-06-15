@@ -72,6 +72,8 @@ const nb: Dict = {
     howToJoin: "Hvordan blir man med?",
     claimSelf: "Velge sitt eget navn",
     claimInvite: "Invitere via e-post",
+    requireFarcaster: "Krev Farcaster-innlogging",
+    requireFarcasterHint: "Alle blir med via Farcaster-kontoen sin — velg plass inne i Warpcast.",
     inviteEmailPlaceholder: "deltakerens e-post",
   },
   members: {
@@ -84,6 +86,7 @@ const nb: Dict = {
     loginFirst: "Logg inn for å velge plassen din i denne splitten.",
     pickName: "Hvem er du? Velg plassen din:",
     noneLeft: "Alle plasser er allerede tatt. Be skaperen legge deg til.",
+    farcasterOnly: "Denne splitten er for Farcaster-kontoer — åpne den i Warpcast for å bli med.",
   },
   login: {
     title: "Logg inn",
@@ -175,6 +178,8 @@ const nb: Dict = {
     readyMark: "Jeg er ferdig — ingen flere utgifter",
     readyUndo: "Angre — jeg har flere utgifter",
     notAllSeenHint: "Ikke alle har sett splitten ennå.",
+    inviteFarcaster: "Inviter på Farcaster",
+    inviteFarcasterText: "Vi deler {title} på xupersplit — legg inn det du betalte og gjør opp 👇",
   },
   settle: {
     title: "{from} betaler {to}",
@@ -337,6 +342,7 @@ const nb: Dict = {
     slot_taken: "Den plassen er allerede tatt.",
     not_invited: "Denne plassen er reservert for en annen e-postadresse.",
     not_secure: "Dette er ikke en sikker splitt.",
+    farcaster_required: "Denne splitten krever en Farcaster-konto — åpne den i Warpcast.",
     rate_limited:
       "Uvanlig mange xupersplits opprettes akkurat nå — vent litt og prøv igjen.",
     need_two_participants: "Legg til minst to deltakere.",

@@ -183,6 +183,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             splitKey={split.key}
             participants={participants}
             loggedIn={loggedIn}
+            requireFarcaster={split.require_farcaster}
           />
         )}
         {tab === "entries" ? (
@@ -203,6 +204,8 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             participants={participants}
             currency={split.currency}
             meId={meId}
+            isCreator={split.is_creator}
+            secure={secure}
             onEditEntry={(entry) =>
               setEntryDialog({ open: true, entry, kind: entry.kind })
             }

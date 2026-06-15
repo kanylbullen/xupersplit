@@ -157,6 +157,22 @@ export function NewSplitForm({
                   onSelect={() => setClaimMode("invite")}
                 />
               </fieldset>
+
+              <label className="flex cursor-pointer items-start gap-2.5 border-t border-stone-100 pt-4">
+                <input
+                  type="checkbox"
+                  name="require_farcaster"
+                  className="mt-0.5 h-4 w-4 accent-teal-600"
+                />
+                <span>
+                  <span className="text-sm font-semibold">
+                    {dict.new.requireFarcaster}
+                  </span>
+                  <span className="block text-xs text-stone-400">
+                    {dict.new.requireFarcasterHint}
+                  </span>
+                </span>
+              </label>
             </div>
           )}
         </div>

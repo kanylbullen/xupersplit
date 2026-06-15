@@ -21,6 +21,9 @@ export type Participant = {
   seen_at: string | null;
   /** Set when this participant marked themselves done adding expenses. */
   ready_at: string | null;
+  /** Farcaster identity attached when claimed from a Farcaster Mini App. */
+  fc_username: string | null;
+  fc_pfp_url: string | null;
 };
 
 export type AccessMode = "all" | "payers";
@@ -65,6 +68,8 @@ export type Split = {
   access_mode: AccessMode;
   visibility: Visibility;
   claim_mode: ClaimMode;
+  /** Secure splits: every claimer must arrive with a Farcaster identity. */
+  require_farcaster: boolean;
   /** True when the current viewer created this split. */
   is_creator: boolean;
   /** The viewer's claimed participant id, or null. */

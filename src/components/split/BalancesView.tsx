@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { track } from "@vercel/analytics";
 import type { Entry, Participant } from "@/lib/types";
 import {
@@ -41,6 +41,8 @@ export function BalancesView({
   participants,
   currency,
   meId,
+  isCreator,
+  secure,
   onEditEntry,
 }: {
   splitKey: string;
@@ -49,6 +51,8 @@ export function BalancesView({
   participants: Participant[];
   currency: string;
   meId: string | null;
+  isCreator: boolean;
+  secure: boolean;
   onEditEntry: (entry: Entry) => void;
 }) {
   const { dict, t, te, locale } = useI18n();
@@ -82,6 +86,31 @@ export function BalancesView({
   // too early (someone might still add expenses).
   const engaged = (p: Participant) => Boolean(p.seen_at || p.ready_at);
   const allSeen = participants.every(engaged);
+
+  // Creator-only Farcaster invite (compose a cast that @-mentions people, with
+  // the split link). Only meaningful inside a Farcaster client.
+  const [inMiniApp, setInMiniApp] = useState(false);
+  useEffect(() => {
+    let active = true;
+    import("@farcaster/miniapp-sdk")
+      .then(({ sdk }) => sdk.isInMiniApp())
+      .then((v) => active && setInMiniApp(v))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  function inviteOnFarcaster() {
+    import("@farcaster/miniapp-sdk")
+      .then(({ sdk }) => {
+        sdk.actions.composeCast({
+          text: t(dict.bal.inviteFarcasterText, { title: splitTitle }),
+          embeds: [`${window.location.origin}/k/${splitKey}`],
+        });
+      })
+      .catch(() => {});
+  }
 
   function toggleReady() {
     if (!me) return;
@@ -343,13 +372,28 @@ export function BalancesView({
               key={p.id}
               className={`flex items-center justify-between gap-3 px-4 py-2.5 ${i > 0 ? "border-t border-stone-100" : ""}`}
             >
-              <span className="min-w-0 flex-1 truncate text-sm font-medium">
-                {p.name}
-                {meId === p.id && (
-                  <span className="ml-1.5 rounded-md bg-primary-soft px-1.5 py-0.5 text-xs font-bold text-primary-dark">
-                    {dict.common.you}
-                  </span>
+              <span className="flex min-w-0 flex-1 items-center gap-2">
+                {p.fc_pfp_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={p.fc_pfp_url}
+                    alt=""
+                    className="h-5 w-5 shrink-0 rounded-full object-cover"
+                  />
                 )}
+                <span className="min-w-0 truncate text-sm font-medium">
+                  {p.name}
+                  {p.fc_username && (
+                    <span className="ml-1 text-xs font-normal text-stone-400">
+                      @{p.fc_username}
+                    </span>
+                  )}
+                  {meId === p.id && (
+                    <span className="ml-1.5 rounded-md bg-primary-soft px-1.5 py-0.5 text-xs font-bold text-primary-dark">
+                      {dict.common.you}
+                    </span>
+                  )}
+                </span>
               </span>
               <span className="shrink-0 text-xs font-semibold">
                 {p.ready_at ? (
@@ -370,6 +414,14 @@ export function BalancesView({
             className="mt-2 text-sm font-semibold text-primary hover:text-primary-dark disabled:opacity-50"
           >
             {me.ready_at ? dict.bal.readyUndo : dict.bal.readyMark}
+          </button>
+        )}
+        {isCreator && secure && inMiniApp && (
+          <button
+            onClick={inviteOnFarcaster}
+            className="mt-2 ml-4 text-sm font-semibold text-[#855DCD] hover:underline"
+          >
+            {dict.bal.inviteFarcaster}
           </button>
         )}
         {!allSeen && (
