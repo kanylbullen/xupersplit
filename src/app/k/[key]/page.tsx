@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { SplitData } from "@/lib/types";
 import { SplitApp } from "@/components/split/SplitApp";
 import { MembersOnly } from "@/components/split/MembersOnly";
+import { miniappEmbed, APP_ORIGIN } from "@/lib/miniapp";
 
 type Fetched = SplitData | "forbidden" | null;
 
@@ -47,6 +48,8 @@ export async function generateMetadata({
       title: "You've been invited to a Xupersplit",
       description: inviteDescription,
     },
+    // Farcaster Mini App: sharing this split opens it as a launch card in-feed.
+    other: { "fc:miniapp": miniappEmbed(`${APP_ORIGIN}/k/${key}`) },
   };
 }
 

@@ -11,6 +11,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@farcaster/miniapp-sdk": "^0.3.0",
     "@reown/appkit": "^1.8.20",
     "@reown/appkit-adapter-solana": "^1.8.20",
     "@reown/appkit-adapter-wagmi": "^1.8.20",

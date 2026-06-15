@@ -3,8 +3,10 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 import { CookieNotice } from "@/components/CookieNotice";
+import { MiniAppReady } from "@/components/MiniAppReady";
 import { I18nProvider } from "@/lib/i18n/client";
 import { getI18n } from "@/lib/i18n/server";
+import { miniappEmbed, APP_ORIGIN } from "@/lib/miniapp";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,6 +35,8 @@ export const metadata: Metadata = {
     title: "Xupersplit — split shared expenses",
     description: DESCRIPTION,
   },
+  // Farcaster Mini App launch card (sharing split.xuper.fun opens the app).
+  other: { "fc:miniapp": miniappEmbed(APP_ORIGIN) },
 };
 
 export const viewport: Viewport = {
@@ -57,6 +61,7 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
             <CookieNotice />
+            <MiniAppReady />
             <Analytics />
           </ThemeProvider>
         </I18nProvider>
