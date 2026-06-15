@@ -204,6 +204,7 @@ const is: Dict = {
     notAllSeenHint: "Ekki hafa allir séð skiptinguna enn.",
     inviteFarcaster: "Bjóða á Farcaster",
     inviteFarcasterCopied: "Hlekkur afritaður — sendu hann sem Direct Cast 🟣",
+    inviteFarcasterCast: "— skiptum {title} á xupersplit. Bættu við því sem þú borgaðir og gerðu upp 👇",
   },
   settle: {
     title: "{from} greiðir {to}",

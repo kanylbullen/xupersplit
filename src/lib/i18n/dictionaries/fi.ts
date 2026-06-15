@@ -204,6 +204,7 @@ const fi: Dict = {
     notAllSeenHint: "Kaikki eivät ole vielä nähneet jakoa.",
     inviteFarcaster: "Kutsu Farcasterissa",
     inviteFarcasterCopied: "Linkki kopioitu — lähetä se Direct Castina 🟣",
+    inviteFarcasterCast: "— jaetaan {title} xupersplitissä. Lisää maksusi ja selvitä 👇",
   },
   settle: {
     title: "{from} maksaa {to}",

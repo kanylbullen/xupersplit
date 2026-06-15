@@ -205,6 +205,7 @@ const sv = {
     notAllSeenHint: "Alla har inte sett spliten ännu.",
     inviteFarcaster: "Bjud in på Farcaster",
     inviteFarcasterCopied: "Länk kopierad — skicka den som en Direct Cast 🟣",
+    inviteFarcasterCast: "— vi delar {title} på xupersplit. Lägg in vad du betalat och gör upp 👇",
   },
   settle: {
     title: "{from} betalar {to}",
