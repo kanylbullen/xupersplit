@@ -5,6 +5,7 @@ import { BeerButton } from "@/components/BeerButton";
 import { MySplits } from "@/components/MySplits";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 import { RegisterPasskeyButton } from "@/components/auth/RegisterPasskeyButton";
+import { MiniAppSwap } from "@/components/MiniAppSwap";
 import { getI18n } from "@/lib/i18n/server";
 
 export default async function Home() {
@@ -72,7 +73,9 @@ export default async function Home() {
         >
           {dict.landing.create}
         </Link>
-        <p className="mt-3 text-sm text-stone-400">{dict.landing.noLogin}</p>
+        <p className="mt-3 text-sm text-stone-400">
+          <MiniAppSwap base={dict.landing.noLogin} alt={dict.landing.noLoginFarcaster} />
+        </p>
       </section>
 
       <MySplits server={mine} />
@@ -92,7 +95,7 @@ export default async function Home() {
       <footer className="mt-16 flex flex-col items-center gap-4 text-center text-xs text-stone-400">
         <BeerButton />
         <span>
-          {dict.footer.tagline} ·{" "}
+          <MiniAppSwap base={dict.footer.tagline} alt={dict.footer.taglineFarcaster} /> ·{" "}
           <Link href="/privacy" className="hover:text-ink">
             {dict.footer.privacy}
           </Link>{" "}

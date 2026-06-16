@@ -46,8 +46,12 @@ export async function POST(req: NextRequest) {
   try {
     const payload = await quickAuth.verifyJwt({ token: body.token, domain: DOMAIN });
     fid = Number(payload.sub);
-    if (!Number.isInteger(fid) || fid <= 0) throw new Error("bad fid");
-  } catch {
+    if (!Number.isInteger(fid) || fid <= 0) throw new Error(`bad fid: ${payload.sub}`);
+  } catch (e) {
+    console.error("[quickauth] verify failed", {
+      domain: DOMAIN,
+      message: e instanceof Error ? e.message : String(e),
+    });
     return NextResponse.json({ error: "invalid_token" }, { status: 401 });
   }
 
@@ -73,6 +77,7 @@ export async function POST(req: NextRequest) {
     app_metadata: { fid },
   });
   if (created.error && !/already|exist|regist/i.test(created.error.message)) {
+    console.error("[quickauth] createUser failed", { fid, message: created.error.message });
     return NextResponse.json({ error: "create_failed" }, { status: 500 });
   }
 
@@ -80,6 +85,7 @@ export async function POST(req: NextRequest) {
   const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
   const tokenHash = link.data?.properties?.hashed_token;
   if (link.error || !tokenHash) {
+    console.error("[quickauth] generateLink failed", { fid, message: link.error?.message });
     return NextResponse.json({ error: "link_failed" }, { status: 500 });
   }
 

@@ -25,6 +25,7 @@ const sv = {
       "Samla resans alla utlägg på ett ställe och se direkt vem som ska få tillbaka vad. Inga konton — bara en länk.",
     create: "Skapa en ny xupersplit",
     noLogin: "Ingen inloggning behövs.",
+    noLoginFarcaster: "Ingen inloggning behövs — eller logga in med Farcaster.",
     step1Title: "1. Skapa",
     step1Body: "Döp din xupersplit och lägg till vilka som är med.",
     step2Title: "2. Dela länken",
@@ -36,6 +37,7 @@ const sv = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · byggd med kärlek, kaffe och öl",
+    taglineFarcaster: "xupersplit · dela notan, gör upp onchain",
     privacy: "integritetspolicy",
     cookies: "cookies",
     openSource: "Öppen källkod på GitHub",

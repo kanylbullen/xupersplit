@@ -25,6 +25,7 @@ const is: Dict = {
       "Safnaðu öllum sameiginlegum útgjöldum á einn stað og sjáðu strax hver skuldar hvað. Engir reikningar — bara hlekkur.",
     create: "Búa til nýjan xupersplit",
     noLogin: "Engin innskráning nauðsynleg.",
+    noLoginFarcaster: "Engin innskráning — eða skráðu þig inn með Farcaster.",
     step1Title: "1. Búa til",
     step1Body: "Gefðu xupersplitnum nafn og bættu við hverjir eru með.",
     step2Title: "2. Deildu hlekknum",
@@ -36,6 +37,7 @@ const is: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · gert með ást, kaffi og bjór",
+    taglineFarcaster: "xupersplit · skiptu reikningi, gerðu upp onchain",
     privacy: "persónuvernd",
     cookies: "vafrakökur",
     openSource: "Opinn hugbúnaður á GitHub",
