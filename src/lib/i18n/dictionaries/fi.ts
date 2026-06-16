@@ -20,7 +20,9 @@ const fi: Dict = {
   },
   landing: {
     hero1: "Jaa kulut.",
+    hero1Farcaster: "Jaa lasku.",
     hero2: "Vältä riidat.",
+    hero2Farcaster: "Maksa onchain.",
     subtitle:
       "Kokoa kaikki yhteiset kulut yhteen paikkaan ja näe heti, kuka on velkaa kenelle. Ei tilejä — vain linkki.",
     create: "Luo uusi xupersplit",
@@ -37,7 +39,6 @@ const fi: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · tehty rakkaudella, kahvilla ja oluella",
-    taglineFarcaster: "xupersplit · jaa lasku, maksa onchain",
     privacy: "tietosuoja",
     cookies: "evästeet",
     openSource: "Avoin lähdekoodi GitHubissa",

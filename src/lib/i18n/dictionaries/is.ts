@@ -20,7 +20,9 @@ const is: Dict = {
   },
   landing: {
     hero1: "Skiptu kostnaði.",
+    hero1Farcaster: "Skiptu reikningnum.",
     hero2: "Slepptu þrasinu.",
+    hero2Farcaster: "Gerðu upp onchain.",
     subtitle:
       "Safnaðu öllum sameiginlegum útgjöldum á einn stað og sjáðu strax hver skuldar hvað. Engir reikningar — bara hlekkur.",
     create: "Búa til nýjan xupersplit",
@@ -37,7 +39,6 @@ const is: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · gert með ást, kaffi og bjór",
-    taglineFarcaster: "xupersplit · skiptu reikningi, gerðu upp onchain",
     privacy: "persónuvernd",
     cookies: "vafrakökur",
     openSource: "Opinn hugbúnaður á GitHub",

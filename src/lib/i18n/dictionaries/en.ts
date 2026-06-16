@@ -20,7 +20,9 @@ const en: Dict = {
   },
   landing: {
     hero1: "Split expenses.",
+    hero1Farcaster: "Split bills.",
     hero2: "Skip the squabble.",
+    hero2Farcaster: "Settle onchain.",
     subtitle:
       "Gather every shared cost in one place and see at a glance who owes what. No accounts — just a link.",
     create: "Create a new xupersplit",
@@ -37,7 +39,6 @@ const en: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · built with love, coffee and beer",
-    taglineFarcaster: "xupersplit · split bills, settle onchain",
     privacy: "privacy policy",
     cookies: "cookies",
     openSource: "Open source on GitHub",

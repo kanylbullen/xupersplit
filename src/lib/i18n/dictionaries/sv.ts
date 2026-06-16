@@ -20,7 +20,9 @@ const sv = {
   },
   landing: {
     hero1: "Dela utgifter.",
+    hero1Farcaster: "Dela notan.",
     hero2: "Slipp tjafset.",
+    hero2Farcaster: "Gör upp onchain.",
     subtitle:
       "Samla resans alla utlägg på ett ställe och se direkt vem som ska få tillbaka vad. Inga konton — bara en länk.",
     create: "Skapa en ny xupersplit",
@@ -37,7 +39,6 @@ const sv = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · byggd med kärlek, kaffe och öl",
-    taglineFarcaster: "xupersplit · dela notan, gör upp onchain",
     privacy: "integritetspolicy",
     cookies: "cookies",
     openSource: "Öppen källkod på GitHub",
