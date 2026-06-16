@@ -80,10 +80,14 @@ function Web3LoginButtonInner() {
   const signInFarcaster = useCallback(async () => {
     setBusy(true);
     setError(null);
+    // TEMP: staged diagnostics so the in-app toast names the failing step.
+    let stage = "sdk";
     try {
       const { sdk } = await import("@farcaster/miniapp-sdk");
+      if (!sdk?.quickAuth?.getToken) throw new Error("quickAuth missing");
+      stage = "token";
       const { token } = await sdk.quickAuth.getToken();
-      if (!token) throw new Error("No Quick Auth token");
+      if (!token) throw new Error("empty token");
       // Display fields (client-asserted) so the account shows a name/avatar.
       let username: string | undefined;
       let pfpUrl: string | undefined;
@@ -94,13 +98,23 @@ function Web3LoginButtonInner() {
       } catch {
         // context is best-effort; the FID in the token is what matters
       }
+      stage = "api";
       const res = await fetch("/api/fc/quickauth", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ token, username, pfpUrl }),
       });
-      if (!res.ok) throw new Error(`quickauth ${res.status}`);
+      if (!res.ok) {
+        let detail = "";
+        try {
+          detail = JSON.stringify(await res.json());
+        } catch {
+          /* non-JSON body */
+        }
+        throw new Error(`${res.status} ${detail}`);
+      }
       const { token_hash } = (await res.json()) as { token_hash: string };
+      stage = "session";
       const { error } = await createClient().auth.verifyOtp({
         type: "magiclink",
         token_hash,
@@ -110,7 +124,8 @@ function Web3LoginButtonInner() {
       router.push("/");
       router.refresh();
     } catch (e) {
-      setError(dict.login.web3Error);
+      const msg = e instanceof Error ? e.message : String(e);
+      setError(`FC [${stage}]: ${msg}`);
       if (e instanceof Error && process.env.NODE_ENV !== "production") {
         console.error(e);
       }
@@ -118,7 +133,7 @@ function Web3LoginButtonInner() {
       setBusy(false);
       intent.current = false;
     }
-  }, [router, dict.login.web3Error]);
+  }, [router]);
 
   // Continue into signing once the wallet connects (web modal has no callback).
   useEffect(() => {
