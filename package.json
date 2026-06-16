@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@farcaster/miniapp-sdk": "^0.3.0",
+    "@farcaster/quick-auth": "^0.0.8",
     "@reown/appkit": "^1.8.20",
     "@reown/appkit-adapter-solana": "^1.8.20",
     "@reown/appkit-adapter-wagmi": "^1.8.20",
