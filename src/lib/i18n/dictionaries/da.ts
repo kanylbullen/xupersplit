@@ -20,7 +20,9 @@ const da: Dict = {
   },
   landing: {
     hero1: "Del udgifter.",
+    hero1Farcaster: "Del regningen.",
     hero2: "Slip for skænderiet.",
+    hero2Farcaster: "Gør op onchain.",
     subtitle:
       "Saml alle fælles udgifter ét sted og se med det samme, hvem der skylder hvad. Ingen konti — bare et link.",
     create: "Opret en ny xupersplit",
@@ -37,7 +39,6 @@ const da: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · lavet med kærlighed, kaffe og øl",
-    taglineFarcaster: "xupersplit · del regningen, gør op onchain",
     privacy: "privatliv",
     cookies: "cookies",
     openSource: "Open source på GitHub",

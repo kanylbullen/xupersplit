@@ -60,9 +60,11 @@ export default async function Home() {
 
       <section className="mb-12 text-center">
         <h1 className="mb-3 text-4xl font-black tracking-tight sm:text-5xl">
-          {dict.landing.hero1}
+          <MiniAppSwap base={dict.landing.hero1} alt={dict.landing.hero1Farcaster} />
           <br />
-          <span className="text-primary">{dict.landing.hero2}</span>
+          <span className="text-primary">
+            <MiniAppSwap base={dict.landing.hero2} alt={dict.landing.hero2Farcaster} />
+          </span>
         </h1>
         <p className="mx-auto mb-8 max-w-md text-lg text-stone-500">
           {dict.landing.subtitle}
@@ -95,7 +97,7 @@ export default async function Home() {
       <footer className="mt-16 flex flex-col items-center gap-4 text-center text-xs text-stone-400">
         <BeerButton />
         <span>
-          <MiniAppSwap base={dict.footer.tagline} alt={dict.footer.taglineFarcaster} /> ·{" "}
+          {dict.footer.tagline} ·{" "}
           <Link href="/privacy" className="hover:text-ink">
             {dict.footer.privacy}
           </Link>{" "}
