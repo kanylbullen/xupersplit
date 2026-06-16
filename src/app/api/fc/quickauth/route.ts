@@ -88,7 +88,6 @@ export async function POST(req: NextRequest) {
     console.error("[quickauth] generateLink failed", { fid, message: link.error?.message });
     return NextResponse.json({ error: "link_failed" }, { status: 500 });
   }
-  console.log("[quickauth] ok", { fid });
 
   // Refresh display fields (username/pfp can change between logins).
   if (link.data.user?.id) {

@@ -25,6 +25,7 @@ const fi: Dict = {
       "Kokoa kaikki yhteiset kulut yhteen paikkaan ja näe heti, kuka on velkaa kenelle. Ei tilejä — vain linkki.",
     create: "Luo uusi xupersplit",
     noLogin: "Kirjautumista ei tarvita.",
+    noLoginFarcaster: "Ei kirjautumista — tai kirjaudu Farcasterilla.",
     step1Title: "1. Luo",
     step1Body: "Anna xupersplitille nimi ja lisää, ketkä ovat mukana.",
     step2Title: "2. Jaa linkki",
@@ -36,6 +37,7 @@ const fi: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · tehty rakkaudella, kahvilla ja oluella",
+    taglineFarcaster: "xupersplit · jaa lasku, maksa onchain",
     privacy: "tietosuoja",
     cookies: "evästeet",
     openSource: "Avoin lähdekoodi GitHubissa",

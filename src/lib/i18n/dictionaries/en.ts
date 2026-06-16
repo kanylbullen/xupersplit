@@ -25,6 +25,7 @@ const en: Dict = {
       "Gather every shared cost in one place and see at a glance who owes what. No accounts — just a link.",
     create: "Create a new xupersplit",
     noLogin: "No sign-in needed.",
+    noLoginFarcaster: "No sign-in needed — or sign in with Farcaster.",
     step1Title: "1. Create",
     step1Body: "Name your xupersplit and add who's in.",
     step2Title: "2. Share the link",
@@ -36,6 +37,7 @@ const en: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · built with love, coffee and beer",
+    taglineFarcaster: "xupersplit · split bills, settle onchain",
     privacy: "privacy policy",
     cookies: "cookies",
     openSource: "Open source on GitHub",

@@ -25,6 +25,7 @@ const da: Dict = {
       "Saml alle fælles udgifter ét sted og se med det samme, hvem der skylder hvad. Ingen konti — bare et link.",
     create: "Opret en ny xupersplit",
     noLogin: "Ingen login nødvendig.",
+    noLoginFarcaster: "Ingen login nødvendig — eller log ind med Farcaster.",
     step1Title: "1. Opret",
     step1Body: "Giv din xupersplit et navn og tilføj, hvem der er med.",
     step2Title: "2. Del linket",
@@ -36,6 +37,7 @@ const da: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · lavet med kærlighed, kaffe og øl",
+    taglineFarcaster: "xupersplit · del regningen, gør op onchain",
     privacy: "privatliv",
     cookies: "cookies",
     openSource: "Open source på GitHub",
