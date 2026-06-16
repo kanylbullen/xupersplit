@@ -10,10 +10,11 @@ import { walletEnabled } from "@/components/split/WalletProvider";
 import { useI18n } from "@/lib/i18n/client";
 
 // Sign in with Ethereum (EIP-4361 / SIWE) via Supabase Auth's Web3 provider.
-// On the web this uses the Reown/wagmi wallet; inside a Farcaster Mini App it
-// uses the host wallet the SDK exposes — one tap, no modal ("Sign in with
-// Farcaster"). Either way the wallet signs a SIWE message and Supabase issues a
-// session. No password, no email. Only shown when WalletConnect is configured.
+// On the web this uses the Reown/wagmi wallet — the wallet signs a SIWE message
+// and Supabase issues a session. Inside a Farcaster Mini App we instead use
+// native Quick Auth ("Sign in with Farcaster"): the host hands us a signed FID
+// token with zero friction (no signature prompt), which our /api/fc/quickauth
+// route bridges into a Supabase session. No password, no email either way.
 function Web3LoginButtonInner() {
   const { dict } = useI18n();
   const router = useRouter();
@@ -74,23 +75,50 @@ function Web3LoginButtonInner() {
     await siweWith(provider, "wallet");
   }, [connector, siweWith]);
 
-  // Mini App path: SIWE with the Farcaster host wallet (no modal).
+  // Mini App path: native Quick Auth — a signed FID token, no wallet signature.
+  // We exchange it server-side for a one-time login token, then for a session.
   const signInFarcaster = useCallback(async () => {
     setBusy(true);
     setError(null);
     try {
       const { sdk } = await import("@farcaster/miniapp-sdk");
-      const provider = await sdk.wallet.getEthereumProvider();
-      if (!provider) throw new Error("No Farcaster wallet available");
-      await siweWith(provider, "farcaster");
+      const { token } = await sdk.quickAuth.getToken();
+      if (!token) throw new Error("No Quick Auth token");
+      // Display fields (client-asserted) so the account shows a name/avatar.
+      let username: string | undefined;
+      let pfpUrl: string | undefined;
+      try {
+        const ctx = await sdk.context;
+        username = ctx?.user?.username;
+        pfpUrl = ctx?.user?.pfpUrl;
+      } catch {
+        // context is best-effort; the FID in the token is what matters
+      }
+      const res = await fetch("/api/fc/quickauth", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ token, username, pfpUrl }),
+      });
+      if (!res.ok) throw new Error(`quickauth ${res.status}`);
+      const { token_hash } = (await res.json()) as { token_hash: string };
+      const { error } = await createClient().auth.verifyOtp({
+        type: "magiclink",
+        token_hash,
+      });
+      if (error) throw error;
+      track("web3_login", { via: "farcaster" });
+      router.push("/");
+      router.refresh();
     } catch (e) {
       setError(dict.login.web3Error);
       if (e instanceof Error && process.env.NODE_ENV !== "production") {
         console.error(e);
       }
+    } finally {
       setBusy(false);
+      intent.current = false;
     }
-  }, [siweWith, dict.login.web3Error]);
+  }, [router, dict.login.web3Error]);
 
   // Continue into signing once the wallet connects (web modal has no callback).
   useEffect(() => {
