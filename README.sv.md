@@ -13,6 +13,10 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 [![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
+<br />
+
+<img src="docs/demo-sv.gif" alt="Xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="260" />
+
 </div>
 
 ---

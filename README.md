@@ -13,6 +13,10 @@ automatically, with one-tap payments straight from the balance view.
 [![License: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
+<br />
+
+<img src="docs/demo.gif" alt="Xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="260" />
+
 </div>
 
 ---
