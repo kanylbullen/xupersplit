@@ -49,3 +49,7 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# demo recording raw output (committed gifs live in docs/)
+demo-out/
+demo-out-sv/
