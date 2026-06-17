@@ -21,6 +21,16 @@ export default async function Home() {
     mine = (data as SplitSummary[] | null) ?? [];
   }
 
+  // Farcaster (Quick Auth) users have no real email — show their @handle, never
+  // the synthetic <fid>@fc.split.xuper.fun key.
+  const fcUsername = (user?.user_metadata as { fc_username?: string } | undefined)
+    ?.fc_username;
+  const displayName = fcUsername
+    ? `@${fcUsername}`
+    : user?.email?.endsWith("@fc.split.xuper.fun")
+      ? `FID ${user.email.split("@")[0]}`
+      : user?.email ?? "";
+
   const steps = [
     [dict.landing.step1Title, dict.landing.step1Body],
     [dict.landing.step2Title, dict.landing.step2Body],
@@ -40,7 +50,7 @@ export default async function Home() {
               <RegisterPasskeyButton />
               <form action="/auth/signout" method="post" className="flex items-center gap-3">
                 <span className="hidden text-sm text-stone-400 sm:inline">
-                  {t(dict.nav.signedInAs, { email: user.email ?? "" })}
+                  {t(dict.nav.signedInAs, { email: displayName })}
                 </span>
                 <button className="text-sm font-medium text-stone-500 hover:text-ink">
                   {dict.nav.logout}
