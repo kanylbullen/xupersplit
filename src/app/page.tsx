@@ -8,6 +8,11 @@ import { RegisterPasskeyButton } from "@/components/auth/RegisterPasskeyButton";
 import { MiniAppSwap } from "@/components/MiniAppSwap";
 import { getI18n } from "@/lib/i18n/server";
 
+// Self-canonical for the landing page (other pages self-canonicalize).
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default async function Home() {
   const { dict, t } = await getI18n();
   const supabase = await createClient();
