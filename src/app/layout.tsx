@@ -19,8 +19,22 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://split.xuper.fun"),
-  title: "Xupersplit — split shared expenses",
+  title: {
+    default: "Xupersplit — split shared expenses",
+    template: "%s — Xupersplit",
+  },
   description: DESCRIPTION,
+  applicationName: "Xupersplit",
+  keywords: [
+    "split expenses",
+    "expense splitter",
+    "split bills",
+    "settle up",
+    "group expenses",
+    "crypto payments",
+    "USDC",
+    "Swish",
+  ],
   // The opengraph-image / twitter-image files attach the card automatically.
   openGraph: {
     type: "website",
@@ -57,6 +71,21 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Xupersplit",
+              url: "https://split.xuper.fun",
+              applicationCategory: "FinanceApplication",
+              operatingSystem: "Web",
+              description: DESCRIPTION,
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            }),
+          }}
+        />
         <I18nProvider locale={locale} dict={dict}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
