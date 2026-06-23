@@ -1,0 +1,19 @@
+# Xupersplit
+
+> Accountless group expense splitter. Create a split, share the secret link, and
+> everyone adds what they paid — balances and who-owes-whom are worked out
+> automatically. Settle up with crypto (USDC on Base/Arbitrum/Optimism), Swish,
+> Lightning, Revolut, IBAN and more, straight from the balance view. No sign-up
+> required; the unguessable split link is the capability.
+
+## Pages
+- [Home](https://split.xuper.fun/): what it is and how it works
+- [Create a split](https://split.xuper.fun/new): start a new split (no account)
+- [Privacy](https://split.xuper.fun/privacy)
+- [Cookies](https://split.xuper.fun/cookies)
+
+## Key facts
+- Free and accountless. Optional email/wallet/passkey sign-in just makes splits follow you across devices.
+- Individual splits live at /k/<secret-key>. They are private, capability-gated and noindex — never list or crawl them.
+- Also a Farcaster Mini App (native Quick Auth sign-in, settle to a Farcaster wallet).
+- Open source (MIT): https://github.com/kanylbullen/xupersplit

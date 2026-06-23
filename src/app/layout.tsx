@@ -76,13 +76,26 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "WebApplication",
-              name: "Xupersplit",
-              url: "https://split.xuper.fun",
-              applicationCategory: "FinanceApplication",
-              operatingSystem: "Web",
-              description: DESCRIPTION,
-              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://split.xuper.fun/#org",
+                  name: "Xupersplit",
+                  url: "https://split.xuper.fun",
+                  logo: "https://split.xuper.fun/apple-icon.png",
+                  sameAs: ["https://github.com/kanylbullen/xupersplit"],
+                },
+                {
+                  "@type": "WebApplication",
+                  name: "Xupersplit",
+                  url: "https://split.xuper.fun",
+                  applicationCategory: "FinanceApplication",
+                  operatingSystem: "Web",
+                  description: DESCRIPTION,
+                  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+                  publisher: { "@id": "https://split.xuper.fun/#org" },
+                },
+              ],
             }),
           }}
         />
