@@ -91,7 +91,7 @@ const sv = {
     claimSelf: "Välj sitt eget namn",
     claimInvite: "Bjud in specifika personer",
     requireFarcaster: "Kräv Farcaster-inloggning",
-    requireFarcasterHint: "Alla går med via sitt Farcaster-konto — välj din plats inifrån Warpcast.",
+    requireFarcasterHint: "Alla går med via sitt Farcaster-konto — välj din plats inifrån Farcaster.",
     inviteEmailPlaceholder: "e-post till deltagaren",
     inviteHandlePlaceholder: "e-post eller @farcaster",
     fcInviteHint: "Skriv e-post eller @Farcaster-namn — eller tryck 👥 (i Farcaster-appen) för att välja bland dina följда.",
@@ -110,7 +110,7 @@ const sv = {
     loginFirst: "Logga in för att välja din plats i den här spliten.",
     pickName: "Vem är du? Välj din plats:",
     noneLeft: "Alla platser är redan tagna. Be skaparen lägga till dig.",
-    farcasterOnly: "Den här spliten är för Farcaster-konton — öppna den i Warpcast för att gå med.",
+    farcasterOnly: "Den här spliten är för Farcaster-konton — öppna den i Farcaster för att gå med.",
   },
   login: {
     title: "Logga in",
@@ -372,7 +372,7 @@ const sv = {
     slot_taken: "Den platsen är redan tagen.",
     not_invited: "Den här platsen är reserverad för en annan e-postadress.",
     not_secure: "Det här är inte en säker split.",
-    farcaster_required: "Den här spliten kräver ett Farcaster-konto — öppna den i Warpcast.",
+    farcaster_required: "Den här spliten kräver ett Farcaster-konto — öppna den i Farcaster.",
     fc_user_not_found: "Ingen Farcaster-användare med det namnet — kolla stavningen.",
     rate_limited:
       "Det skapas ovanligt många xupersplits just nu — vänta en stund och prova igen.",

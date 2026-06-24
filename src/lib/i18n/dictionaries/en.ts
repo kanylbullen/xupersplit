@@ -90,7 +90,7 @@ const en: Dict = {
     claimSelf: "Pick their own name",
     claimInvite: "Invite specific people",
     requireFarcaster: "Require Farcaster login",
-    requireFarcasterHint: "Everyone joins with their Farcaster account — claim a spot inside Warpcast.",
+    requireFarcasterHint: "Everyone joins with their Farcaster account — claim a spot inside Farcaster.",
     inviteEmailPlaceholder: "participant's email",
     inviteHandlePlaceholder: "email or @farcaster",
     fcInviteHint: "Enter an email or @Farcaster handle — or tap 👥 (in the Farcaster app) to pick from who you follow.",
@@ -109,7 +109,7 @@ const en: Dict = {
     loginFirst: "Sign in to claim your spot in this split.",
     pickName: "Who are you? Claim your spot:",
     noneLeft: "Every spot is already taken. Ask the creator to add you.",
-    farcasterOnly: "This split is for Farcaster accounts — open it in Warpcast to join.",
+    farcasterOnly: "This split is for Farcaster accounts — open it in Farcaster to join.",
   },
   login: {
     title: "Log in",
@@ -370,7 +370,7 @@ const en: Dict = {
     slot_taken: "That spot is already taken.",
     not_invited: "This spot is reserved for a different email.",
     not_secure: "This isn't a secure split.",
-    farcaster_required: "This split needs a Farcaster account — open it in Warpcast.",
+    farcaster_required: "This split needs a Farcaster account — open it in Farcaster.",
     fc_user_not_found: "No Farcaster user with that handle — check the spelling.",
     rate_limited:
       "Unusually many xupersplits are being created right now — wait a moment and try again.",
