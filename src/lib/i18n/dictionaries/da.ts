@@ -90,7 +90,7 @@ const da: Dict = {
     claimSelf: "Vælge sit eget navn",
     claimInvite: "Invitér bestemte personer",
     requireFarcaster: "Kræv Farcaster-login",
-    requireFarcasterHint: "Alle deltager med deres Farcaster-konto — vælg en plads inde i Warpcast.",
+    requireFarcasterHint: "Alle deltager med deres Farcaster-konto — vælg en plads inde i Farcaster.",
     inviteEmailPlaceholder: "deltagerens e-mail",
     inviteHandlePlaceholder: "e-mail eller @farcaster",
     fcInviteHint: "Skriv e-mail eller @Farcaster-navn — eller tryk 👥 (i Farcaster-appen) for at vælge blandt dem du følger.",
@@ -109,7 +109,7 @@ const da: Dict = {
     loginFirst: "Log ind for at vælge din plads i denne split.",
     pickName: "Hvem er du? Vælg din plads:",
     noneLeft: "Alle pladser er allerede taget. Bed skaberen om at tilføje dig.",
-    farcasterOnly: "Denne split er for Farcaster-konti — åbn den i Warpcast for at deltage.",
+    farcasterOnly: "Denne split er for Farcaster-konti — åbn den i Farcaster for at deltage.",
   },
   login: {
     title: "Log ind",
@@ -370,7 +370,7 @@ const da: Dict = {
     slot_taken: "Den plads er allerede taget.",
     not_invited: "Denne plads er reserveret til en anden e-mail.",
     not_secure: "Dette er ikke en sikker split.",
-    farcaster_required: "Denne split kræver en Farcaster-konto — åbn den i Warpcast.",
+    farcaster_required: "Denne split kræver en Farcaster-konto — åbn den i Farcaster.",
     fc_user_not_found: "Ingen Farcaster-bruger med det navn — tjek stavningen.",
     rate_limited:
       "Usædvanligt mange xupersplits oprettes lige nu — vent lidt og prøv igen.",

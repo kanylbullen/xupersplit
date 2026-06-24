@@ -35,7 +35,7 @@ see the app *with the crypto pay buttons visible*. Optimise that:
 - **OG preview** sells the crypto angle, not just "split expenses".
 - **"settle in crypto" in shared views** — a discreet "made with Xupersplit ·
   settle in USDC/sats" so non-users see the hook.
-- **"Share to Warpcast / X" button** on the balances view — one tap → cast/tweet
+- **"Share to Farcaster / X" button** on the balances view — one tap → cast/tweet
   with link + OG. Highest-ROI product change for organic spread.
 
 ## 3. The sharpest Farcaster move: a Mini App / Frame
@@ -117,7 +117,7 @@ North star = **crypto settlements**, not followers. We already track
 
 ## 9. If you only do three things
 
-1. **"Share to Warpcast/X" button + a Farcaster Frame (≥ level 1)** — make the
+1. **"Share to Farcaster/X" button + a Farcaster Frame (≥ level 1)** — make the
    product self-spreading on the right network.
 2. **Build in public on Farcaster** (/someone-build, /devs) + Show HN on the
    open-source/privacy angle.

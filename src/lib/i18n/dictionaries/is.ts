@@ -90,7 +90,7 @@ const is: Dict = {
     claimSelf: "Velja eigið nafn",
     claimInvite: "Bjóða tilteknum aðilum",
     requireFarcaster: "Krefjast Farcaster-innskráningar",
-    requireFarcasterHint: "Allir taka þátt með Farcaster-reikningnum — veldu sæti inni í Warpcast.",
+    requireFarcasterHint: "Allir taka þátt með Farcaster-reikningnum — veldu sæti inni í Farcaster.",
     inviteEmailPlaceholder: "netfang þátttakanda",
     inviteHandlePlaceholder: "netfang eða @farcaster",
     fcInviteHint: "Skrifaðu netfang eða @Farcaster-nafn — eða ýttu á 👥 (í Farcaster-appinu) til að velja úr þeim sem þú fylgir.",
@@ -109,7 +109,7 @@ const is: Dict = {
     loginFirst: "Skráðu þig inn til að velja sæti þitt í þessari skiptingu.",
     pickName: "Hver ert þú? Veldu sæti þitt:",
     noneLeft: "Öll sæti eru þegar tekin. Biddu höfundinn að bæta þér við.",
-    farcasterOnly: "Þessi skipting er fyrir Farcaster-reikninga — opnaðu hana í Warpcast til að taka þátt.",
+    farcasterOnly: "Þessi skipting er fyrir Farcaster-reikninga — opnaðu hana í Farcaster til að taka þátt.",
   },
   login: {
     title: "Skrá inn",
@@ -370,7 +370,7 @@ const is: Dict = {
     slot_taken: "Þetta sæti er þegar tekið.",
     not_invited: "Þetta sæti er frátekið fyrir annað netfang.",
     not_secure: "Þetta er ekki örugg skipting.",
-    farcaster_required: "Þessi skipting krefst Farcaster-reiknings — opnaðu hana í Warpcast.",
+    farcaster_required: "Þessi skipting krefst Farcaster-reiknings — opnaðu hana í Farcaster.",
     fc_user_not_found: "Enginn Farcaster-notandi með það nafn — athugaðu stafsetninguna.",
     rate_limited:
       "Óvenju margir xupersplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
