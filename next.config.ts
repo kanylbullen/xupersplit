@@ -22,6 +22,12 @@ function supabaseConnectSrc(): string {
 const FRAME_ANCESTORS =
   "frame-ancestors 'self' https://farcaster.xyz https://*.farcaster.xyz https://warpcast.com https://*.warpcast.com https://base.org https://*.base.org https://wallet.coinbase.com https://*.coinbase.com";
 
+// Pre-rebrand hosts that still resolve to this project. Each is redirected to
+// the canonical domain so the site isn't served (and indexed) under several
+// names. tollesplit.vercel.app is the auto-alias left over from the old Vercel
+// project name — it served a full, crawlable copy of the site.
+const LEGACY_HOSTS = ["tollysplit.xuper.fun", "tollesplit.vercel.app"];
+
 // Security headers. Referrer-Policy is the important one here: the secret
 // kitty key lives in the URL (/k/<key>), and no-referrer keeps it out of the
 // Referer header on any outbound navigation (e.g. the buy-me-a-beer link).
@@ -66,17 +72,17 @@ const nextConfig: NextConfig = {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
   // Rebrand: the canonical domain is split.xuper.fun. Permanently redirect the
-  // old tollysplit.xuper.fun host (query string preserved, so magic-link
-  // /auth/confirm?token_hash=… still works). Inert on every other host.
+  // pre-rebrand hosts (query string preserved, so magic-link
+  // /auth/confirm?token_hash=… still works). Inert on every other host —
+  // matching is exact, so deployment URLs (xupersplit-<hash>-*.vercel.app)
+  // and the self-host domain are untouched.
   async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "tollysplit.xuper.fun" }],
-        destination: "https://split.xuper.fun/:path*",
-        permanent: true,
-      },
-    ];
+    return LEGACY_HOSTS.map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://split.xuper.fun/:path*",
+      permanent: true,
+    }));
   },
   // Self-host only: Next acts as the Supabase gateway, routing /auth/v1 →
   // GoTrue and /rest/v1 → PostgREST. The browser then talks to the app's own
