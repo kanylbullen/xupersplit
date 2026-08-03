@@ -42,9 +42,14 @@ const SECTIONS: [string, React.ReactNode][] = [
       show payment links and QR codes) and you can sign in with your email
       (entirely optional — it just makes your splits follow you across devices).
       When a split is created we also store a hashed version of your IP address
-      as spam protection. The lawful basis is our legitimate interest (Art.
-      6(1)(f) GDPR) in providing a simple expense-splitting tool; for sign-in,
-      the email is processed to perform that service at your request.
+      as spam protection. If you send feedback from inside a split, we store
+      what you wrote, the email address you gave us if you gave one, and some
+      diagnostics — your language, your browser, and how many participants and
+      entries the split has — so the problem can be reproduced. The names and
+      amounts in the split aren’t attached to it. The lawful basis is our
+      legitimate interest (Art. 6(1)(f) GDPR) in providing a simple
+      expense-splitting tool and in fixing it when it breaks; for sign-in, the
+      email is processed to perform that service at your request.
     </>,
   ],
   [
@@ -54,7 +59,10 @@ const SECTIONS: [string, React.ReactNode][] = [
       everyone in the split is square. <strong>Whole splits</strong> are deleted
       automatically after 6 months of inactivity (opening a split counts as
       activity); signed-in creators can turn that purge off per split.{" "}
-      <strong>The IP hash</strong> is deleted within 24 hours.
+      <strong>The IP hash</strong> is deleted within 24 hours.{" "}
+      <strong>Feedback you send us</strong> is kept for 12 months and then
+      deleted, address and all — write to us before then if you want it gone
+      sooner.
     </>,
   ],
   [

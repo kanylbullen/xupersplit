@@ -12,6 +12,7 @@ import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
 import { IdentityDialog } from "./IdentityDialog";
 import { SettingsDialog } from "./SettingsDialog";
+import { FeedbackDialog } from "./FeedbackDialog";
 import { WalletProvider } from "./WalletProvider";
 import { ClaimBanner } from "./ClaimBanner";
 
@@ -32,6 +33,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
     kind: EntryKind;
   }>({ open: false, entry: null, kind: "expense" });
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [identityOpen, setIdentityOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -257,6 +259,25 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
           onPick={pickIdentity}
         />
       )}
+      {/* Deliberately quiet and at the bottom: it should be findable when
+          something goes wrong, not compete with the actual task. */}
+      <footer className="mt-10 text-center text-xs text-stone-400">
+        <button onClick={() => setFeedbackOpen(true)} className="hover:text-ink">
+          {dict.feedback.trigger}
+        </button>
+      </footer>
+
+      <FeedbackDialog
+        open={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
+        splitKey={split.key}
+        context={{
+          secure,
+          participants: participants.length,
+          entries: entries.length,
+          currency: split.currency,
+        }}
+      />
       <SettingsDialog
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}

@@ -57,6 +57,24 @@ const is: Dict = {
     step3Body:
       "Stöður reiknast sjálfkrafa, með tilbúnum tillögum um hver borgar hverjum.",
   },
+  feedback: {
+    trigger: "eitthvað bilað?",
+    title: "Senda ábendingu",
+    intro: "Fer beint til þess sem smíðaði þetta — engin þjónustuver.",
+    kindLabel: "Um hvað snýst þetta?",
+    kinds: { bug: "Eitthvað er bilað", suggestion: "Hugmynd", other: "Eitthvað annað" },
+    messageLabel: "Hvað gerðist?",
+    messagePlaceholder: "Ég bætti við útgjöldum og staðan breyttist ekki…",
+    emailLabel: "Netfangið þitt (valfrjálst)",
+    emailPlaceholder: "thu@daemi.is",
+    emailHint: "Aðeins svo þú getir fengið svar. Ekkert annað er sent þangað.",
+    privacyNote:
+      "Tungumálið þitt, vafrinn og stærð skiptingarinnar fylgja með svo hægt sé að endurgera villuna. Nöfnin og upphæðirnar í henni ekki.",
+    send: "Senda",
+    sending: "Sendi…",
+    sent: "Takk — þetta hefur verið sent áfram.",
+    sentWithEmail: "Takk — þetta hefur verið sent áfram. Þú heyrir frá okkur á netfangið sem þú gafst upp.",
+  },
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · gert með ást, kaffi og bjór",
@@ -401,6 +419,9 @@ const is: Dict = {
       "Óvenju margir xupersplitir eru að verða til núna — bíddu aðeins og reyndu aftur.",
     need_two_participants: "Bættu við að minnsta kosti tveimur þátttakendum.",
     title_required: "Gefðu xupersplitnum þínum nafn.",
+    feedback_rate_limited: "Þú hefur þegar sent nokkur skilaboð — bíddu í klukkustund.",
+    feedback_rate_limited_global: "Mikið af ábendingum berst núna — reyndu aftur eftir smástund.",
+    bad_email: "Netfangið lítur ekki rétt út.",
     unknown: "Eitthvað fór úrskeiðis. Reyndu aftur.",
   },
   switcher: {
