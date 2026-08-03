@@ -42,7 +42,7 @@ export async function notifyFeedback(args: {
   ].join("\n");
 
   try {
-    await fetch(RESEND_ENDPOINT, {
+    const response = await fetch(RESEND_ENDPOINT, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -56,7 +56,17 @@ export async function notifyFeedback(args: {
         text: body,
       }),
     });
-  } catch {
-    // Swallowed on purpose — see the note above.
+
+    // A rejected key or an unverified sender answers 401/403 rather than
+    // throwing, so without this the whole notification path could be dead and
+    // look exactly like "nobody has sent feedback yet". The row is already
+    // saved, so this is a log line, not an error the reporter should see.
+    if (!response.ok) {
+      console.error(
+        `Feedback ${args.id} saved but not mailed: Resend returned ${response.status}`,
+      );
+    }
+  } catch (cause) {
+    console.error(`Feedback ${args.id} saved but not mailed:`, cause);
   }
 }
