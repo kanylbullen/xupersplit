@@ -214,6 +214,15 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             }
           />
         )}
+
+        {/* Quiet and last: findable when something goes wrong, not competing
+            with the actual task. Inside pb-28 so the fixed action bar below
+            doesn't cover it. */}
+        <footer className="mt-10 text-center text-xs text-stone-400">
+          <button onClick={() => setFeedbackOpen(true)} className="hover:text-ink">
+            {dict.feedback.trigger}
+          </button>
+        </footer>
       </div>
 
       {/* Secure splits: you must claim a slot before you can add anything
@@ -259,14 +268,6 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
           onPick={pickIdentity}
         />
       )}
-      {/* Deliberately quiet and at the bottom: it should be findable when
-          something goes wrong, not compete with the actual task. */}
-      <footer className="mt-10 text-center text-xs text-stone-400">
-        <button onClick={() => setFeedbackOpen(true)} className="hover:text-ink">
-          {dict.feedback.trigger}
-        </button>
-      </footer>
-
       <FeedbackDialog
         open={feedbackOpen}
         onClose={() => setFeedbackOpen(false)}
