@@ -11,6 +11,7 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 [**split.xuper.fun**](https://split.xuper.fun) · [English](README.md) · Svenska
 
 [![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP-server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
@@ -20,6 +21,15 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 </div>
 
 ---
+
+> **Funkar med AI-agenter.** Xupersplit är även en [MCP-server](#mcp-server) —
+> peka din assistent på en URL så kan den skapa spliten, lägga in vad alla
+> betalat och säga vem som är skyldig vem. Inget konto, ingen API-nyckel,
+> inget att installera.
+>
+> ```
+> claude mcp add --transport http xupersplit https://split.xuper.fun/api/mcp
+> ```
 
 ## Vad det är
 

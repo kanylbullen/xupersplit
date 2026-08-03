@@ -11,6 +11,7 @@ automatically, with one-tap payments straight from the balance view.
 [**split.xuper.fun**](https://split.xuper.fun) · English · [Svenska](README.sv.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
@@ -20,6 +21,14 @@ automatically, with one-tap payments straight from the balance view.
 </div>
 
 ---
+
+> **Works with AI agents.** Xupersplit is an [MCP server](#mcp-server) too —
+> point your assistant at one URL and it can create the split, add what everyone
+> paid and tell you who owes whom. No account, no API key, nothing to install.
+>
+> ```
+> claude mcp add --transport http xupersplit https://split.xuper.fun/api/mcp
+> ```
 
 ## What it is
 
