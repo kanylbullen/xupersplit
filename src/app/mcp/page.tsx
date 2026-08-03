@@ -4,15 +4,35 @@ import { APP_ORIGIN } from "@/lib/miniapp";
 
 const ENDPOINT = `${APP_ORIGIN}/api/mcp`;
 
+const DESCRIPTION =
+  "Xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
+  "it can create a split, add expenses and work out who owes whom — no account, " +
+  "no API key.";
+
+const SHARE_TITLE = "Xupersplit MCP server — split expenses from your AI";
+
 export const metadata: Metadata = {
   // The root layout's template appends " — Xupersplit".
   title: "MCP server",
-  description:
-    "Xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
-    "it can create a split, add expenses and work out who owes whom — no account, " +
-    "no API key.",
+  description: DESCRIPTION,
   // Relative, resolved against metadataBase — same as the landing page.
   alternates: { canonical: "/mcp" },
+  // Without these the card would inherit the site-wide "split shared expenses"
+  // pitch, which doesn't match the page or the image next to it. The image
+  // itself comes from ./opengraph-image.tsx automatically.
+  openGraph: {
+    type: "website",
+    siteName: "Xupersplit",
+    title: SHARE_TITLE,
+    description: DESCRIPTION,
+    url: "/mcp",
+    locale: "en",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SHARE_TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const TOOLS: [string, string][] = [
