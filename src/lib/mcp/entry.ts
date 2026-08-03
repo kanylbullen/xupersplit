@@ -61,6 +61,17 @@ function customShares(
       "Mixing exact amounts and weights in one expense isn't supported — use one or the other."
     );
   }
+  // Half-specified amounts would otherwise fall through to the weight branch
+  // and be dropped without a word.
+  if (withAmount.length > 0 && withAmount.length !== resolved.length) {
+    const missing = resolved
+      .filter((s) => s.amount === undefined)
+      .map((s) => s.participant.name)
+      .join(", ");
+    throw new McpToolError(
+      `Give every person in shares an exact amount, or none of them. Missing: ${missing}.`
+    );
+  }
 
   const seen = new Set<string>();
   for (const s of resolved) {
@@ -72,7 +83,7 @@ function customShares(
 
   // Exact amounts: they're used verbatim, so they have to add up or the
   // balances silently stop matching the receipt.
-  if (withAmount.length === resolved.length) {
+  if (withAmount.length > 0) {
     const cents = resolved.map((s) => toCents(s.amount!, "share amount"));
     const sum = cents.reduce((a, b) => a + b, 0);
     if (sum !== amountCents) {
