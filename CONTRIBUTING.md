@@ -55,6 +55,20 @@ npx tsc --noEmit
 npm run build
 ```
 
+`npm run lint` runs in CI and blocks the merge. It passes today despite a
+backlog of 36 violations, because those are recorded in
+`eslint-suppressions.json` — a baseline, not a pardon. Anything **new** fails.
+
+If you fix violations that are in the baseline (see
+[#80](https://github.com/kanylbullen/xupersplit/issues/80)), prune the entries
+you cleared and commit the result:
+
+```bash
+npx eslint . --prune-suppressions
+```
+
+Warnings don't gate the build, but don't add new ones either.
+
 `main` is protected. Branch, open a PR, and let CI finish — it builds the app and
 runs Playwright smoke tests, and merging is blocked until that passes.
 

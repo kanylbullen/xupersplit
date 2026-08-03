@@ -33,6 +33,12 @@ jobs:
 
       - run: npm ci
 
+      # Before the build, so a lint failure costs seconds rather than minutes.
+      # Existing violations are recorded in eslint-suppressions.json and pass;
+      # anything new fails. Warnings stay advisory and don't gate.
+      - name: Lint
+        run: npm run lint
+
       - name: Install Playwright (Chromium)
         run: npx playwright install --with-deps chromium
 
