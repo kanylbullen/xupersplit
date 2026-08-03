@@ -11,6 +11,8 @@ const is: Dict = {
     you: "þú",
   },
   nav: {
+    account: "Minn aðgangur",
+    menu: "Valmynd",
     signedInAs: "Skráð(ur) inn sem {email}",
     logout: "Skrá út",
     login: "Skrá inn",

@@ -5,24 +5,14 @@ import Link from "next/link";
 import type { SplitSummary } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { LOCALE_INTL } from "@/lib/i18n/config";
-
-type VisitedSplit = { key: string; title: string; at: number };
+import { readVisited, type VisitedSplit } from "@/lib/visited";
 
 export function MySplits({ server }: { server: SplitSummary[] }) {
   const { dict, t, locale } = useI18n();
   const intl = LOCALE_INTL[locale];
   const [visited, setVisited] = useState<VisitedSplit[]>([]);
 
-  useEffect(() => {
-    try {
-      const raw = JSON.parse(
-        localStorage.getItem("xupersplit:visited") ?? "[]"
-      ) as VisitedSplit[];
-      setVisited(raw.filter((v) => v.key && v.title));
-    } catch {
-      // corrupt localStorage — start over
-    }
-  }, []);
+  useEffect(() => setVisited(readVisited()), []);
 
   const serverKeys = new Set(server.map((k) => k.key));
   const localOnly = visited.filter((v) => !serverKeys.has(v.key));
@@ -30,7 +20,7 @@ export function MySplits({ server }: { server: SplitSummary[] }) {
   if (server.length === 0 && localOnly.length === 0) return null;
 
   return (
-    <section className="mb-12">
+    <section id="my-splits" className="mb-12 scroll-mt-4">
       <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-stone-400">
         {dict.mySplits.title}
       </h2>

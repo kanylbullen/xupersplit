@@ -9,7 +9,11 @@ import { useInMiniApp } from "@/lib/useInMiniApp";
 // "Sign in with a passkey" next time. The SDK runs the WebAuthn create ceremony.
 // Hidden inside the Farcaster Mini App — the host webview can't run WebAuthn
 // against our RP there, so the ceremony always fails.
-export function RegisterPasskeyButton() {
+export function RegisterPasskeyButton({
+  className = "text-sm font-medium text-stone-500 hover:text-ink",
+}: {
+  className?: string;
+}) {
   const { dict } = useI18n();
   const inMiniApp = useInMiniApp();
   const [state, setState] = useState<"idle" | "busy" | "done" | "error">("idle");
@@ -28,8 +32,10 @@ export function RegisterPasskeyButton() {
   if (inMiniApp) return null;
 
   if (state === "done") {
+    // `!` so the success green wins over whatever text colour the caller's
+    // class sets — utility order in the class string doesn't decide that.
     return (
-      <span className="text-sm text-positive">{dict.nav.passkeyDone}</span>
+      <span className={`${className} text-positive!`}>{dict.nav.passkeyDone}</span>
     );
   }
 
@@ -37,7 +43,7 @@ export function RegisterPasskeyButton() {
     <button
       onClick={register}
       disabled={state === "busy"}
-      className="text-sm font-medium text-stone-500 hover:text-ink disabled:opacity-50"
+      className={`${className} disabled:opacity-50`}
     >
       {state === "error" ? dict.nav.passkeyError : dict.nav.addPasskey}
     </button>

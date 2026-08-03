@@ -11,6 +11,8 @@ const nb: Dict = {
     you: "deg",
   },
   nav: {
+    account: "Min konto",
+    menu: "Meny",
     signedInAs: "Logget inn som {email}",
     logout: "Logg ut",
     login: "Logg inn",

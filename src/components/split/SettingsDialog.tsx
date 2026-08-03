@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useTheme } from "next-themes";
 import type { Split, Participant } from "@/lib/types";
 import { CURRENCIES } from "@/lib/money";
 import Link from "next/link";
@@ -25,6 +24,7 @@ import {
 import { Button, Dialog, Input, Label, Select } from "@/components/ui";
 import { useI18n } from "@/lib/i18n/client";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { exportCsv, exportJson } from "@/lib/export";
 import type { SplitData } from "@/lib/types";
 
@@ -55,10 +55,7 @@ export function SettingsDialog({
   const [payText, setPayText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
-  const { theme, setTheme } = useTheme();
   const { dict, t, te } = useI18n();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (open) {
@@ -345,28 +342,7 @@ export function SettingsDialog({
 
         <section>
           <Label>{dict.set.appearance}</Label>
-          <div className="grid grid-cols-3 gap-1 rounded-xl bg-stone-100 p-1">
-            {(
-              [
-                ["light", dict.set.light],
-                ["dark", dict.set.dark],
-                ["system", dict.set.system],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setTheme(value)}
-                className={`rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
-                  mounted && theme === value
-                    ? "bg-surface text-ink shadow-sm"
-                    : "text-stone-500 hover:text-ink"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <ThemeToggle />
           <p className="mt-1.5 text-xs text-stone-400">{dict.set.systemHint}</p>
         </section>
 

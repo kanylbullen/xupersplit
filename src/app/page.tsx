@@ -3,8 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { SplitSummary } from "@/lib/types";
 import { BeerButton } from "@/components/BeerButton";
 import { MySplits } from "@/components/MySplits";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
-import { RegisterPasskeyButton } from "@/components/auth/RegisterPasskeyButton";
+import { AccountMenu } from "@/components/AccountMenu";
 import { MiniAppSwap } from "@/components/MiniAppSwap";
 import { getI18n } from "@/lib/i18n/server";
 
@@ -14,7 +13,7 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const { dict, t } = await getI18n();
+  const { dict } = await getI18n();
   const supabase = await createClient();
   const {
     data: { user },
@@ -48,29 +47,10 @@ export default async function Home() {
         <span className="text-xl font-black tracking-tight text-primary">
           xupersplit
         </span>
-        <div className="flex items-center gap-3">
-          <LocaleSwitcher />
-          {user ? (
-            <div className="flex items-center gap-3">
-              <RegisterPasskeyButton />
-              <form action="/auth/signout" method="post" className="flex items-center gap-3">
-                <span className="hidden text-sm text-stone-400 sm:inline">
-                  {t(dict.nav.signedInAs, { email: displayName })}
-                </span>
-                <button className="text-sm font-medium text-stone-500 hover:text-ink">
-                  {dict.nav.logout}
-                </button>
-              </form>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="text-sm font-medium text-stone-500 hover:text-ink"
-            >
-              {dict.nav.login}
-            </Link>
-          )}
-        </div>
+        <AccountMenu
+          displayName={user ? displayName : null}
+          hasServerSplits={mine.length > 0}
+        />
       </header>
 
       <section className="mb-12 text-center">

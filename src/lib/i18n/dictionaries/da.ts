@@ -11,6 +11,8 @@ const da: Dict = {
     you: "dig",
   },
   nav: {
+    account: "Min konto",
+    menu: "Menu",
     signedInAs: "Logget ind som {email}",
     logout: "Log ud",
     login: "Log ind",
