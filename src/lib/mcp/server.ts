@@ -178,13 +178,17 @@ export function registerSplitTools(server: McpServer): void {
           );
         }
 
-        // Same per-IP creation throttle the web form is subject to.
+        // Per-IP creation throttle, but on the MCP bucket rather than the web
+        // one: hosted clients (ChatGPT connectors, Claude on the web) reach us
+        // from a handful of shared egress IPs, so the whole user base of a
+        // client lands in a single bucket. p_source picks the wider cap.
         const req = ctx.http?.req;
         const key = await callRpc<string>(supabase, "create_split", {
           p_title: title.trim(),
           p_currency: currency ?? "SEK",
           p_names: names,
           p_ip_hash: req ? clientIpHash(req.headers) : null,
+          p_source: "mcp",
         });
 
         await track("mcp_split_created", {
