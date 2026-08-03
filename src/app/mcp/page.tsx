@@ -187,6 +187,32 @@ export default function McpPage() {
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+          <h2 className="mb-1.5 font-bold">Receipts and shared items</h2>
+          <p className="mb-3 text-sm leading-relaxed text-stone-500">
+            A split is made of expenses, not receipt lines — so a bill where
+            people shared some things and not others is <em>several</em>{" "}
+            expenses, one per group of items the same people shared. Your
+            assistant reads the receipt and does that division; hand it a photo
+            and say who had what.
+          </p>
+          <Code>{`add_expense  wine 480, split_between: [Alice, Bob, Chen]
+add_expense  Alice's main 245, split_between: [Alice]
+add_expense  taxi 300, shares: [{Alice, weight: 2}, {Bob, weight: 1}]`}</Code>
+          <p className="mt-3 text-sm leading-relaxed text-stone-500">
+            <code className="rounded bg-stone-100 px-1">split_between</code>{" "}
+            divides equally between the people you name.{" "}
+            <code className="rounded bg-stone-100 px-1">shares</code> takes
+            either a <code className="rounded bg-stone-100 px-1">weight</code>{" "}
+            each — 2 for a couple — or an exact{" "}
+            <code className="rounded bg-stone-100 px-1">amount</code> each,
+            which has to add up to the total. It won’t accept a set of amounts
+            that doesn’t, so an agent can’t quietly lose a krona, and cents that
+            don’t divide evenly are settled by largest remainder rather than
+            dropped.
+          </p>
+        </section>
+
+        <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
           <h2 className="mb-1.5 font-bold">The link is the key</h2>
           <p className="text-sm leading-relaxed text-stone-500">
             A split lives at an unguessable URL, and holding that URL is what

@@ -77,7 +77,10 @@ const handler = createMcpHandler(registerSplitTools, {
     "edit the split, so treat it as a secret. Add what people paid with " +
     "add_expense, read who owes whom with get_split, and record paybacks with " +
     "record_payment. Refer to people by name — the tools resolve names to " +
-    "participants for you.",
+    "participants for you. Working from a receipt or a photo of one: read it " +
+    "yourself and enter one expense per group of items sharing the same " +
+    "people, rather than one equal split of the total — the shared bottle of " +
+    "wine and the individual mains are separate expenses.",
 });
 
 // Agents connect from anywhere, including browser-based clients, so this
