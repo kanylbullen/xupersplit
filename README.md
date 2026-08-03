@@ -45,6 +45,8 @@ project and grown from there.
   save** (Kittysplit-style); set a main currency per split. Includes **sats** —
   run a whole split in bitcoin if you like.
 - **Eight payment methods**, several with genuine one-tap prefill — [see below](#payments).
+- **MCP server** — AI agents can run a whole split over
+  [Model Context Protocol](#mcp-server), with no account and no API key.
 - **Six languages** — English, Svenska, Norsk, Dansk, Suomi, Íslenska
   (auto-detected, switchable).
 - **Privacy by design** — payment details can be wiped once everyone is square,
@@ -82,6 +84,32 @@ it in is a small change. PRs welcome. 🤞
 > **Crypto is irreversible.** Crypto methods show extra warnings, and **any**
 > method warns (with a date) if the recipient's details were ever changed from
 > what was first entered — anyone with the link can edit them.
+
+## MCP server
+
+Xupersplit speaks [Model Context Protocol](https://modelcontextprotocol.io), so
+an AI assistant can create a split, add what everyone paid and report who owes
+whom — then hand you the link to share. Accountless like the rest of the app:
+no sign-up, no API key.
+
+```bash
+claude mcp add --transport http xupersplit https://split.xuper.fun/api/mcp
+```
+
+Or point any MCP client at `https://split.xuper.fun/api/mcp` (Streamable HTTP;
+stdio-only clients can bridge via `npx mcp-remote`). Self-hosted instances get
+the same endpoint at their own `/api/mcp`.
+
+Eleven tools cover the whole lifecycle — `create_split`, `get_split`,
+`add_expense`, `record_payment`, `update_entry`, `delete_entry`,
+`add_participant`, `rename_participant`, `remove_participant`,
+`set_payment_methods`, `update_split`. People are referred to by name and
+amounts are plain decimals, so an agent never handles uuids or cents.
+
+The server is a thin layer over the same RPCs and `money.ts` helpers the web app
+uses, and it only ever holds the anonymous role — which is what keeps *secure*
+splits (they need a signed-in `auth.uid()`) unreachable over MCP. Full details
+at [/mcp](https://split.xuper.fun/mcp).
 
 ## Architecture
 
