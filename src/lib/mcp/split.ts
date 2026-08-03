@@ -362,9 +362,12 @@ export function renderSplit(summary: SplitSummary): string {
   if (summary.entries.length > 0) {
     lines.push("", `Entries (${summary.entries.length}):`);
     for (const e of summary.entries) {
+      // Transfers carry a description too (the web app shows it, falling back
+      // to a plain "Transfer" label) — don't drop it here.
+      const note = e.description ? ` — ${e.description}` : "";
       lines.push(
         e.kind === "transfer"
-          ? `  ${e.date} · ${e.paid_by} paid ${e.to} ${money(e.amount)}`
+          ? `  ${e.date} · ${e.paid_by} paid ${e.to} ${money(e.amount)}${note} [${e.id}]`
           : `  ${e.date} · ${e.description ?? "(no description)"} — ${money(e.amount)}` +
               ` paid by ${e.paid_by}, shared by ${e.shared_by.join(", ")} [${e.id}]`
       );
