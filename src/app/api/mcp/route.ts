@@ -1,5 +1,6 @@
 import { createMcpHandler } from "mcp-handler";
 import { registerSplitTools } from "@/lib/mcp/server";
+import { APP_ORIGIN } from "@/lib/miniapp";
 
 // Model Context Protocol endpoint — the machine-readable way into xupersplit.
 // Any AI agent can point at this URL and create or manage a split; there is no
@@ -12,8 +13,35 @@ import { registerSplitTools } from "@/lib/mcp/server";
 
 export const runtime = "nodejs";
 
+// Identity a client shows in its connector list. `icons` is part of the MCP
+// `Implementation` shape — without it a client has nothing to render but its
+// own placeholder, which is why the wordmark didn't show up. The mark carries
+// its own teal background, so one icon works on light and dark alike and no
+// per-theme variant is needed. mcp-handler passes this object straight to
+// `new McpServer(...)`, so every field here reaches the wire.
+const serverInfo = {
+  name: "xupersplit",
+  version: "1.0.0",
+  websiteUrl: APP_ORIGIN,
+  description:
+    "Split shared expenses in a group — no account needed. Create a split, " +
+    "add what everyone paid, and see who owes whom.",
+  icons: [
+    {
+      src: `${APP_ORIGIN}/icon.svg`,
+      mimeType: "image/svg+xml",
+      sizes: ["any"],
+    },
+    {
+      src: `${APP_ORIGIN}/apple-icon.png`,
+      mimeType: "image/png",
+      sizes: ["512x512"],
+    },
+  ],
+};
+
 const handler = createMcpHandler(registerSplitTools, {
-  serverInfo: { name: "xupersplit", version: "1.0.0" },
+  serverInfo,
   instructions:
     "xupersplit splits shared expenses in a group — no accounts, no app. " +
     "Create a split with create_split, then hand the returned link to the user " +
