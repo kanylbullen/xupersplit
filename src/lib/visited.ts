@@ -23,3 +23,35 @@ export function readVisited(): VisitedSplit[] {
     return [];
   }
 }
+
+// Keys this browser has already handed to an account. Once follow_splits has
+// seen a key the account's answer is the whole truth, and my_splits() leaves
+// out two kinds of split on purpose: the ones the user hid, and members-only
+// ones they can't open. Neither may crawl back onto the list just because the
+// key is still sitting in this browser's history. Kept per user so a second
+// account signing in on the same browser still syncs its own history.
+const SYNCED_PREFIX = "xupersplit:synced:";
+
+export function readSynced(userId: string): string[] {
+  try {
+    const raw = JSON.parse(
+      localStorage.getItem(SYNCED_PREFIX + userId) ?? "[]"
+    ) as string[];
+    return raw.filter((k) => typeof k === "string");
+  } catch {
+    return [];
+  }
+}
+
+export function writeSynced(userId: string, keys: string[]): void {
+  try {
+    // Same 200 as follow_splits' own cap — no point remembering keys we'd
+    // never be allowed to send in one batch anyway.
+    localStorage.setItem(
+      SYNCED_PREFIX + userId,
+      JSON.stringify([...new Set(keys)].slice(-200))
+    );
+  } catch {
+    // private mode or a full quota — worst case the sync runs again
+  }
+}

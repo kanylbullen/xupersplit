@@ -7,47 +7,74 @@ import type { SplitSummary } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { LOCALE_INTL } from "@/lib/i18n/config";
 import { createClient } from "@/lib/supabase/client";
-import { readVisited, writeVisited, type VisitedSplit } from "@/lib/visited";
+import {
+  readVisited,
+  writeVisited,
+  readSynced,
+  writeSynced,
+  type VisitedSplit,
+} from "@/lib/visited";
 
 export function MySplits({
   server,
-  loggedIn,
+  userId,
 }: {
   server: SplitSummary[];
-  loggedIn: boolean;
+  userId: string | null;
 }) {
   const { dict, t, locale } = useI18n();
   const intl = LOCALE_INTL[locale];
   const router = useRouter();
   const [visited, setVisited] = useState<VisitedSplit[]>([]);
+  const [synced, setSynced] = useState<string[]>([]);
   const [syncing, setSyncing] = useState(false);
+  const loggedIn = userId !== null;
 
-  useEffect(() => setVisited(readVisited()), []);
+  // Both in one effect: rendering the visited list before we know which of its
+  // keys the account has already answered for would flash splits the user hid
+  // on another device.
+  useEffect(() => {
+    setVisited(readVisited());
+    setSynced(userId ? readSynced(userId) : []);
+  }, [userId]);
 
   const serverKeys = new Set(server.map((k) => k.key));
   const localOnly = visited.filter((v) => !serverKeys.has(v.key));
 
+  // Signed out, every visited split is worth showing. Signed in, only the ones
+  // the account hasn't ruled on yet — a key that's been through follow_splits
+  // and still isn't in my_splits() was left out deliberately.
+  const pending = loggedIn
+    ? localOnly.filter((v) => !synced.includes(v.key))
+    : localOnly;
+
   // Signed in, but this browser remembers splits the account doesn't know
-  // about — adopt them, then re-render from the server list. Splits the user
-  // has hidden stay hidden (follow_splits won't unhide), so this settles after
-  // one pass instead of resurrecting them on every visit.
+  // about — adopt them, then re-render from the server list. Recording what we
+  // sent is what makes this settle: without it the same keys go back over the
+  // wire on every single page load and hidden splits never stay hidden.
   useEffect(() => {
-    if (!loggedIn || syncing || localOnly.length === 0) return;
+    if (!userId || syncing || pending.length === 0) return;
     setSyncing(true);
-    const keys = localOnly.map((v) => v.key);
+    const keys = pending.map((v) => v.key);
     (async () => {
       try {
         const { error } = await createClient().rpc("follow_splits", {
           p_keys: keys,
         });
         // Offline, or the migration hasn't landed yet — the local list still
-        // renders, so there's nothing useful to tell the user.
-        if (!error) router.refresh();
+        // renders, so there's nothing useful to tell the user. Leaving the
+        // keys unrecorded means the next load tries again, which is right.
+        if (!error) {
+          const next = [...readSynced(userId), ...keys];
+          writeSynced(userId, next);
+          setSynced(next);
+          router.refresh();
+        }
       } catch {
         // same
       }
     })();
-  }, [loggedIn, syncing, localOnly, router]);
+  }, [userId, syncing, pending, router]);
 
   async function hide(key: string) {
     // Drop it from this browser either way; the account-level hide only
@@ -67,7 +94,7 @@ export function MySplits({
     }
   }
 
-  if (server.length === 0 && localOnly.length === 0) return null;
+  if (server.length === 0 && pending.length === 0) return null;
 
   const rows = [
     ...server.map((k) => ({
@@ -82,7 +109,7 @@ export function MySplits({
         date: new Date(k.created_at).toLocaleDateString(intl),
       })}`,
     })),
-    ...localOnly.map((v) => ({
+    ...pending.map((v) => ({
       key: v.key,
       title: v.title,
       meta: t(dict.mySplits.lastOpened, {
