@@ -232,7 +232,11 @@ export function registerSplitTools(server: McpServer): void {
       title: "Add an expense",
       description:
         `Record something one person paid for the group. Split equally by ` +
-        `default. ${SECURE_NOTE}`,
+        `default; pass split_between for a subset, or shares for an uneven ` +
+        `split. One expense covers one set of people — a receipt whose items ` +
+        `aren't all shared by everyone is several expenses, so call this once ` +
+        `per group of items that the same people share, rather than splitting ` +
+        `the total equally. ${SECURE_NOTE}`,
       inputSchema: z.object({
         split: splitArg,
         amount: amountArg,
