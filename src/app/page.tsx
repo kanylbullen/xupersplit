@@ -93,6 +93,12 @@ export default async function Home() {
         <BeerButton />
         <span>
           {dict.footer.tagline} ·{" "}
+          {/* Most people who hit a bug here are splitting a bar tab, not on
+              GitHub. Mail reaches the same person as an issue does. */}
+          <a href="mailto:split@xuper.fun" className="hover:text-ink">
+            {dict.footer.feedback}
+          </a>{" "}
+          ·{" "}
           <Link href="/terms" className="hover:text-ink">
             {dict.footer.terms}
           </Link>{" "}

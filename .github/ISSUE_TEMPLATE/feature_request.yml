@@ -1,0 +1,44 @@
+name: Feature request
+description: Suggest something Xupersplit should do
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Xupersplit deliberately stays small. The bar is roughly: *would most
+        groups splitting a bill want this?* Things that only make sense for one
+        group usually belong in your own fork — the code is MIT.
+
+        Please don't paste a split link here; the URL is its password.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the situation you ran into, not the solution you have in mind.
+      placeholder: |
+        Half our group pays in NOK and half in SEK, and we keep arguing about
+        which rate to use.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What did you have in mind?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part?
+      options:
+        - Splitting and balances
+        - Payments and settling up
+        - The MCP server / AI assistants
+        - Self-hosting
+        - Translations
+        - Something else
+    validations:
+      required: true
