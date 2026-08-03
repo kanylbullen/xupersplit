@@ -201,7 +201,14 @@ export default function McpPage() {
             >
               privacy policy
             </Link>{" "}
-            for what’s stored and for how long.
+            for what’s stored and for how long, and the{" "}
+            <Link
+              href="/terms"
+              className="text-primary underline underline-offset-2"
+            >
+              terms
+            </Link>{" "}
+            for what an agent connected here is and isn’t responsible for.
           </p>
         </section>
 

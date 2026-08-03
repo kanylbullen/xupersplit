@@ -93,6 +93,10 @@ export default async function Home() {
         <BeerButton />
         <span>
           {dict.footer.tagline} ·{" "}
+          <Link href="/terms" className="hover:text-ink">
+            {dict.footer.terms}
+          </Link>{" "}
+          ·{" "}
           <Link href="/privacy" className="hover:text-ink">
             {dict.footer.privacy}
           </Link>{" "}

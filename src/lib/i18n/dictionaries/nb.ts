@@ -60,6 +60,7 @@ const nb: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · laget med kjærlighet, kaffe og øl",
+    terms: "vilkår",
     privacy: "personvern",
     cookies: "informasjonskapsler",
     openSource: "Åpen kildekode på GitHub",
