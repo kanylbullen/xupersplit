@@ -42,8 +42,11 @@ declare
   v_fc_pfp text;
   v_ip_cap int := case when p_source = 'mcp' then 200 else 10 end;
 begin
+  -- Distinct code from the per-IP cap below: with MCP's wider bucket this one
+  -- is what a busy hour hits first, and "too many from your network" would be
+  -- the wrong thing to tell someone whose network is idle.
   if (select count(*) from splits where created_at > now() - interval '1 hour') >= 2000 then
-    raise exception 'rate_limited';
+    raise exception 'rate_limited_global';
   end if;
   if p_ip_hash is not null and (
     select count(*) from splits
