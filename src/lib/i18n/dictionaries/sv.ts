@@ -31,8 +31,12 @@ const sv = {
     lastUsed: "senast använd {date}",
     neverUsed: "aldrig använd",
     adding: "Väntar på din enhet…",
+    rename: "Byt namn",
+    nameLabel: "Namn",
+    namePlaceholder: "t.ex. Min telefon",
     removeConfirm: "Ta bort?",
     errList: "Kunde inte hämta dina passkeys.",
+    errRename: "Kunde inte byta namn.",
     errRemove: "Kunde inte ta bort passkeyn.",
   },
   landing: {

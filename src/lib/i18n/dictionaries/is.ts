@@ -31,8 +31,12 @@ const is: Dict = {
     lastUsed: "síðast notað {date}",
     neverUsed: "aldrei notað",
     adding: "Bíð eftir tækinu þínu…",
+    rename: "Endurnefna",
+    nameLabel: "Nafn",
+    namePlaceholder: "t.d. Síminn minn",
     removeConfirm: "Fjarlægja?",
     errList: "Ekki tókst að sækja aðgangslyklana þína.",
+    errRename: "Ekki tókst að endurnefna aðgangslykilinn.",
     errRemove: "Ekki tókst að fjarlægja aðgangslykilinn.",
   },
   landing: {
