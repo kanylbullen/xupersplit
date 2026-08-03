@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.kanylbullen/xupersplit",
+  "title": "Xupersplit",
+  "description": "Split shared expenses in a group — no account needed. See who owes whom and settle up.",
+  "version": "1.0.0",
+  "websiteUrl": "https://split.xuper.fun/mcp",
+  "repository": {
+    "url": "https://github.com/kanylbullen/xupersplit",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://split.xuper.fun/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": ["any"]
+    },
+    {
+      "src": "https://split.xuper.fun/apple-icon.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://split.xuper.fun/api/mcp"
+    }
+  ]
+}
