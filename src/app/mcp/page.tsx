@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     "Xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
     "it can create a split, add expenses and work out who owes whom — no account, " +
     "no API key.",
-  alternates: { canonical: `${APP_ORIGIN}/mcp` },
+  // Relative, resolved against metadataBase — same as the landing page.
+  alternates: { canonical: "/mcp" },
 };
 
 const TOOLS: [string, string][] = [
