@@ -234,7 +234,9 @@ export const SPLIT_SCHEMA = z.object({
       paid: z.number(),
       /** This person's share of all expenses. */
       owes: z.number(),
-      /** paid − owes, adjusted for transfers. Positive = owed money back. */
+      /** Paybacks sent minus received. */
+      settled: z.number(),
+      /** paid − owes + settled. Positive = this person is owed money. */
       balance: z.number(),
       payment_methods: z.array(z.object({ type: z.string(), value: z.string() })),
     })
@@ -273,10 +275,21 @@ export function describeSplit(data: SplitData): SplitSummary {
   const bal = balances(participants, entries);
   const owed = shareOfTotal(participants, entries);
 
+  // Split the two halves of a balance apart so the reported numbers add up:
+  // balance = paid − owes + settled. Without the transfer leg, "paid 450,
+  // share 795, owes 245" looks like an arithmetic error.
   const paid = new Map(participants.map((p) => [p.id, 0]));
+  const settled = new Map(participants.map((p) => [p.id, 0]));
+  const bump = (map: Map<string, number>, id: string, cents: number) =>
+    map.set(id, (map.get(id) ?? 0) + cents);
+
   for (const entry of entries) {
-    if (entry.kind !== "expense") continue;
-    paid.set(entry.paid_by, (paid.get(entry.paid_by) ?? 0) + entry.amount_cents);
+    if (entry.kind === "expense") {
+      bump(paid, entry.paid_by, entry.amount_cents);
+    } else if (entry.transfer_to) {
+      bump(settled, entry.paid_by, entry.amount_cents);
+      bump(settled, entry.transfer_to, -entry.amount_cents);
+    }
   }
 
   return {
@@ -293,6 +306,7 @@ export function describeSplit(data: SplitData): SplitSummary {
       name: p.name,
       paid: fromCents(paid.get(p.id) ?? 0),
       owes: fromCents(owed.get(p.id) ?? 0),
+      settled: fromCents(settled.get(p.id) ?? 0),
       balance: fromCents(bal.get(p.id) ?? 0),
       payment_methods: p.payment_methods ?? [],
     })),
@@ -333,8 +347,15 @@ export function renderSplit(summary: SplitSummary): string {
   for (const p of summary.participants) {
     const sign = p.balance > 0 ? "is owed" : p.balance < 0 ? "owes" : "is square";
     const tail = p.balance === 0 ? "" : ` ${money(Math.abs(p.balance))}`;
+    const settled =
+      p.settled > 0
+        ? `, paid back ${money(p.settled)}`
+        : p.settled < 0
+          ? `, received ${money(-p.settled)}`
+          : "";
     lines.push(
-      `  ${p.name}: paid ${money(p.paid)}, share ${money(p.owes)} → ${sign}${tail}`
+      `  ${p.name}: paid ${money(p.paid)}, share ${money(p.owes)}${settled}` +
+        ` → ${sign}${tail}`
     );
   }
 
