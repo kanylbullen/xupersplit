@@ -71,9 +71,59 @@ export default function McpPage() {
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
-          <h2 className="mb-1.5 font-bold">Connect</h2>
+          <h2 className="mb-1.5 font-bold">Claude</h2>
           <p className="mb-3 text-sm leading-relaxed text-stone-500">
-            Claude Code, from a terminal:
+            On the web or in the desktop app, open{" "}
+            <strong className="font-semibold text-ink">Customize</strong> →{" "}
+            <strong className="font-semibold text-ink">Connectors</strong>, click{" "}
+            <strong className="font-semibold text-ink">+</strong> →{" "}
+            <strong className="font-semibold text-ink">Add custom connector</strong>,
+            and paste the endpoint. Leave the OAuth fields empty — there’s nothing
+            to authenticate against.
+          </p>
+          <Code>{ENDPOINT}</Code>
+          <p className="mt-3 text-sm leading-relaxed text-stone-500">
+            Works on every plan, though the free plan allows a single custom
+            connector. Claude connects from Anthropic’s cloud rather than your
+            device, which is fine here: this endpoint is on the public internet
+            with nothing to allowlist. See{" "}
+            <a
+              href="https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp"
+              className="text-primary underline underline-offset-2"
+            >
+              Anthropic’s guide
+            </a>{" "}
+            if the menu has moved.
+          </p>
+        </section>
+
+        <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+          <h2 className="mb-1.5 font-bold">ChatGPT</h2>
+          <p className="mb-3 text-sm leading-relaxed text-stone-500">
+            Turn on{" "}
+            <strong className="font-semibold text-ink">developer mode</strong>{" "}
+            first — it lives in settings under the apps/connectors advanced
+            options, and until it’s on there’s no way to add a custom connector
+            at all. Then add a connector and paste the endpoint. When it asks how
+            to authenticate, choose no authentication.
+          </p>
+          <Code>{ENDPOINT}</Code>
+          <p className="mt-3 text-sm leading-relaxed text-stone-500">
+            OpenAI has moved these settings around more than once, so follow{" "}
+            <a
+              href="https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt"
+              className="text-primary underline underline-offset-2"
+            >
+              their own instructions
+            </a>{" "}
+            for the current menu path and which plans include it.
+          </p>
+        </section>
+
+        <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+          <h2 className="mb-1.5 font-bold">Claude Code and other clients</h2>
+          <p className="mb-3 text-sm leading-relaxed text-stone-500">
+            From a terminal:
           </p>
           <Code>{`claude mcp add --transport http xupersplit ${ENDPOINT}`}</Code>
           <p className="mt-4 mb-3 text-sm leading-relaxed text-stone-500">

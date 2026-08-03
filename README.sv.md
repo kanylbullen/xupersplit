@@ -111,6 +111,11 @@ Eller peka valfri MCP-klient på `https://split.xuper.fun/api/mcp` (Streamable
 HTTP; klienter som bara klarar stdio kan brygga via `npx mcp-remote`).
 Self-hostade instanser får samma endpoint på sin egen `/api/mcp`.
 
+Den funkar även som custom connector i **Claude** och **ChatGPT** på webben —
+klistra in endpointen, ingen autentisering. ChatGPT kräver att developer mode
+slås på först, annars finns valet att lägga till en inte alls. Steg för steg på
+[/mcp](https://split.xuper.fun/mcp).
+
 Elva verktyg täcker hela livscykeln — `create_split`, `get_split`,
 `add_expense`, `record_payment`, `update_entry`, `delete_entry`,
 `add_participant`, `rename_participant`, `remove_participant`,
