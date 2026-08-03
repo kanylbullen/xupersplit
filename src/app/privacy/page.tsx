@@ -68,6 +68,22 @@ const SECTIONS: [string, React.ReactNode][] = [
     </>,
   ],
   [
+    "AI assistants (MCP)",
+    <>
+      Xupersplit can be driven by an AI assistant over the Model Context
+      Protocol. If you connect one — ChatGPT, Claude or another — it reads and
+      writes your split on your instruction, which means the split’s contents
+      (names, amounts, and any payment details in it) pass through that
+      assistant’s provider and are handled under <em>their</em> privacy terms,
+      not ours. We don’t send anything to them; your assistant fetches it. So
+      choose your assistant accordingly, and think twice before pointing one at
+      a split holding something you’d rather no third party processed. On our
+      side we record only that a connection happened — which client and version
+      — and, when a split is created that way, the number of participants and
+      the currency. Never the contents.
+    </>,
+  ],
+  [
     "Subprocessors & international transfers",
     <>
       Xupersplit runs on Supabase (database in Stockholm, EU), Vercel (hosting
@@ -158,7 +174,7 @@ export default function PrivacyPage() {
         ))}
       </div>
       <p className="mt-8 text-center text-xs text-stone-400">
-        Last updated 2026-06-12
+        Last updated 2026-08-03
       </p>
     </main>
   );

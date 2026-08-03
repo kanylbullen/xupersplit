@@ -60,6 +60,7 @@ const sv = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · byggd med kärlek, kaffe och öl",
+    terms: "villkor",
     privacy: "integritetspolicy",
     cookies: "cookies",
     openSource: "Öppen källkod på GitHub",
