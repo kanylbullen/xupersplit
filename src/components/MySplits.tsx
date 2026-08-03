@@ -42,8 +42,10 @@ export function MySplits({
   const localOnly = visited.filter((v) => !serverKeys.has(v.key));
 
   // Signed out, every visited split is worth showing. Signed in, only the ones
-  // the account hasn't ruled on yet — a key that's been through follow_splits
-  // and still isn't in my_splits() was left out deliberately.
+  // the account hasn't ruled on yet — a key that went through follow_splits on
+  // an earlier load and still isn't in my_splits() was left out deliberately.
+  // `synced` is the mount-time snapshot on purpose, so keys adopted during
+  // this render pass keep their row until the refresh replaces it.
   const pending = loggedIn
     ? localOnly.filter((v) => !synced.includes(v.key))
     : localOnly;
@@ -65,9 +67,12 @@ export function MySplits({
         // renders, so there's nothing useful to tell the user. Leaving the
         // keys unrecorded means the next load tries again, which is right.
         if (!error) {
-          const next = [...readSynced(userId), ...keys];
-          writeSynced(userId, next);
-          setSynced(next);
+          // Recorded for the next load, deliberately not applied to this one.
+          // Dropping these rows the moment the RPC returns would empty the
+          // list for the length of a refresh round trip; letting router
+          // .refresh() move them from the local half to the server half keeps
+          // it continuous. The snapshot read at mount is what filters here.
+          writeSynced(userId, [...readSynced(userId), ...keys]);
           router.refresh();
         }
       } catch {
