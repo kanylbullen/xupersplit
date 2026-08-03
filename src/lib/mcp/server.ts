@@ -358,13 +358,21 @@ export function registerSplitTools(server: McpServer): void {
           );
         } else {
           // Keep the existing division; re-send it since the row is replaced.
-          entry.shares = existing.shares.map((s) => ({
-            participant_id: s.participant_id,
-            // An exact-amount share only stays exact if the total is unchanged.
-            ...(s.amount_cents !== null && args.amount === undefined
-              ? { amount_cents: s.amount_cents }
-              : { weight: s.weight }),
-          }));
+          const exact = existing.shares.some((s) => s.amount_cents !== null);
+          // Exact amounts can't survive a new total — silently falling back to
+          // an equal split would quietly change who owes what.
+          if (exact && args.amount !== undefined) {
+            throw new McpToolError(
+              "This expense splits into exact per-person amounts, so changing " +
+                "the total means restating them. Pass shares with the new " +
+                "amounts, or split_between to switch to an equal split."
+            );
+          }
+          entry.shares = existing.shares.map((s) =>
+            exact
+              ? { participant_id: s.participant_id, amount_cents: s.amount_cents }
+              : { participant_id: s.participant_id, weight: s.weight }
+          );
         }
 
         await callRpc(supabase, "save_entry", { p_key: key, p_entry: entry }, key);
