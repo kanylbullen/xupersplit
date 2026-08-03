@@ -71,6 +71,8 @@ const is: Dict = {
     entriesMany: "{count} færslur",
     created: "búið til {date}",
     lastOpened: "síðast opnað {date}",
+    savedAccount: "Listinn fylgir aðgangnum þínum á öllum tækjum.",
+    remove: "Fjarlægja af listanum",
     savedHint1: "Listinn er vistaður í vafranum þínum.",
     loginCta: "Skrá inn",
     savedHint2: "ef þú vilt að hann fylgi þér milli tækja.",
