@@ -1,4 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/server";
+import { after } from "next/server";
 import { track } from "@vercel/analytics/server";
 import { z } from "zod";
 import { clientIpHash } from "@/lib/ipHash";
@@ -35,7 +36,9 @@ type ToolResult = {
 
 const splitArg = z
   .string()
-  .describe("The split key, or the whole https://split.xuper.fun/k/<key> link.");
+  .describe(
+    "The split key, or the whole https://split.xuper.fun/k/<key> link.",
+  );
 
 const participantArg = (what: string) =>
   z.string().describe(`${what} — a participant's name (or id) in this split.`);
@@ -56,20 +59,20 @@ const shareArg = z
       participant: z.string(),
       amount: z.number().positive().optional(),
       weight: z.number().positive().optional(),
-    })
+    }),
   )
   .optional()
   .describe(
     "Uneven split. Either an exact `amount` per person (must add up to the " +
       "total) or a relative `weight` per person (e.g. weight 2 for a couple). " +
-      "Don't combine with split_between."
+      "Don't combine with split_between.",
   );
 
 const splitBetweenArg = z
   .array(z.string())
   .optional()
   .describe(
-    "Names of the people sharing this cost, split equally. Defaults to everyone."
+    "Names of the people sharing this cost, split equally. Defaults to everyone.",
   );
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -82,7 +85,7 @@ const splitBetweenArg = z
 async function respond(
   supabase: RpcClient,
   key: string,
-  headline: string
+  headline: string,
 ): Promise<ToolResult> {
   const summary = describeSplit(await fetchSplit(supabase, key));
   return {
@@ -91,13 +94,34 @@ async function respond(
   };
 }
 
-/** Messages meant for the agent come back as tool errors, not crashes. */
-async function guard(run: () => Promise<ToolResult>): Promise<ToolResult> {
+/**
+ * Messages meant for the agent come back as tool errors, not crashes — and
+ * every call is counted on the way out.
+ *
+ * Usage is measured here rather than in the handler's event hook because this
+ * is the only place that knows both which tool ran and how it went: a rejected
+ * call still answers with a normal JSON-RPC result, so the transport counts it
+ * a success either way. Only the tool name and that verdict are recorded — the arguments
+ * hold split keys and participant names, and the error messages name people
+ * too, so neither is ever sent.
+ */
+async function guard(
+  tool: string,
+  run: () => Promise<ToolResult>,
+): Promise<ToolResult> {
+  const count = (ok: boolean) =>
+    after(() => track("mcp_tool", { tool, ok }).catch(() => {}));
   try {
-    return await run();
+    const result = await run();
+    count(true);
+    return result;
   } catch (error) {
     if (error instanceof McpToolError) {
-      return { isError: true, content: [{ type: "text", text: error.message }] };
+      count(false);
+      return {
+        isError: true,
+        content: [{ type: "text", text: error.message }],
+      };
     }
     throw error;
   }
@@ -129,7 +153,10 @@ export function registerSplitTools(server: McpServer): void {
         "share it with the group, since anyone holding the link can see and " +
         "edit the split.",
       inputSchema: z.object({
-        title: z.string().min(1).describe('What the split is for, e.g. "Ski trip".'),
+        title: z
+          .string()
+          .min(1)
+          .describe('What the split is for, e.g. "Ski trip".'),
         participants: z
           .array(z.string().min(1))
           .min(2)
@@ -143,10 +170,12 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async ({ title, participants, currency }, ctx: ToolCtx) =>
-      guard(async () => {
+      guard("create_split", async () => {
         const names = participants.map((n) => n.trim()).filter(Boolean);
         if (names.length < 2) {
-          throw new McpToolError("A split needs at least two named participants.");
+          throw new McpToolError(
+            "A split needs at least two named participants.",
+          );
         }
 
         // Same per-IP creation throttle the web form is subject to.
@@ -166,9 +195,9 @@ export function registerSplitTools(server: McpServer): void {
         return respond(
           supabase,
           key,
-          `Created the split. Share this link with the group:\n${splitUrl(key)}`
+          `Created the split. Share this link with the group:\n${splitUrl(key)}`,
         );
-      })
+      }),
   );
 
   server.registerTool(
@@ -183,14 +212,14 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: true },
     },
     async ({ split }) =>
-      guard(async () => {
+      guard("get_split", async () => {
         const key = parseSplitKey(split);
         const summary = describeSplit(await fetchSplit(supabase, key));
         return {
           content: [{ type: "text", text: renderSplit(summary) }],
           structuredContent: summary,
         };
-      })
+      }),
   );
 
   server.registerTool(
@@ -204,7 +233,10 @@ export function registerSplitTools(server: McpServer): void {
         split: splitArg,
         amount: amountArg,
         paid_by: participantArg("Who paid"),
-        description: z.string().optional().describe('What it was, e.g. "Groceries".'),
+        description: z
+          .string()
+          .optional()
+          .describe('What it was, e.g. "Groceries".'),
         split_between: splitBetweenArg,
         shares: shareArg,
         date: dateArg,
@@ -212,8 +244,16 @@ export function registerSplitTools(server: McpServer): void {
       outputSchema: SPLIT_SCHEMA,
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
-    async ({ split, amount, paid_by, description, split_between, shares, date }) =>
-      guard(async () => {
+    async ({
+      split,
+      amount,
+      paid_by,
+      description,
+      split_between,
+      shares,
+      date,
+    }) =>
+      guard("add_expense", async () => {
         const { key, data } = await openSplit(supabase, split);
         const amountCents = toCents(amount);
         const payer = resolveParticipant(data.participants, paid_by);
@@ -233,15 +273,15 @@ export function registerSplitTools(server: McpServer): void {
                 data.participants,
                 amountCents,
                 split_between,
-                shares as ShareInput[] | undefined
+                shares as ShareInput[] | undefined,
               ),
             },
           },
-          key
+          key,
         );
 
         return respond(supabase, key, `Added the expense.`);
-      })
+      }),
   );
 
   server.registerTool(
@@ -259,14 +299,16 @@ export function registerSplitTools(server: McpServer): void {
         description: z
           .string()
           .optional()
-          .describe('How it was paid, e.g. "Swish, 3 March". Shown in the history.'),
+          .describe(
+            'How it was paid, e.g. "Swish, 3 March". Shown in the history.',
+          ),
         date: dateArg,
       }),
       outputSchema: SPLIT_SCHEMA,
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async ({ split, from, to, amount, description, date }) =>
-      guard(async () => {
+      guard("record_payment", async () => {
         const { key, data } = await openSplit(supabase, split);
         const sender = resolveParticipant(data.participants, from);
         const recipient = resolveParticipant(data.participants, to);
@@ -288,7 +330,7 @@ export function registerSplitTools(server: McpServer): void {
               entry_date: checkDate(date),
             },
           },
-          key
+          key,
         );
 
         // Privacy: wipe stored payment details once everyone is square, just
@@ -296,7 +338,7 @@ export function registerSplitTools(server: McpServer): void {
         await clearPaymentMethodsIfSettled(supabase, key);
 
         return respond(supabase, key, `Recorded the payment.`);
-      })
+      }),
   );
 
   server.registerTool(
@@ -311,7 +353,10 @@ export function registerSplitTools(server: McpServer): void {
         entry_id: z.string().describe("The entry's id, from get_split."),
         amount: amountArg.optional(),
         description: z.string().optional(),
-        paid_by: z.string().optional().describe("Move the entry to a different payer."),
+        paid_by: z
+          .string()
+          .optional()
+          .describe("Move the entry to a different payer."),
         to: z.string().optional().describe("New recipient — payments only."),
         split_between: splitBetweenArg,
         shares: shareArg,
@@ -321,17 +366,19 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async (args) =>
-      guard(async () => {
+      guard("update_entry", async () => {
         const { key, data } = await openSplit(supabase, args.split);
         const existing = data.entries.find((e) => e.id === args.entry_id);
         if (!existing) {
           throw new McpToolError(
-            `No entry ${args.entry_id} in this split. Call get_split for the current ids.`
+            `No entry ${args.entry_id} in this split. Call get_split for the current ids.`,
           );
         }
 
         const amountCents =
-          args.amount === undefined ? existing.amount_cents : toCents(args.amount);
+          args.amount === undefined
+            ? existing.amount_cents
+            : toCents(args.amount);
         const payer = args.paid_by
           ? resolveParticipant(data.participants, args.paid_by)
           : { id: existing.paid_by };
@@ -359,7 +406,7 @@ export function registerSplitTools(server: McpServer): void {
             data.participants,
             amountCents,
             args.split_between,
-            args.shares as ShareInput[] | undefined
+            args.shares as ShareInput[] | undefined,
           );
         } else {
           // Keep the existing division; re-send it since the row is replaced.
@@ -370,22 +417,30 @@ export function registerSplitTools(server: McpServer): void {
             throw new McpToolError(
               "This expense splits into exact per-person amounts, so changing " +
                 "the total means restating them. Pass shares with the new " +
-                "amounts, or split_between to switch to an equal split."
+                "amounts, or split_between to switch to an equal split.",
             );
           }
           entry.shares = existing.shares.map((s) =>
             exact
-              ? { participant_id: s.participant_id, amount_cents: s.amount_cents }
-              : { participant_id: s.participant_id, weight: s.weight }
+              ? {
+                  participant_id: s.participant_id,
+                  amount_cents: s.amount_cents,
+                }
+              : { participant_id: s.participant_id, weight: s.weight },
           );
         }
 
-        await callRpc(supabase, "save_entry", { p_key: key, p_entry: entry }, key);
+        await callRpc(
+          supabase,
+          "save_entry",
+          { p_key: key, p_entry: entry },
+          key,
+        );
         if (existing.kind === "transfer") {
           await clearPaymentMethodsIfSettled(supabase, key);
         }
         return respond(supabase, key, "Updated the entry.");
-      })
+      }),
   );
 
   server.registerTool(
@@ -401,11 +456,16 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: true },
     },
     async ({ split, entry_id }) =>
-      guard(async () => {
+      guard("delete_entry", async () => {
         const key = parseSplitKey(split);
-        await callRpc(supabase, "delete_entry", { p_key: key, p_id: entry_id }, key);
+        await callRpc(
+          supabase,
+          "delete_entry",
+          { p_key: key, p_id: entry_id },
+          key,
+        );
         return respond(supabase, key, "Deleted the entry.");
-      })
+      }),
   );
 
   server.registerTool(
@@ -418,11 +478,16 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async ({ split, name }) =>
-      guard(async () => {
+      guard("add_participant", async () => {
         const key = parseSplitKey(split);
-        await callRpc(supabase, "add_participant", { p_key: key, p_name: name }, key);
+        await callRpc(
+          supabase,
+          "add_participant",
+          { p_key: key, p_name: name },
+          key,
+        );
         return respond(supabase, key, `Added ${name.trim()}.`);
-      })
+      }),
   );
 
   server.registerTool(
@@ -439,17 +504,21 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async ({ split, participant, name }) =>
-      guard(async () => {
+      guard("rename_participant", async () => {
         const { key, data } = await openSplit(supabase, split);
         const person = resolveParticipant(data.participants, participant);
         await callRpc(
           supabase,
           "rename_participant",
           { p_key: key, p_id: person.id, p_name: name },
-          key
+          key,
         );
-        return respond(supabase, key, `Renamed ${person.name} to ${name.trim()}.`);
-      })
+        return respond(
+          supabase,
+          key,
+          `Renamed ${person.name} to ${name.trim()}.`,
+        );
+      }),
   );
 
   server.registerTool(
@@ -467,17 +536,17 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: true },
     },
     async ({ split, participant }) =>
-      guard(async () => {
+      guard("remove_participant", async () => {
         const { key, data } = await openSplit(supabase, split);
         const person = resolveParticipant(data.participants, participant);
         await callRpc(
           supabase,
           "delete_participant",
           { p_key: key, p_id: person.id },
-          key
+          key,
         );
         return respond(supabase, key, `Removed ${person.name}.`);
-      })
+      }),
   );
 
   server.registerTool(
@@ -499,9 +568,9 @@ export function registerSplitTools(server: McpServer): void {
                 .string()
                 .describe(
                   "Phone number for swish/vipps/mobilepay, IBAN, Revolut tag, " +
-                    "Lightning address, 0x/ENS address, or Solana address."
+                    "Lightning address, 0x/ENS address, or Solana address.",
                 ),
-            })
+            }),
           )
           .max(8),
       }),
@@ -509,17 +578,21 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: true },
     },
     async ({ split, participant, methods }) =>
-      guard(async () => {
+      guard("set_payment_methods", async () => {
         const { key, data } = await openSplit(supabase, split);
         const person = resolveParticipant(data.participants, participant);
         await callRpc(
           supabase,
           "set_payment_methods",
           { p_key: key, p_id: person.id, p_methods: methods },
-          key
+          key,
         );
-        return respond(supabase, key, `Updated payment details for ${person.name}.`);
-      })
+        return respond(
+          supabase,
+          key,
+          `Updated payment details for ${person.name}.`,
+        );
+      }),
   );
 
   server.registerTool(
@@ -538,7 +611,7 @@ export function registerSplitTools(server: McpServer): void {
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async ({ split, title, currency }) =>
-      guard(async () => {
+      guard("update_split", async () => {
         const { key, data } = await openSplit(supabase, split);
         if (!title && !currency) {
           throw new McpToolError("Pass a new title, a new currency, or both.");
@@ -555,7 +628,7 @@ export function registerSplitTools(server: McpServer): void {
           throw new McpToolError(
             `The currency is locked to ${data.split.currency} because this ` +
               `split already has expenses — every amount is stored in it. ` +
-              `Delete the entries first, or start a new split in ${currency}.`
+              `Delete the entries first, or start a new split in ${currency}.`,
           );
         }
         await callRpc(
@@ -566,9 +639,9 @@ export function registerSplitTools(server: McpServer): void {
             p_title: title ?? data.split.title,
             p_currency: currency ?? data.split.currency,
           },
-          key
+          key,
         );
         return respond(supabase, key, "Updated the split.");
-      })
+      }),
   );
 }

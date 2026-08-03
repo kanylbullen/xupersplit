@@ -1,4 +1,6 @@
-import { createMcpHandler } from "mcp-handler";
+import { createMcpHandler, type McpHandlerOptions } from "mcp-handler";
+import { after } from "next/server";
+import { track } from "@vercel/analytics/server";
 import { registerSplitTools } from "@/lib/mcp/server";
 import { APP_ORIGIN } from "@/lib/miniapp";
 
@@ -40,8 +42,34 @@ const serverInfo = {
   ],
 };
 
+// The handler's event hook is the only place a client's identity shows up —
+// tool calls never mention it. Note the shape: REQUEST_RECEIVED carries the
+// whole JSON-RPC envelope (params nested one level down), and REQUEST_COMPLETED
+// carries neither parameters nor result, so per-tool outcomes are recorded in
+// the tools themselves rather than here.
+type McpEvent = Parameters<NonNullable<McpHandlerOptions["onEvent"]>>[0];
+
+function recordConnection(event: McpEvent): void {
+  if (event.type !== "REQUEST_RECEIVED" || event.method !== "initialize")
+    return;
+
+  const envelope = event.parameters as
+    | { params?: { clientInfo?: { name?: string; version?: string } } }
+    | undefined;
+  const client = envelope?.params?.clientInfo;
+
+  // Analytics must never hold up the response or fail a request.
+  after(() =>
+    track("mcp_connect", {
+      client: client?.name ?? "unknown",
+      client_version: client?.version ?? "unknown",
+    }).catch(() => {}),
+  );
+}
+
 const handler = createMcpHandler(registerSplitTools, {
   serverInfo,
+  onEvent: recordConnection,
   instructions:
     "xupersplit splits shared expenses in a group — no accounts, no app. " +
     "Create a split with create_split, then hand the returned link to the user " +
