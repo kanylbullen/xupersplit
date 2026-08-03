@@ -256,12 +256,16 @@ export function registerSplitTools(server: McpServer): void {
         from: participantArg("Who sent the money"),
         to: participantArg("Who received it"),
         amount: amountArg,
+        description: z
+          .string()
+          .optional()
+          .describe('How it was paid, e.g. "Swish, 3 March". Shown in the history.'),
         date: dateArg,
       }),
       outputSchema: SPLIT_SCHEMA,
       annotations: { readOnlyHint: false, destructiveHint: false },
     },
-    async ({ split, from, to, amount, date }) =>
+    async ({ split, from, to, amount, description, date }) =>
       guard(async () => {
         const { key, data } = await openSplit(supabase, split);
         const sender = resolveParticipant(data.participants, from);
@@ -277,6 +281,7 @@ export function registerSplitTools(server: McpServer): void {
             p_key: key,
             p_entry: {
               kind: "transfer",
+              description,
               amount_cents: toCents(amount),
               paid_by: sender.id,
               transfer_to: recipient.id,
