@@ -31,8 +31,12 @@ const en: Dict = {
     lastUsed: "last used {date}",
     neverUsed: "never used",
     adding: "Waiting for your device…",
+    rename: "Rename",
+    nameLabel: "Name",
+    namePlaceholder: "e.g. My phone",
     removeConfirm: "Remove?",
     errList: "Couldn't fetch your passkeys.",
+    errRename: "Couldn't rename the passkey.",
     errRemove: "Couldn't remove the passkey.",
   },
   landing: {

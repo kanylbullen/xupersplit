@@ -31,8 +31,12 @@ const da: Dict = {
     lastUsed: "sidst brugt {date}",
     neverUsed: "aldrig brugt",
     adding: "Venter på din enhed…",
+    rename: "Omdøb",
+    nameLabel: "Navn",
+    namePlaceholder: "f.eks. Min telefon",
     removeConfirm: "Fjern?",
     errList: "Kunne ikke hente dine passkeys.",
+    errRename: "Kunne ikke omdøbe passkeyen.",
     errRemove: "Kunne ikke fjerne passkeyen.",
   },
   landing: {

@@ -31,8 +31,12 @@ const fi: Dict = {
     lastUsed: "viimeksi käytetty {date}",
     neverUsed: "ei koskaan käytetty",
     adding: "Odotetaan laitettasi…",
+    rename: "Nimeä uudelleen",
+    nameLabel: "Nimi",
+    namePlaceholder: "esim. Oma puhelin",
     removeConfirm: "Poistetaanko?",
     errList: "Passkey-avainten hakeminen epäonnistui.",
+    errRename: "Nimen muuttaminen epäonnistui.",
     errRemove: "Passkeyn poistaminen epäonnistui.",
   },
   landing: {

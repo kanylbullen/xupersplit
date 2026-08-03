@@ -31,8 +31,12 @@ const nb: Dict = {
     lastUsed: "sist brukt {date}",
     neverUsed: "aldri brukt",
     adding: "Venter på enheten din…",
+    rename: "Endre navn",
+    nameLabel: "Navn",
+    namePlaceholder: "f.eks. Telefonen min",
     removeConfirm: "Fjerne?",
     errList: "Kunne ikke hente passkeyene dine.",
+    errRename: "Kunne ikke endre navnet.",
     errRemove: "Kunne ikke fjerne passkeyen.",
   },
   landing: {
