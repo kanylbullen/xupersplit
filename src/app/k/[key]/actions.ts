@@ -1,8 +1,12 @@
 "use server";
 
+import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { clientIpHash } from "@/lib/ipHash";
 import { clearPaymentMethodsIfSettled } from "@/lib/split/wipe";
+import type { FeedbackContext, FeedbackKind } from "@/lib/feedback";
+import { notifyFeedback } from "@/lib/notifyFeedback";
 
 // On failure, `error` is a stable code (see dict.errors) the client translates.
 export type ActionResult = { ok: true } | { ok: false; error: string };
@@ -31,6 +35,16 @@ const ERROR_CODES = [
   "not_invited",
   "not_secure",
   "farcaster_required",
+  // Feedback. The codes are prefixed because the match is a substring test and
+  // a bare `rate_limited` already means "too many splits are being created" —
+  // and for the same reason the global one has to come before the per-network
+  // one, which is a substring of it.
+  "feedback_rate_limited_global",
+  "feedback_rate_limited",
+  "bad_email",
+  // `message_required` and `message_too_long` are deliberately absent: the form
+  // won't submit under five characters and caps the field at 4000, so they only
+  // fire on a tampered client and can fall through to the generic message.
 ];
 
 function errorCode(message: string | undefined): string {
@@ -182,4 +196,48 @@ export async function updateSplitAction(
     p_title: title,
     p_currency: currency,
   });
+}
+
+/**
+ * In-app feedback. Deliberately does not touch GitHub: the repo is public and
+ * the reporter's address bar holds the split key, so anything auto-filed would
+ * publish their split. This lands in a private table; promoting a report to an
+ * issue is a separate, human decision.
+ */
+export async function submitFeedbackAction(
+  key: string | null,
+  input: {
+    kind: FeedbackKind;
+    message: string;
+    replyEmail: string;
+    context: FeedbackContext;
+  }
+): Promise<ActionResult> {
+  const supabase = await createClient();
+  const ipHash = clientIpHash(await headers());
+
+  const { data, error } = await supabase.rpc("submit_feedback", {
+    p_kind: input.kind,
+    p_message: input.message,
+    p_split_key: key,
+    p_reply_email: input.replyEmail.trim() || null,
+    p_context: input.context,
+    p_ip_hash: ipHash,
+  });
+
+  if (error || !data) return { ok: false, error: errorCode(error?.message) };
+
+  const saved = data as { id: string; split_id: string | null };
+
+  // Never let the notification decide whether the report succeeded.
+  await notifyFeedback({
+    id: saved.id,
+    kind: input.kind,
+    message: input.message,
+    replyEmail: input.replyEmail.trim() || null,
+    splitId: saved.split_id,
+    context: input.context,
+  });
+
+  return { ok: true };
 }

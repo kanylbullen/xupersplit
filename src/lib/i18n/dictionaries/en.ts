@@ -57,6 +57,24 @@ const en: Dict = {
     step3Body:
       "Balances are calculated automatically, with ready-made suggestions for who pays whom.",
   },
+  feedback: {
+    trigger: "something broken?",
+    title: "Send feedback",
+    intro: "Goes straight to the person who built this — not a support desk.",
+    kindLabel: "What is it?",
+    kinds: { bug: "Something's broken", suggestion: "An idea", other: "Something else" },
+    messageLabel: "What happened?",
+    messagePlaceholder: "I added an expense and the balance didn't change…",
+    emailLabel: "Your email (optional)",
+    emailPlaceholder: "you@example.com",
+    emailHint: "Only so you can get an answer. Nothing else is sent to it.",
+    privacyNote:
+      "Your language, browser and the size of this split are attached so the problem can be reproduced. The names and amounts in it are not.",
+    send: "Send",
+    sending: "Sending…",
+    sent: "Thank you — it's been passed on.",
+    sentWithEmail: "Thank you — it's been passed on. You'll hear back at the address you gave.",
+  },
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · built with love, coffee and beer",
@@ -401,6 +419,9 @@ const en: Dict = {
       "Unusually many xupersplits are being created right now — wait a moment and try again.",
     need_two_participants: "Add at least two participants.",
     title_required: "Give your xupersplit a name.",
+    feedback_rate_limited: "You've sent a few messages already — give it an hour.",
+    feedback_rate_limited_global: "A lot of feedback is coming in right now — try again in a bit.",
+    bad_email: "That email address doesn't look right.",
     unknown: "Something went wrong. Please try again.",
   },
   switcher: {

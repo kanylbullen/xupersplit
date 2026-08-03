@@ -57,6 +57,24 @@ const da: Dict = {
     step3Body:
       "Saldiene beregnes automatisk, med færdige forslag til hvem der betaler hvem.",
   },
+  feedback: {
+    trigger: "noget der driller?",
+    title: "Send feedback",
+    intro: "Går direkte til personen, der har bygget det her — ingen supportafdeling.",
+    kindLabel: "Hvad drejer det sig om?",
+    kinds: { bug: "Noget er i stykker", suggestion: "En idé", other: "Noget andet" },
+    messageLabel: "Hvad skete der?",
+    messagePlaceholder: "Jeg tilføjede en udgift, og saldoen ændrede sig ikke…",
+    emailLabel: "Din e-mail (valgfrit)",
+    emailPlaceholder: "dig@eksempel.dk",
+    emailHint: "Kun så du kan få svar. Der sendes ikke andet dertil.",
+    privacyNote:
+      "Dit sprog, din browser og hvor stor splitten er følger med, så fejlen kan genskabes. Navnene og beløbene i den gør ikke.",
+    send: "Send",
+    sending: "Sender…",
+    sent: "Tak — det er sendt videre.",
+    sentWithEmail: "Tak — det er sendt videre. Du hører fra os på den adresse, du gav.",
+  },
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · lavet med kærlighed, kaffe og øl",
@@ -401,6 +419,9 @@ const da: Dict = {
       "Usædvanligt mange xupersplits oprettes lige nu — vent lidt og prøv igen.",
     need_two_participants: "Tilføj mindst to deltagere.",
     title_required: "Giv din xupersplit et navn.",
+    feedback_rate_limited: "Du har allerede sendt et par beskeder — vent en time.",
+    feedback_rate_limited_global: "Der kommer meget feedback ind lige nu — prøv igen om lidt.",
+    bad_email: "E-mailadressen ser ikke rigtig ud.",
     unknown: "Noget gik galt. Prøv igen.",
   },
   switcher: {

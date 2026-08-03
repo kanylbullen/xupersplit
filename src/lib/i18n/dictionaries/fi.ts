@@ -57,6 +57,24 @@ const fi: Dict = {
     step3Body:
       "Saldot lasketaan automaattisesti, valmiine ehdotuksineen siitä, kuka maksaa kenelle.",
   },
+  feedback: {
+    trigger: "jokin rikki?",
+    title: "Lähetä palautetta",
+    intro: "Menee suoraan tämän rakentaneelle ihmiselle — ei asiakaspalveluun.",
+    kindLabel: "Mistä on kyse?",
+    kinds: { bug: "Jokin on rikki", suggestion: "Idea", other: "Jotain muuta" },
+    messageLabel: "Mitä tapahtui?",
+    messagePlaceholder: "Lisäsin kulun eikä saldo muuttunut…",
+    emailLabel: "Sähköpostisi (vapaaehtoinen)",
+    emailPlaceholder: "sina@esimerkki.fi",
+    emailHint: "Vain jotta voit saada vastauksen. Muuta sinne ei lähetetä.",
+    privacyNote:
+      "Kielesi, selaimesi ja jaon koko lähetetään mukana, jotta vika voidaan toistaa. Siinä olevat nimet ja summat eivät.",
+    send: "Lähetä",
+    sending: "Lähetetään…",
+    sent: "Kiitos — viesti on välitetty.",
+    sentWithEmail: "Kiitos — viesti on välitetty. Vastaamme antamaasi osoitteeseen.",
+  },
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · tehty rakkaudella, kahvilla ja oluella",
@@ -401,6 +419,9 @@ const fi: Dict = {
       "Xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
     need_two_participants: "Lisää vähintään kaksi osallistujaa.",
     title_required: "Anna xupersplitillesi nimi.",
+    feedback_rate_limited: "Olet jo lähettänyt muutaman viestin — odota tunti.",
+    feedback_rate_limited_global: "Palautetta tulee juuri nyt paljon — yritä hetken kuluttua uudelleen.",
+    bad_email: "Sähköpostiosoite ei näytä oikealta.",
     unknown: "Jokin meni pieleen. Yritä uudelleen.",
   },
   switcher: {

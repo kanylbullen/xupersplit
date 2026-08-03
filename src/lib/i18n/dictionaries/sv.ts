@@ -57,6 +57,24 @@ const sv = {
     step3Body:
       "Saldon räknas ut automatiskt, med färdiga förslag på vem som betalar vem.",
   },
+  feedback: {
+    trigger: "något trasigt?",
+    title: "Skicka feedback",
+    intro: "Går direkt till personen som byggt det här — ingen supportavdelning.",
+    kindLabel: "Vad gäller det?",
+    kinds: { bug: "Något är trasigt", suggestion: "En idé", other: "Något annat" },
+    messageLabel: "Vad hände?",
+    messagePlaceholder: "Jag lade till ett utlägg och saldot ändrades inte…",
+    emailLabel: "Din mejladress (frivilligt)",
+    emailPlaceholder: "du@exempel.se",
+    emailHint: "Bara för att du ska kunna få svar. Inget annat skickas dit.",
+    privacyNote:
+      "Ditt språk, din webbläsare och hur stor spliten är följer med så att felet går att återskapa. Namnen och beloppen i den gör det inte.",
+    send: "Skicka",
+    sending: "Skickar…",
+    sent: "Tack — det är vidarebefordrat.",
+    sentWithEmail: "Tack — det är vidarebefordrat. Du hör av oss på adressen du angav.",
+  },
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · byggd med kärlek, kaffe och öl",
@@ -403,6 +421,9 @@ const sv = {
       "Det skapas ovanligt många xupersplits just nu — vänta en stund och prova igen.",
     need_two_participants: "Lägg till minst två deltagare.",
     title_required: "Ge din xupersplit ett namn.",
+    feedback_rate_limited: "Du har redan skickat några meddelanden — vänta en timme.",
+    feedback_rate_limited_global: "Det kommer in mycket feedback just nu — prova igen om en stund.",
+    bad_email: "Mejladressen ser inte riktig ut.",
     unknown: "Något gick fel. Försök igen.",
   },
   switcher: {
