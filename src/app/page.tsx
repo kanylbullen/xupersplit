@@ -75,7 +75,7 @@ export default async function Home() {
         </p>
       </section>
 
-      <MySplits server={mine} />
+      <MySplits server={mine} loggedIn={!!user} />
 
       <section className="grid gap-4 sm:grid-cols-3">
         {steps.map(([title, body]) => (

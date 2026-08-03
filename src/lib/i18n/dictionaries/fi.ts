@@ -71,6 +71,8 @@ const fi: Dict = {
     entriesMany: "{count} merkintää",
     created: "luotu {date}",
     lastOpened: "viimeksi avattu {date}",
+    savedAccount: "Lista seuraa tiliäsi kaikilla laitteilla.",
+    remove: "Poista listalta",
     savedHint1: "Lista tallennetaan selaimeesi.",
     loginCta: "Kirjaudu sisään",
     savedHint2: "jos haluat sen seuraavan mukana laitteiden välillä.",

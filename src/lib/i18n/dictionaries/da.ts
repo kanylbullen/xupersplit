@@ -71,6 +71,8 @@ const da: Dict = {
     entriesMany: "{count} poster",
     created: "oprettet {date}",
     lastOpened: "sidst åbnet {date}",
+    savedAccount: "Listen følger din konto på alle enheder.",
+    remove: "Fjern fra listen",
     savedHint1: "Listen gemmes i din browser.",
     loginCta: "Log ind",
     savedHint2: "hvis du vil have den med på tværs af enheder.",

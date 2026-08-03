@@ -71,6 +71,8 @@ const en: Dict = {
     entriesMany: "{count} entries",
     created: "created {date}",
     lastOpened: "last opened {date}",
+    savedAccount: "This list follows your account across devices.",
+    remove: "Remove from the list",
     savedHint1: "This list is saved in your browser.",
     loginCta: "Log in",
     savedHint2: "if you want it to follow you across devices.",

@@ -71,6 +71,8 @@ const sv = {
     entriesMany: "{count} poster",
     created: "skapad {date}",
     lastOpened: "senast öppnad {date}",
+    savedAccount: "Listan följer ditt konto på alla enheter.",
+    remove: "Ta bort från listan",
     savedHint1: "Listan sparas i din webbläsare.",
     loginCta: "Logga in",
     savedHint2: "om du vill att den följer med mellan enheter.",

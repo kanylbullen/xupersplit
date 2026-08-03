@@ -4,6 +4,14 @@ export const VISITED_KEY = "xupersplit:visited";
 
 export type VisitedSplit = { key: string; title: string; at: number };
 
+export function writeVisited(items: VisitedSplit[]): void {
+  try {
+    localStorage.setItem(VISITED_KEY, JSON.stringify(items.slice(0, 50)));
+  } catch {
+    // private mode or a full quota — the list is a convenience, not state
+  }
+}
+
 export function readVisited(): VisitedSplit[] {
   try {
     const raw = JSON.parse(
