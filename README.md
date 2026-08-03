@@ -109,6 +109,11 @@ Or point any MCP client at `https://split.xuper.fun/api/mcp` (Streamable HTTP;
 stdio-only clients can bridge via `npx mcp-remote`). Self-hosted instances get
 the same endpoint at their own `/api/mcp`.
 
+It also works as a custom connector in **Claude** and **ChatGPT** on the web —
+paste the endpoint, no authentication. ChatGPT needs developer mode switched on
+first, or the option to add one isn't there at all. Step-by-step at
+[/mcp](https://split.xuper.fun/mcp).
+
 Eleven tools cover the whole lifecycle — `create_split`, `get_split`,
 `add_expense`, `record_payment`, `update_entry`, `delete_entry`,
 `add_participant`, `rename_participant`, `remove_participant`,
