@@ -1,10 +1,10 @@
 "use server";
 
-import { createHash } from "crypto";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { track } from "@vercel/analytics/server";
 import { createClient } from "@/lib/supabase/server";
+import { clientIpHash } from "@/lib/ipHash";
 import { resolveFarcasterHandle } from "@/lib/neynar";
 
 export type CreateState = { error: string } | null;
@@ -60,19 +60,7 @@ export async function createSplitAction(
   if (names.length < 2) return { error: "need_two_participants" };
 
   // Hashed client IP feeds the per-IP creation throttle in the database.
-  // Use Vercel's trusted headers — a client can spoof x-forwarded-for, but
-  // x-vercel-forwarded-for / x-real-ip are set by the edge to the real
-  // client IP and can't be overridden from the request.
-  const headerStore = await headers();
-  const ip =
-    headerStore.get("x-vercel-forwarded-for")?.trim() ||
-    headerStore.get("x-real-ip")?.trim() ||
-    // Self-host behind a reverse proxy: first hop of x-forwarded-for.
-    headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    "";
-  const ipHash = ip
-    ? createHash("sha256").update(`xupersplit:${ip}`).digest("hex").slice(0, 32)
-    : null;
+  const ipHash = clientIpHash(await headers());
 
   const supabase = await createClient();
 

@@ -11,6 +11,7 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 [**split.xuper.fun**](https://split.xuper.fun) · [English](README.md) · Svenska
 
 [![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP-server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
 &nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
@@ -20,6 +21,15 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 </div>
 
 ---
+
+> **Funkar med AI-agenter.** Xupersplit är även en [MCP-server](#mcp-server) —
+> peka din assistent på en URL så kan den skapa spliten, lägga in vad alla
+> betalat och säga vem som är skyldig vem. Inget konto, ingen API-nyckel,
+> inget att installera.
+>
+> ```
+> claude mcp add --transport http xupersplit https://split.xuper.fun/api/mcp
+> ```
 
 ## Vad det är
 
@@ -46,6 +56,8 @@ Byggd som ett en-prompt-projekt och vidareutvecklad därifrån.
   spara** (Kittysplit-modell); sätt en huvudvaluta per split. Inklusive **sats**
   — kör en hel split i bitcoin om du vill.
 - **Åtta betalsätt**, flera med äkta förifyllning på ett tryck — [se nedan](#betalsätt).
+- **MCP-server** — AI-agenter kan sköta en hel split över
+  [Model Context Protocol](#mcp-server), utan konto och utan API-nyckel.
 - **Sex språk** — English, Svenska, Norsk, Dansk, Suomi, Íslenska
   (autodetekteras, kan bytas).
 - **Inbyggd integritet** — betaluppgifter kan raderas när alla är kvitt,
@@ -83,6 +95,32 @@ P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
 > **Krypto är oåterkalleligt.** Kryptometoder visar extra varningar, och **alla**
 > betalsätt varnar (med datum) om mottagarens uppgifter någonsin ändrats från
 > det som först lades in — vem som helst med länken kan ändra dem.
+
+## MCP-server
+
+Xupersplit pratar [Model Context Protocol](https://modelcontextprotocol.io), så
+en AI-assistent kan skapa en split, lägga in vad alla betalat och räkna ut vem
+som är skyldig vem — och sedan ge dig länken att dela. Kontolöst som resten av
+appen: ingen registrering, ingen API-nyckel.
+
+```bash
+claude mcp add --transport http xupersplit https://split.xuper.fun/api/mcp
+```
+
+Eller peka valfri MCP-klient på `https://split.xuper.fun/api/mcp` (Streamable
+HTTP; klienter som bara klarar stdio kan brygga via `npx mcp-remote`).
+Self-hostade instanser får samma endpoint på sin egen `/api/mcp`.
+
+Elva verktyg täcker hela livscykeln — `create_split`, `get_split`,
+`add_expense`, `record_payment`, `update_entry`, `delete_entry`,
+`add_participant`, `rename_participant`, `remove_participant`,
+`set_payment_methods`, `update_split`. Deltagare anges med namn och belopp som
+vanliga decimaltal, så en agent hanterar aldrig uuid:n eller ören.
+
+Servern är ett tunt lager ovanpå samma RPC:er och `money.ts`-hjälpare som
+webbappen, och den håller bara anon-rollen — vilket är det som gör *säkra*
+splits (de kräver ett inloggat `auth.uid()`) oåtkomliga över MCP. Detaljer på
+[/mcp](https://split.xuper.fun/mcp).
 
 ## Arkitektur
 

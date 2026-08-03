@@ -2,8 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { balances } from "@/lib/money";
-import type { SplitData } from "@/lib/types";
+import { clearPaymentMethodsIfSettled } from "@/lib/split/wipe";
 
 // On failure, `error` is a stable code (see dict.errors) the client translates.
 export type ActionResult = { ok: true } | { ok: false; error: string };
@@ -107,25 +106,8 @@ export async function saveEntryAction(
   // have served their purpose — wipe them.
   if (result.ok && entry.kind === "transfer") {
     const supabase = await createClient();
-    const { data } = await supabase.rpc("split_data", { p_key: key });
-    const split = data as (SplitData & { not_found?: boolean }) | null;
-    // Skip the wipe when the split opted to keep payment info (long-running splits).
-    if (
-      split &&
-      !split.not_found &&
-      split.participants &&
-      !split.split?.keep_payment_methods
-    ) {
-      const hasMethods = split.participants.some(
-        (p) => p.payment_methods?.length > 0
-      );
-      const allSquare = [...balances(split.participants, split.entries).values()].every(
-        (v) => v === 0
-      );
-      if (hasMethods && allSquare) {
-        await supabase.rpc("clear_payment_methods", { p_key: key });
-        revalidatePath(`/k/${key}`);
-      }
+    if (await clearPaymentMethodsIfSettled(supabase, key)) {
+      revalidatePath(`/k/${key}`);
     }
   }
   return result;

@@ -9,8 +9,14 @@
 ## Pages
 - [Home](https://split.xuper.fun/): what it is and how it works
 - [Create a split](https://split.xuper.fun/new): start a new split (no account)
+- [MCP server](https://split.xuper.fun/mcp): connect an AI agent
 - [Privacy](https://split.xuper.fun/privacy)
 - [Cookies](https://split.xuper.fun/cookies)
+
+## For agents
+- MCP endpoint: https://split.xuper.fun/api/mcp (Streamable HTTP, no auth, no API key).
+- Tools: create_split, get_split, add_expense, record_payment, update_entry, delete_entry, add_participant, rename_participant, remove_participant, set_payment_methods, update_split.
+- create_split returns a secret link. Give it to the user to share with the group — anyone holding it can read and edit the split.
 
 ## Key facts
 - Free and accountless. Optional email/wallet/passkey sign-in just makes splits follow you across devices.
