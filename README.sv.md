@@ -230,8 +230,22 @@ delnings-/saldo-/avräkningslogiken finns i `src/lib/money.ts`.
 
 ## Bidra
 
-Issues och PR:er välkomnas — särskilt en riktig öppen P2P-deeplänk för Vipps
-eller MobilePay, eller fler betalspår. Kodbasen är liten och fullt typad.
+Issues och PR:er välkomnas, och lika gärna en buggrapport från någon som bara
+använt sajten. Börja i [CONTRIBUTING.md](CONTRIBUTING.md).
+
+> **Klistra aldrig in en split-länk.** Länken *är* lösenordet — vem som helst
+> som ser den kan läsa och ändra splitten, och issues är publika och indexerade.
+> Beskriv problemet, eller gör en slaskplit med påhittade namn.
+
+- 🐛 [**Rapportera en bugg**](https://github.com/kanylbullen/xupersplit/issues/new?template=bug_report.yml) — eller mejla **split@xuper.fun** om GitHub-konto känns onödigt
+- 💡 [**Föreslå en funktion**](https://github.com/kanylbullen/xupersplit/issues/new?template=feature_request.yml)
+- 🔒 [**Rapportera en sårbarhet privat**](https://github.com/kanylbullen/xupersplit/security/advisories/new) — aldrig som publik issue; se [SECURITY.md](SECURITY.md)
+- 🌱 [**good first issue**](https://github.com/kanylbullen/xupersplit/labels/good%20first%20issue) — små, avgränsade uppgifter
+
+Mest efterlängtat just nu: en riktig öppen P2P-deeplänk för **Vipps** eller
+**MobilePay** så att beloppet kan förifyllas som Swish och Lightning redan gör,
+plus fler betalspår och översättningsfixar i de sex språken. Kodbasen är liten
+och fullt typad.
 
 ## Licens
 

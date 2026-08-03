@@ -1,0 +1,70 @@
+name: Bug report
+description: Something on split.xuper.fun or in the code doesn't work
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Never paste your split link
+
+        A split's URL is its password. Anyone who sees
+        `split.xuper.fun/k/<key>` — and this issue is public and indexed by
+        search engines — can read every name and amount in your split and edit
+        or delete anything in it.
+
+        Describe the problem instead. If you need to show a broken state, make a
+        throwaway split with made-up names and link that. Crop screenshots so the
+        address bar isn't in them.
+
+        **Found a security problem?** Don't file it here — use
+        [private reporting](https://github.com/kanylbullen/xupersplit/security/advisories/new).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, and what did the app do instead of what you expected?
+      placeholder: |
+        I added an expense of 250 SEK paid by Alice and split between three
+        people. The balance still showed everyone as square.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did this happen?
+      options:
+        - split.xuper.fun (the hosted site)
+        - An AI assistant over MCP
+        - A Farcaster mini app
+        - My own self-hosted copy
+        - Running it locally as a developer
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Browser or client
+      description: Browser and version, or which AI assistant you connected.
+      placeholder: Safari 18 on iPhone / Claude Desktop / Firefox 141 on Linux
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: no-link
+    attributes:
+      label: Before you submit
+      options:
+        - label: I have **not** included a split link, and no screenshot here shows one.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

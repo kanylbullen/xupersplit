@@ -60,6 +60,7 @@ const fi: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · tehty rakkaudella, kahvilla ja oluella",
+    feedback: "jokin rikki?",
     terms: "käyttöehdot",
     privacy: "tietosuoja",
     cookies: "evästeet",

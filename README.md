@@ -226,8 +226,22 @@ logic lives in `src/lib/money.ts`.
 
 ## Contributing
 
-Issues and PRs welcome — especially a real open P2P deep link for Vipps or
-MobilePay, or additional payment rails. The codebase is small and fully typed.
+Issues and PRs are welcome, and so is a bug report from someone who just used
+the site. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+> **Never post a split link.** A split's URL is its password — anyone who sees
+> it can read and edit that split, and issues are public and indexed. Describe
+> the problem, or make a throwaway split with fake names.
+
+- 🐛 [**Report a bug**](https://github.com/kanylbullen/xupersplit/issues/new?template=bug_report.yml) — or just email **split@xuper.fun** if a GitHub account is a hassle
+- 💡 [**Suggest a feature**](https://github.com/kanylbullen/xupersplit/issues/new?template=feature_request.yml)
+- 🔒 [**Report a vulnerability privately**](https://github.com/kanylbullen/xupersplit/security/advisories/new) — never as a public issue; see [SECURITY.md](SECURITY.md)
+- 🌱 [**good first issue**](https://github.com/kanylbullen/xupersplit/labels/good%20first%20issue) — small, self-contained tasks
+
+Most wanted right now: a real open P2P deep link for **Vipps** or **MobilePay**
+so the amount can be prefilled the way Swish and Lightning already do, plus
+additional payment rails and translation fixes across the six locales. The
+codebase is small and fully typed.
 
 ## License
 

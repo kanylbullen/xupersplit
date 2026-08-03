@@ -60,6 +60,7 @@ const en: Dict = {
   footer: {
     beer: "Buy me a beer",
     tagline: "xupersplit · built with love, coffee and beer",
+    feedback: "something broken?",
     terms: "terms",
     privacy: "privacy policy",
     cookies: "cookies",

@@ -1,0 +1,10 @@
+# Blank issues stay off so nobody files a bug without seeing the "don't paste
+# your split link" warning — the link is the capability, and issues are public.
+blank_issues_enabled: false
+contact_links:
+  - name: Something broken and you'd rather not use GitHub?
+    url: mailto:split@xuper.fun
+    about: Email the same person directly. No account needed.
+  - name: Security vulnerability
+    url: https://github.com/kanylbullen/xupersplit/security/advisories/new
+    about: Report it privately, never as a public issue.
