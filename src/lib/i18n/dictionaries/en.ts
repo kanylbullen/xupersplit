@@ -11,6 +11,8 @@ const en: Dict = {
     you: "you",
   },
   nav: {
+    account: "My account",
+    menu: "Menu",
     signedInAs: "Signed in as {email}",
     logout: "Log out",
     login: "Log in",

@@ -11,6 +11,8 @@ const fi: Dict = {
     you: "sinä",
   },
   nav: {
+    account: "Oma tili",
+    menu: "Valikko",
     signedInAs: "Kirjautunut tunnuksella {email}",
     logout: "Kirjaudu ulos",
     login: "Kirjaudu sisään",

@@ -11,6 +11,8 @@ const sv = {
     you: "du",
   },
   nav: {
+    account: "Mitt konto",
+    menu: "Meny",
     signedInAs: "Inloggad som {email}",
     logout: "Logga ut",
     login: "Logga in",

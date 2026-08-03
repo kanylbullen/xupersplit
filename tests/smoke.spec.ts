@@ -12,6 +12,19 @@ test("landing page renders with a create button", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("account menu holds language, theme and log in", async ({ page }) => {
+  await page.goto("/");
+  const menu = page.locator("summary").filter({ hasText: "Menu" });
+  await expect(menu).toBeVisible();
+  await menu.click();
+  await expect(page.getByRole("combobox")).toBeVisible(); // language switcher
+  await expect(page.getByRole("button", { name: "System" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
+  // Escape closes it again.
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("link", { name: "Log in" })).toBeHidden();
+});
+
 test("FX endpoint returns a numeric rate", async ({ request }) => {
   const res = await request.get("/api/fx?from=EUR&to=SEK");
   expect(res.ok()).toBeTruthy();

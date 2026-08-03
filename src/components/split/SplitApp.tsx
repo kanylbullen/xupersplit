@@ -6,6 +6,7 @@ import { track } from "@vercel/analytics";
 import { markSeenAction } from "@/app/k/[key]/actions";
 import type { Entry, EntryKind, SplitData } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
+import { VISITED_KEY } from "@/lib/visited";
 import { EntriesView } from "./EntriesView";
 import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
@@ -38,15 +39,15 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
   useEffect(() => {
     try {
       const raw = JSON.parse(
-        localStorage.getItem("xupersplit:visited") ?? "[]"
+        localStorage.getItem(VISITED_KEY) ?? "[]"
       ) as { key: string; title: string; at: number }[];
       const rest = raw.filter((v) => v.key !== split.key);
       rest.unshift({ key: split.key, title: split.title, at: Date.now() });
-      localStorage.setItem("xupersplit:visited", JSON.stringify(rest.slice(0, 50)));
+      localStorage.setItem(VISITED_KEY, JSON.stringify(rest.slice(0, 50)));
     } catch {
       // corrupt entry — overwrite with just this split
       localStorage.setItem(
-        "xupersplit:visited",
+        VISITED_KEY,
         JSON.stringify([{ key: split.key, title: split.title, at: Date.now() }])
       );
     }
