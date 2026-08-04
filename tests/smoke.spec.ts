@@ -74,6 +74,7 @@ async function mcpSession(request: APIRequestContext) {
     1
   );
   expect(init.result.serverInfo.name).toBe("xupersplit");
+  return init;
 }
 
 test("MCP endpoint advertises the split tools", async ({ request }) => {
@@ -84,6 +85,26 @@ test("MCP endpoint advertises the split tools", async ({ request }) => {
   for (const tool of ["create_split", "get_split", "add_expense", "record_payment"]) {
     expect(names, `tools/list should include ${tool}`).toContain(tool);
   }
+});
+
+// An agent reading a receipt gets no second chance: it either asks about the
+// line it can't place, or it averages the cost onto someone who never ordered
+// it and the total still comes out right. That guidance lives entirely in two
+// strings served over the wire, so nothing else here would notice them going
+// missing in a refactor.
+test("MCP tells agents to ask rather than guess", async ({ request }) => {
+  const init = await mcpSession(request);
+  expect(init.result.instructions).toContain("ask rather than spreading");
+
+  const listed = await mcp(request, "tools/list", {}, 2);
+  const addExpense = listed.result.tools.find(
+    (t: { name: string }) => t.name === "add_expense",
+  ) as
+    | { inputSchema: { properties: { paid_by?: { description?: string } } } }
+    | undefined;
+  expect(addExpense?.inputSchema.properties.paid_by?.description).toContain(
+    "ask unless you know",
+  );
 });
 
 // Skip the split-dependent tests if no smoke split is configured (e.g. a fork).

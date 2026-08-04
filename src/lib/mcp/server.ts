@@ -248,8 +248,9 @@ export function registerSplitTools(server: McpServer): void {
           "Who paid",
           "A card receipt rarely names the payer, so ask unless you know: " +
             "guess wrong and every balance points the wrong way. If the user " +
-            "counts themselves among the participants, they are almost always " +
-            "the one who paid.",
+            "counts themselves among the participants, assume it was them and " +
+            "say that you assumed it — what you must not do is pick a payer " +
+            "silently.",
         ),
         description: z
           .string()
