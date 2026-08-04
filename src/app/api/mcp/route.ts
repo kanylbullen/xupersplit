@@ -80,7 +80,12 @@ const handler = createMcpHandler(registerSplitTools, {
     "participants for you. Working from a receipt or a photo of one: read it " +
     "yourself and enter one expense per group of items sharing the same " +
     "people, rather than one equal split of the total — the shared bottle of " +
-    "wine and the individual mains are separate expenses.",
+    "wine and the individual mains are separate expenses. When you cannot " +
+    "tell who had what, ask rather than spreading that line evenly; an even " +
+    "split you already suspect is wrong costs the group real money and looks " +
+    "authoritative doing it. The tell is that the counts don't fit the group " +
+    "— two glasses of wine for three people, one dessert for four. Name the " +
+    "line you can't place, say what you assumed for the rest, and ask.",
 });
 
 // Agents connect from anywhere, including browser-based clients, so this
