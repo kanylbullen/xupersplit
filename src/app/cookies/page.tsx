@@ -27,7 +27,7 @@ export default function CookiesPage() {
           <p className="text-sm leading-relaxed text-stone-500">
             If you choose to sign in, a session cookie (
             <code className="rounded bg-stone-100 px-1">sb-…-auth-token</code>)
-            keeps you logged in. It's set by our database provider Supabase,
+            keeps you logged in. It’s set by our database provider Supabase,
             contains only your sign-in session, and disappears when you log
             out. If you never sign in, no cookie is set at all.
           </p>
@@ -39,17 +39,17 @@ export default function CookiesPage() {
             Your browser saves a few things locally that are never sent to us:
             the “Your xupersplits” list, your “who are you” choice per split,
             your chosen language, your light/dark preference, and the fact that
-            you've dismissed the cookie notice. It all stays on your device and
+            you’ve dismissed the cookie notice. It all stays on your device and
             can be cleared from your browser settings.
           </p>
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
-          <h2 className="mb-1.5 font-bold">What's not here</h2>
+          <h2 className="mb-1.5 font-bold">What’s not here</h2>
           <p className="text-sm leading-relaxed text-stone-500">
             No analytics cookies, no ad networks, no third-party tracking, no
-            “us and our 847 partners”. We count page views with Vercel's
-            statistics, but it's entirely cookieless and anonymous — it can't
+            “us and our 847 partners”. We count page views with Vercel’s
+            statistics, but it’s entirely cookieless and anonymous — it can’t
             recognise you between visits or follow you to other sites. Since
             everything we use is strictly necessary or cookieless, the law
             requires no consent — the notice you saw is just information.

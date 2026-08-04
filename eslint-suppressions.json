@@ -1,14 +1,4 @@
 {
-  "src/app/cookies/page.tsx": {
-    "react/no-unescaped-entities": {
-      "count": 6
-    }
-  },
-  "src/app/privacy/page.tsx": {
-    "react/no-unescaped-entities": {
-      "count": 14
-    }
-  },
   "src/components/AccountMenu.tsx": {
     "react-hooks/set-state-in-effect": {
       "count": 1
