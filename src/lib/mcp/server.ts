@@ -40,8 +40,12 @@ const splitArg = z
     "The split key, or the whole https://split.xuper.fun/k/<key> link.",
   );
 
-const participantArg = (what: string) =>
-  z.string().describe(`${what} — a participant's name (or id) in this split.`);
+const participantArg = (what: string, note?: string) =>
+  z
+    .string()
+    .describe(
+      `${what} — a participant's name (or id) in this split.${note ? ` ${note}` : ""}`,
+    );
 
 const amountArg = z
   .number()
@@ -240,7 +244,13 @@ export function registerSplitTools(server: McpServer): void {
       inputSchema: z.object({
         split: splitArg,
         amount: amountArg,
-        paid_by: participantArg("Who paid"),
+        paid_by: participantArg(
+          "Who paid",
+          "A card receipt rarely names the payer, so ask unless you know: " +
+            "guess wrong and every balance points the wrong way. If the user " +
+            "counts themselves among the participants, they are almost always " +
+            "the one who paid.",
+        ),
         description: z
           .string()
           .optional()
