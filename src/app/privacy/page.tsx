@@ -13,7 +13,7 @@ const SECTIONS: [string, React.ReactNode][] = [
     "Who is responsible (data controller)",
     <>
       Xupersplit is run by a private individual in Sweden as a non-commercial
-      hobby project (the “buy me a beer” link doesn't cover its running costs).
+      hobby project (the “buy me a beer” link doesn’t cover its running costs).
       The data controller is{" "}
       <a
         href="https://www.linkedin.com/in/johantollstorp/"
@@ -36,7 +36,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "What data is stored & why (lawful basis)",
     <>
-      Only what you enter yourself: the split's name, participant names (first
+      Only what you enter yourself: the split’s name, participant names (first
       names are plenty), expenses and transfers. Optionally, participants can
       add a payment method (Swish/Vipps/MobilePay number or IBAN, used only to
       show payment links and QR codes) and you can sign in with your email
@@ -69,7 +69,7 @@ const SECTIONS: [string, React.ReactNode][] = [
     "Who can see your data?",
     <>
       Anyone with the secret link to a split can view and edit its contents —
-      that's how Xupersplit works, just like a shared notepad. Only share the
+      that’s how Xupersplit works, just like a shared notepad. Only share the
       link with the people who should be in on it. No data is sold, shared or
       used for advertising, and there is no automated decision-making or
       profiling.
@@ -96,8 +96,8 @@ const SECTIONS: [string, React.ReactNode][] = [
     <>
       Xupersplit runs on Supabase (database in Stockholm, EU), Vercel (hosting
       and anonymous, cookieless visitor statistics) and Resend (sign-in emails).
-      When a Swish QR code is shown, the recipient's number, amount and the
-      split's name are sent to Swish's official QR service to draw the code.
+      When a Swish QR code is shown, the recipient’s number, amount and the
+      split’s name are sent to Swish’s official QR service to draw the code.
       Vercel and Resend are US-based; transfers to them rely on their EU–US Data
       Privacy Framework certification and standard contractual clauses. Data
       processing agreements (GDPR Art. 28) are in place with all three.
@@ -106,7 +106,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Cookies & local storage",
     <>
-      If you sign in, a session cookie is set — that's all. The “Your
+      If you sign in, a session cookie is set — that’s all. The “Your
       xupersplits” list, your “who are you” choice and your language/theme
       preferences are stored locally in your browser and never leave your
       device. Details are in the{" "}
@@ -122,7 +122,7 @@ const SECTIONS: [string, React.ReactNode][] = [
       Much of this is self-service: anyone with the link can edit or delete
       entries, export the whole split as JSON or CSV from Settings, and remove
       a participant — so you can take yourself out of a split directly, as long
-      as you haven't recorded any expenses or transfers yet. Beyond that, you
+      as you haven’t recorded any expenses or transfers yet. Beyond that, you
       have the right to access, rectification, erasure, restriction, objection
       and data portability regarding your personal data. Email{" "}
       <a
@@ -131,7 +131,7 @@ const SECTIONS: [string, React.ReactNode][] = [
       >
         split@xuper.fun
       </a>{" "}
-      and we'll take care of it — including deleting a split, name or email
+      and we’ll take care of it — including deleting a split, name or email
       right away instead of waiting for the automatic purge. You also have the
       right to lodge a complaint with the Swedish supervisory authority,{" "}
       <a
@@ -148,9 +148,9 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Children",
     <>
-      Xupersplit isn't directed at children and we don't knowingly collect data
+      Xupersplit isn’t directed at children and we don’t knowingly collect data
       from anyone under 13. If a child has been added to a split, contact us and
-      we'll remove the data.
+      we’ll remove the data.
     </>,
   ],
 ];
@@ -167,8 +167,8 @@ export default function PrivacyPage() {
       <h1 className="mb-2 text-3xl font-black tracking-tight">Privacy policy</h1>
       <p className="mb-8 text-stone-500">
         Xupersplit is built to know as little about you as possible. The core
-        principle: we only store what's needed to split expenses, and delete it
-        when it's no longer needed.
+        principle: we only store what’s needed to split expenses, and delete it
+        when it’s no longer needed.
       </p>
       <div className="space-y-6">
         {SECTIONS.map(([title, body]) => (
