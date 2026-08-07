@@ -19,9 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      # Public, safe to expose — security relies on RLS + RPCs.
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      # Inlined rather than read from secrets, so that pull requests from forks
+      # can run too: GitHub withholds both secrets and configuration variables
+      # from fork-triggered runs, which left the server unable to boot and every
+      # smoke test timing out. These two are publishable credentials — they ship
+      # in the client bundle on every page of split.xuper.fun, and security rests
+      # on RLS plus the RPC layer, not on hiding them. See .env.example.
+      NEXT_PUBLIC_SUPABASE_URL: https://uvlgfszbmzdurjlbqovu.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_IuQPAVuL6w-uQLuVtXZLyQ_Ka_tDBr4
+      # Stays a secret: it is a capability link to the smoke split. Fork runs get
+      # an empty value and the tests that need it skip themselves (smoke.spec.ts).
       SMOKE_SPLIT_KEY: ${{ secrets.SMOKE_SPLIT_KEY }}
     steps:
       - uses: actions/checkout@v4
