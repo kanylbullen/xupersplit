@@ -5,6 +5,8 @@ import { BeerButton } from "@/components/BeerButton";
 import { MySplits } from "@/components/MySplits";
 import { AccountMenu } from "@/components/AccountMenu";
 import { MiniAppSwap } from "@/components/MiniAppSwap";
+import { CopyCode } from "@/components/CopyCode";
+import { MCP_ENDPOINT } from "@/lib/mcp/endpoint";
 import { getI18n } from "@/lib/i18n/server";
 
 // Self-canonical for the landing page (other pages self-canonicalize).
@@ -73,6 +75,16 @@ export default async function Home() {
         <p className="mt-3 text-sm text-stone-400">
           <MiniAppSwap base={dict.landing.noLogin} alt={dict.landing.noLoginFarcaster} />
         </p>
+        {/* The only mention of the MCP server above the fold. Kept as a quiet
+            pill rather than a second call to action — the assistant route is a
+            shortcut for people who already have one, not the main path. */}
+        <Link
+          href="/mcp"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-stone-200/80 bg-surface px-3.5 py-1.5 text-xs font-medium text-stone-500 shadow-sm transition-colors hover:border-primary/40 hover:text-primary"
+        >
+          <span aria-hidden="true">✨</span>
+          {dict.landing.aiPill}
+        </Link>
       </section>
 
       <MySplits server={mine} userId={user?.id ?? null} />
@@ -87,6 +99,27 @@ export default async function Home() {
             <p className="text-sm text-stone-500">{body}</p>
           </div>
         ))}
+      </section>
+
+      {/* Same server the footer's "MCP" link points at, pitched in the words of
+          someone splitting a bar tab rather than the protocol's. The acronym
+          and the setup guides live on /mcp. */}
+      <section className="mt-4 rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+        <h2 className="mb-1 font-bold">{dict.landing.aiTitle}</h2>
+        <p className="mb-4 text-sm text-stone-500">{dict.landing.aiBody}</p>
+        <CopyCode
+          location="landing"
+          label={dict.landing.aiCopy}
+          copiedLabel={dict.landing.aiCopied}
+        >
+          {MCP_ENDPOINT}
+        </CopyCode>
+        <Link
+          href="/mcp"
+          className="mt-3 inline-block text-sm font-semibold text-primary hover:underline"
+        >
+          {dict.landing.aiCta} →
+        </Link>
       </section>
 
       <footer className="mt-16 flex flex-col items-center gap-4 text-center text-xs text-stone-400">

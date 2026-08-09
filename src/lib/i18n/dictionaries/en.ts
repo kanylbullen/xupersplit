@@ -56,6 +56,13 @@ const en: Dict = {
     step3Title: "3. Settle up",
     step3Body:
       "Balances are calculated automatically, with ready-made suggestions for who pays whom.",
+    aiPill: "Works with Claude and ChatGPT",
+    aiTitle: "Or let your AI do it",
+    aiBody:
+      "Hand your assistant a photo of the receipt — it creates the xupersplit, enters what everyone paid and gives you the link to share. No account, no API key.",
+    aiCta: "How to connect it",
+    aiCopy: "Copy",
+    aiCopied: "Copied ✓",
   },
   feedback: {
     trigger: "something broken?",

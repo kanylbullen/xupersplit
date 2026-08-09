@@ -56,6 +56,13 @@ const sv = {
     step3Title: "3. Gör upp",
     step3Body:
       "Saldon räknas ut automatiskt, med färdiga förslag på vem som betalar vem.",
+    aiPill: "Fungerar med Claude och ChatGPT",
+    aiTitle: "Eller låt din AI göra jobbet",
+    aiBody:
+      "Ge din assistent ett foto av kvittot — den skapar din xupersplit, lägger in vad var och en betalat och ger dig länken att dela. Inget konto, ingen API-nyckel.",
+    aiCta: "Så kopplar du in den",
+    aiCopy: "Kopiera",
+    aiCopied: "Kopierat ✓",
   },
   feedback: {
     trigger: "något trasigt?",
