@@ -89,6 +89,7 @@ const fi: Dict = {
     terms: "käyttöehdot",
     privacy: "tietosuoja",
     cookies: "evästeet",
+    help: "ohjeet",
     openSource: "Avoin lähdekoodi GitHubissa",
   },
   mySplits: {

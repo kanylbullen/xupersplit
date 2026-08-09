@@ -89,6 +89,7 @@ const nb: Dict = {
     terms: "vilkår",
     privacy: "personvern",
     cookies: "informasjonskapsler",
+    help: "hjelp",
     openSource: "Åpen kildekode på GitHub",
   },
   mySplits: {
