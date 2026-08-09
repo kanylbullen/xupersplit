@@ -138,7 +138,7 @@ const is: Help = {
     },
     {
       q: "Get ég náð í gögnin mín eða eytt þeim?",
-      a: "Í Stillingum er útflutningur sem sækir alla skiptinguna — hvern þátttakanda, útgjöld, millifærslur og stöður — svo þú getir geymt hana eða afhent hana öðrum. Að eyða er sami hnappur og fjarlægir skiptinguna fyrir alla.",
+      a: "Í Stillingum er útflutningur sem sækir alla skiptinguna sem JSON eða CSV — hvern þátttakanda, útgjöld, millifærslur og stöður — svo þú getir geymt hana eða afhent hana öðrum. Einstakar færslur, og þátttakendur sem eru ekki á neinni færslu, geturðu eytt sjálf(ur). Viljir þú láta eyða allri skiptingunni áður en sjálfvirka sex mánaða hreinsunin fer fram, sendu póst á split@xuper.fun og það er gert strax.",
     },
     {
       q: "Hvað kostar þetta, og get ég keyrt það sjálf(ur)?",

@@ -119,11 +119,14 @@ export default async function HelpPage() {
             {h.promptsIntro}
           </p>
           <div className="space-y-4">
-            {h.prompts.map((prompt) => (
+            {h.prompts.map((prompt, i) => (
               <Card key={prompt.title}>
                 <h3 className="mb-2 font-bold">{prompt.title}</h3>
+                {/* Numbered, not locale-tagged: which prompt people copy is
+                    the interesting question, and the label has to stay stable
+                    across six translations to be countable at all. */}
                 <CopyCode
-                  location={`help-prompt-${locale}`}
+                  location={`help-prompt-${i + 1}`}
                   label={h.copy}
                   copiedLabel={h.copied}
                   wrap
@@ -145,26 +148,26 @@ export default async function HelpPage() {
           {/* Expanded, not collapsed: the point of one page is that the
               browser's own find lands on the answer. */}
           <dl className="space-y-4">
+            {/* Card is the div wrapping each dt/dd pair — a <dl> may hold
+                divs, but not a div holding another div holding the pair. */}
             {h.faq.map((qa) => (
-              <div key={qa.q}>
-                <Card>
-                  <dt className="mb-1 font-bold">{qa.q}</dt>
-                  <dd className="text-sm leading-relaxed text-stone-500">
-                    {qa.a}
-                    {qa.more ? (
-                      <>
-                        {" "}
-                        <Link
-                          href={qa.more.href}
-                          className="font-semibold text-primary hover:underline"
-                        >
-                          {qa.more.label} →
-                        </Link>
-                      </>
-                    ) : null}
-                  </dd>
-                </Card>
-              </div>
+              <Card key={qa.q}>
+                <dt className="mb-1 font-bold">{qa.q}</dt>
+                <dd className="text-sm leading-relaxed text-stone-500">
+                  {qa.a}
+                  {qa.more ? (
+                    <>
+                      {" "}
+                      <Link
+                        href={qa.more.href}
+                        className="font-semibold text-primary hover:underline"
+                      >
+                        {qa.more.label} →
+                      </Link>
+                    </>
+                  ) : null}
+                </dd>
+              </Card>
             ))}
           </dl>
         </Section>

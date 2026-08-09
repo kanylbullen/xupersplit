@@ -138,7 +138,7 @@ const sv: Help = {
     },
     {
       q: "Kan jag få ut mina data, eller radera dem?",
-      a: "Under Inställningar finns en export som laddar ner hela spliten — varje deltagare, utgift, överföring och saldo — så att du kan spara den eller lämna över den. Att radera är samma knapp som tar bort spliten för alla.",
+      a: "Under Inställningar finns en export som laddar ner hela spliten som JSON eller CSV — varje deltagare, utgift, överföring och saldo — så att du kan spara den eller lämna över den. Enskilda utgifter, och deltagare som inte står på någon post, kan du ta bort själv. Vill du få hela spliten raderad innan den automatiska sexmånadersgallringen: mejla split@xuper.fun, så sker det direkt.",
     },
     {
       q: "Vad kostar det, och kan jag köra det själv?",

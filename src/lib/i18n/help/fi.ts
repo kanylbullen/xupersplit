@@ -138,7 +138,7 @@ const fi: Help = {
     },
     {
       q: "Saanko tietoni ulos tai poistettua?",
-      a: "Asetuksissa on vienti, joka lataa koko jaon — jokaisen osallistujan, kulun, siirron ja saldon — jotta voit säilyttää sen tai antaa sen eteenpäin. Poistaminen on sama painike, joka poistaa jaon kaikilta.",
+      a: "Asetuksissa on vienti, joka lataa koko jaon JSON- tai CSV-muodossa — jokaisen osallistujan, kulun, siirron ja saldon — jotta voit säilyttää sen tai antaa sen eteenpäin. Yksittäiset kulut ja osallistujat, jotka eivät ole millään kirjauksella, voit poistaa itse. Jos haluat koko jaon poistettavaksi ennen automaattista kuuden kuukauden siivousta, lähetä viesti osoitteeseen split@xuper.fun, niin se hoituu heti.",
     },
     {
       q: "Mitä se maksaa, ja voinko pyörittää sitä itse?",

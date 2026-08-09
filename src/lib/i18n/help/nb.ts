@@ -138,7 +138,7 @@ const nb: Help = {
     },
     {
       q: "Kan jeg få ut dataene mine, eller slette dem?",
-      a: "Under Innstillinger finnes en eksport som laster ned hele spliten — hver deltaker, utgift, overføring og saldo — så du kan ta vare på den eller gi den videre. Å slette er den samme knappen som fjerner spliten for alle.",
+      a: "Under Innstillinger finnes en eksport som laster ned hele spliten som JSON eller CSV — hver deltaker, utgift, overføring og saldo — så du kan ta vare på den eller gi den videre. Enkeltutgifter, og deltakere som ikke står på noen føring, kan du slette selv. Vil du få hele spliten fjernet før den automatiske seksmånedersopprydningen: send en e-post til split@xuper.fun, så skjer det med en gang.",
     },
     {
       q: "Hva koster det, og kan jeg kjøre det selv?",

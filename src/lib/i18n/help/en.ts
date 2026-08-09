@@ -138,7 +138,7 @@ const en: Help = {
     },
     {
       q: "Can I get my data out, or delete it?",
-      a: "Settings has an export that downloads the whole split — every participant, expense, transfer and balance — so you can keep it or hand it to someone else. Deleting is the same button that removes the split for everyone.",
+      a: "Settings has an export that downloads the whole split as JSON or CSV — every participant, expense, transfer and balance — so you can keep it or hand it to someone else. Individual expenses, and participants who aren't on any entry, you can delete yourself. To have a whole split removed before the automatic six-month purge, mail split@xuper.fun and it's done right away.",
     },
     {
       q: "What does it cost, and can I run it myself?",
