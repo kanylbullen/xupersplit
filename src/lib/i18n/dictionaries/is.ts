@@ -56,7 +56,7 @@ const is: Dict = {
     step3Title: "3. Gerið upp",
     step3Body:
       "Stöður reiknast sjálfkrafa, með tilbúnum tillögum um hver borgar hverjum.",
-    aiPill: "Virkar með Claude og ChatGPT",
+    aiPill: "Virkar með Claude, ChatGPT og fleirum",
     aiTitle: "Eða láttu gervigreindina sjá um það",
     aiBody:
       "Réttu aðstoðarmanninum mynd af kvittuninni — hann býr til xupersplitinn, skráir hvað hver greiddi og gefur þér hlekkinn til að deila. Enginn reikningur, enginn API-lykill.",

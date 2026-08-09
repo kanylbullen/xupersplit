@@ -56,7 +56,7 @@ const fi: Dict = {
     step3Title: "3. Selvittäkää",
     step3Body:
       "Saldot lasketaan automaattisesti, valmiine ehdotuksineen siitä, kuka maksaa kenelle.",
-    aiPill: "Toimii Clauden ja ChatGPT:n kanssa",
+    aiPill: "Toimii Clauden, ChatGPT:n ja muiden kanssa",
     aiTitle: "Tai anna tekoälyn hoitaa se",
     aiBody:
       "Anna avustajallesi kuva kuitista — se luo xupersplitin, kirjaa kuka maksoi mitäkin ja antaa sinulle linkin jaettavaksi. Ei tiliä, ei API-avainta.",

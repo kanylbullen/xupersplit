@@ -56,7 +56,7 @@ const nb: Dict = {
     step3Title: "3. Gjør opp",
     step3Body:
       "Saldoene regnes ut automatisk, med ferdige forslag til hvem som betaler hvem.",
-    aiPill: "Fungerer med Claude og ChatGPT",
+    aiPill: "Fungerer med Claude, ChatGPT og flere",
     aiTitle: "Eller la AI-en gjøre jobben",
     aiBody:
       "Gi assistenten din et bilde av kvitteringen — den lager xuperspliten, legger inn hva hver enkelt betalte og gir deg lenken du kan dele. Ingen konto, ingen API-nøkkel.",

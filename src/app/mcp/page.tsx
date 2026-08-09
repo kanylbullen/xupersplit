@@ -142,6 +142,18 @@ export default function McpPage() {
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+          <h2 className="mb-1.5 font-bold">Perplexity, Grok and the rest</h2>
+          <p className="mb-3 text-sm leading-relaxed text-stone-500">
+            Both have been connected to this endpoint and both work. They take a
+            custom MCP server the same way: find connectors in settings, paste
+            the endpoint, and choose no authentication when asked. Nothing here
+            is specific to one assistant — any client that speaks Streamable
+            HTTP gets the same eleven tools.
+          </p>
+          <CopyCode location="other-assistants">{ENDPOINT}</CopyCode>
+        </section>
+
+        <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
           <h2 className="mb-1.5 font-bold">Claude Code and other clients</h2>
           <p className="mb-3 text-sm leading-relaxed text-stone-500">
             From a terminal:

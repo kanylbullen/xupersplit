@@ -22,7 +22,7 @@ test("landing page renders with a create button", async ({ page }) => {
 test("landing page points at the MCP server", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("link", { name: /works with claude and chatgpt/i })
+    page.getByRole("link", { name: /works with claude/i })
   ).toBeVisible();
   // Matched loosely: the origin follows NEXT_PUBLIC_APP_ORIGIN, so it differs
   // between a preview deployment and production.
