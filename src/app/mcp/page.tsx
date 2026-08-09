@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { APP_ORIGIN } from "@/lib/miniapp";
-
-const ENDPOINT = `${APP_ORIGIN}/api/mcp`;
+import { CopyCode } from "@/components/CopyCode";
+import { MCP_ENDPOINT as ENDPOINT } from "@/lib/mcp/endpoint";
 
 const DESCRIPTION =
   "Xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
@@ -49,6 +48,8 @@ const TOOLS: [string, string][] = [
   ["update_split", "Rename the split or set its currency"],
 ];
 
+// Illustrative snippets that aren't meant to be pasted anywhere — everything
+// you actually copy uses <CopyCode> instead.
 function Code({ children }: { children: string }) {
   return (
     <pre className="overflow-x-auto rounded-xl bg-stone-100 p-3 text-xs leading-relaxed">
@@ -83,7 +84,7 @@ export default function McpPage() {
       <div className="space-y-6">
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
           <h2 className="mb-1.5 font-bold">Endpoint</h2>
-          <Code>{ENDPOINT}</Code>
+          <CopyCode location="endpoint">{ENDPOINT}</CopyCode>
           <p className="mt-3 text-sm leading-relaxed text-stone-500">
             Streamable HTTP, stateless, unauthenticated. There is no rate-limit
             key to request and no dashboard to sign up for.
@@ -101,7 +102,7 @@ export default function McpPage() {
             and paste the endpoint. Leave the OAuth fields empty — there’s nothing
             to authenticate against.
           </p>
-          <Code>{ENDPOINT}</Code>
+          <CopyCode location="claude">{ENDPOINT}</CopyCode>
           <p className="mt-3 text-sm leading-relaxed text-stone-500">
             Works on every plan, though the free plan allows a single custom
             connector. Claude connects from Anthropic’s cloud rather than your
@@ -127,7 +128,7 @@ export default function McpPage() {
             at all. Then add a connector and paste the endpoint. When it asks how
             to authenticate, choose no authentication.
           </p>
-          <Code>{ENDPOINT}</Code>
+          <CopyCode location="chatgpt">{ENDPOINT}</CopyCode>
           <p className="mt-3 text-sm leading-relaxed text-stone-500">
             OpenAI has moved these settings around more than once, so follow{" "}
             <a
@@ -141,31 +142,43 @@ export default function McpPage() {
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
+          <h2 className="mb-1.5 font-bold">Perplexity, Grok and the rest</h2>
+          <p className="mb-3 text-sm leading-relaxed text-stone-500">
+            Both have been connected to this endpoint and both work. They take a
+            custom MCP server the same way: find connectors in settings, paste
+            the endpoint, and choose no authentication when asked. Nothing here
+            is specific to one assistant — any client that speaks Streamable
+            HTTP gets the same eleven tools.
+          </p>
+          <CopyCode location="other-assistants">{ENDPOINT}</CopyCode>
+        </section>
+
+        <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
           <h2 className="mb-1.5 font-bold">Claude Code and other clients</h2>
           <p className="mb-3 text-sm leading-relaxed text-stone-500">
             From a terminal:
           </p>
-          <Code>{`claude mcp add --transport http xupersplit ${ENDPOINT}`}</Code>
+          <CopyCode location="cli">{`claude mcp add --transport http xupersplit ${ENDPOINT}`}</CopyCode>
           <p className="mt-4 mb-3 text-sm leading-relaxed text-stone-500">
             Any client that reads an MCP config file:
           </p>
-          <Code>{`{
+          <CopyCode location="config">{`{
   "mcpServers": {
     "xupersplit": { "url": "${ENDPOINT}" }
   }
-}`}</Code>
+}`}</CopyCode>
           <p className="mt-4 mb-3 text-sm leading-relaxed text-stone-500">
             Older clients that only speak stdio can bridge with{" "}
             <code className="rounded bg-stone-100 px-1">mcp-remote</code>:
           </p>
-          <Code>{`{
+          <CopyCode location="mcp-remote">{`{
   "mcpServers": {
     "xupersplit": {
       "command": "npx",
       "args": ["-y", "mcp-remote", "${ENDPOINT}"]
     }
   }
-}`}</Code>
+}`}</CopyCode>
         </section>
 
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">

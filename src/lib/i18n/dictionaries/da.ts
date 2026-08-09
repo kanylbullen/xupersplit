@@ -56,6 +56,13 @@ const da: Dict = {
     step3Title: "3. Gør op",
     step3Body:
       "Saldiene beregnes automatisk, med færdige forslag til hvem der betaler hvem.",
+    aiPill: "Virker med Claude, ChatGPT og flere",
+    aiTitle: "Eller lad din AI klare det",
+    aiBody:
+      "Giv din assistent et billede af kvitteringen — den opretter din xupersplit, indtaster hvad hver især har betalt og giver dig linket, du kan dele. Ingen konto, ingen API-nøgle.",
+    aiCta: "Sådan forbinder du den",
+    aiCopy: "Kopiér",
+    aiCopied: "Kopieret ✓",
   },
   feedback: {
     trigger: "noget der driller?",

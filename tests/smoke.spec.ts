@@ -17,6 +17,21 @@ test("landing page renders with a create button", async ({ page }) => {
   ).toBeVisible();
 });
 
+// The whole point of the landing card and hero pill is that /mcp stops being
+// findable only from the footer — so assert the routes above the footer exist.
+test("landing page points at the MCP server", async ({ page }) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("link", { name: /works with claude/i })
+  ).toBeVisible();
+  // Matched loosely: the origin follows NEXT_PUBLIC_APP_ORIGIN, so it differs
+  // between a preview deployment and production.
+  await expect(page.getByText(/\/api\/mcp$/)).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /how to connect it/i })
+  ).toBeVisible();
+});
+
 test("account menu holds language, theme and log in", async ({ page }) => {
   await page.goto("/");
   const menu = page.locator("summary").filter({ hasText: "Menu" });
