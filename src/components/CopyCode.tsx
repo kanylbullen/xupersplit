@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 
 /**
@@ -22,6 +22,11 @@ export function CopyCode({
   copiedLabel?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  // Clicking a second block while the first still reads "Copied ✓" is normal
+  // here — there are six of them on /mcp — so each click owns the timer.
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
 
   function copy() {
     navigator.clipboard
@@ -29,7 +34,8 @@ export function CopyCode({
       .then(() => {
         track("mcp_snippet_copied", { location });
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        clearTimeout(resetTimer.current);
+        resetTimer.current = setTimeout(() => setCopied(false), 2000);
       })
       .catch(() => {});
   }
