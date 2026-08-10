@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/cover.png" alt="Xupersplit — split expenses, skip the fuss" width="640" />
+<img src="docs/cover.png" alt="xupersplit — split expenses, skip the fuss" width="640" />
 
-# Xupersplit
+# xupersplit
 
 **Split shared expenses without the fuss.** Create a split, share the link, and
 let everyone add what they paid — balances and who-owes-whom are worked out
@@ -19,7 +19,7 @@ Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
-<img src="docs/demo.gif" alt="Xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="260" />
+<img src="docs/demo.gif" alt="xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="260" />
 
 <br />
 <br />
@@ -36,7 +36,7 @@ Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 ---
 
-> **Works with AI agents.** Xupersplit is an [MCP server](#mcp-server) too —
+> **Works with AI agents.** xupersplit is an [MCP server](#mcp-server) too —
 > point your assistant at one URL and it can create the split, add what everyone
 > paid and tell you who owes whom. No account, no API key, nothing to install.
 >
@@ -79,10 +79,10 @@ project and grown from there.
 
 ## Payments
 
-Xupersplit stores each recipient's payment handle(s) and, wherever a payment
+xupersplit stores each recipient's payment handle(s) and, wherever a payment
 network exposes an **open, agreement-free** interface, turns the balance row
 into a real one-tap payment — **prefilled with the exact amount**. No money ever
-passes through Xupersplit; it only builds the link/invoice/transaction the payer
+passes through xupersplit; it only builds the link/invoice/transaction the payer
 approves in their own app.
 
 | Method | Experience | How |
@@ -100,7 +100,7 @@ QR endpoint; Lightning's LNURL and EVM/Solana over WalletConnect are open
 protocols. Vipps
 and MobilePay (now Vipps MobilePay) only offer amount-prefilled flows through
 their **merchant** APIs — a business agreement that routes money to a company,
-not person-to-person — so for those Xupersplit does the honest thing and shows
+not person-to-person — so for those xupersplit does the honest thing and shows
 the handle with a copy button. If they ever ship an open P2P deep link, wiring
 it in is a small change. PRs welcome. 🤞
 
@@ -110,7 +110,7 @@ it in is a small change. PRs welcome. 🤞
 
 ## MCP server
 
-Xupersplit speaks [Model Context Protocol](https://modelcontextprotocol.io), so
+xupersplit speaks [Model Context Protocol](https://modelcontextprotocol.io), so
 an AI assistant can create a split, add what everyone paid and report who owes
 whom — then hand you the link to share. Accountless like the rest of the app:
 no sign-up, no API key.
@@ -265,7 +265,7 @@ MIT — see [LICENSE](LICENSE).
 
 <div align="center">
 
-If Xupersplit saved your group some bickering, you can
+If xupersplit saved your group some bickering, you can
 
 [![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
 

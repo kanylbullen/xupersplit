@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy policy — Xupersplit",
+  title: "Privacy policy — xupersplit",
   // Keep the policy out of search results — data subjects reach it via the
   // footer link; it shouldn't surface the controller's name in searches.
   robots: { index: false, follow: false },
@@ -12,7 +12,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Who is responsible (data controller)",
     <>
-      Xupersplit is run by a private individual in Sweden as a non-commercial
+      xupersplit is run by a private individual in Sweden as a non-commercial
       hobby project (the “buy me a beer” link doesn’t cover its running costs).
       The data controller is{" "}
       <a
@@ -69,7 +69,7 @@ const SECTIONS: [string, React.ReactNode][] = [
     "Who can see your data?",
     <>
       Anyone with the secret link to a split can view and edit its contents —
-      that’s how Xupersplit works, just like a shared notepad. Only share the
+      that’s how xupersplit works, just like a shared notepad. Only share the
       link with the people who should be in on it. No data is sold, shared or
       used for advertising, and there is no automated decision-making or
       profiling.
@@ -78,7 +78,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "AI assistants (MCP)",
     <>
-      Xupersplit can be driven by an AI assistant over the Model Context
+      xupersplit can be driven by an AI assistant over the Model Context
       Protocol. If you connect one — ChatGPT, Claude or another — it reads and
       writes your split on your instruction, which means the split’s contents
       (names, amounts, and any payment details in it) pass through that
@@ -94,7 +94,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Subprocessors & international transfers",
     <>
-      Xupersplit runs on Supabase (database in Stockholm, EU), Vercel (hosting
+      xupersplit runs on Supabase (database in Stockholm, EU), Vercel (hosting
       and anonymous, cookieless visitor statistics) and Resend (sign-in emails).
       When a Swish QR code is shown, the recipient’s number, amount and the
       split’s name are sent to Swish’s official QR service to draw the code.
@@ -148,7 +148,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "Children",
     <>
-      Xupersplit isn’t directed at children and we don’t knowingly collect data
+      xupersplit isn’t directed at children and we don’t knowingly collect data
       from anyone under 13. If a child has been added to a split, contact us and
       we’ll remove the data.
     </>,
@@ -166,7 +166,7 @@ export default function PrivacyPage() {
       </Link>
       <h1 className="mb-2 text-3xl font-black tracking-tight">Privacy policy</h1>
       <p className="mb-8 text-stone-500">
-        Xupersplit is built to know as little about you as possible. The core
+        xupersplit is built to know as little about you as possible. The core
         principle: we only store what’s needed to split expenses, and delete it
         when it’s no longer needed.
       </p>

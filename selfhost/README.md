@@ -1,6 +1,6 @@
-# Self-hosting Xupersplit
+# Self-hosting xupersplit
 
-This directory brings up Xupersplit **and its own backend** — Postgres, auth
+This directory brings up xupersplit **and its own backend** — Postgres, auth
 (GoTrue), the REST/RPC layer (PostgREST) and a local mailbox — with no external
 services. The app itself is the gateway, so the browser only ever talks to a
 single origin.

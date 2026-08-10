@@ -200,7 +200,7 @@ const fi: Dict = {
   },
   confirm: {
     heading: "Vahvista kirjautuminen",
-    body: "Paina painiketta kirjautuaksesi Xupersplitiin.",
+    body: "Paina painiketta kirjautuaksesi xupersplitiin.",
     login: "Kirjaudu sisään",
     loggingIn: "Kirjaudutaan …",
     invalid: "Linkki on virheellinen tai vanhentunut.",
@@ -427,7 +427,7 @@ const fi: Dict = {
     farcaster_required: "Tämä jako vaatii Farcaster-tilin — avaa se Farcasterissa.",
     fc_user_not_found: "Ei Farcaster-käyttäjää tällä nimellä — tarkista kirjoitusasu.",
     rate_limited:
-      "Xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
+      "xupersplitejä luodaan poikkeuksellisen paljon juuri nyt — odota hetki ja yritä uudelleen.",
     need_two_participants: "Lisää vähintään kaksi osallistujaa.",
     title_required: "Anna xupersplitillesi nimi.",
     feedback_rate_limited: "Olet jo lähettänyt muutaman viestin — odota tunti.",

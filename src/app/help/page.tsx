@@ -5,10 +5,10 @@ import { getLocale } from "@/lib/i18n/server";
 import { getHelp } from "@/lib/i18n/help";
 
 export const metadata: Metadata = {
-  // The root layout's template appends " — Xupersplit".
+  // The root layout's template appends " — xupersplit".
   title: "Help & getting started",
   description:
-    "How to split expenses with Xupersplit: getting started, worked examples for the situations people actually hit, answers to the common questions, and how to run a whole split from an AI assistant.",
+    "How to split expenses with xupersplit: getting started, worked examples for the situations people actually hit, answers to the common questions, and how to run a whole split from an AI assistant.",
   alternates: { canonical: "/help" },
 };
 

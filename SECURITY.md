@@ -1,6 +1,6 @@
 # Security policy
 
-Xupersplit is a hobby project, but it handles people's names, what they owe each
+xupersplit is a hobby project, but it handles people's names, what they owe each
 other and — through payment links — real money. Reports are genuinely welcome.
 
 ## Reporting a vulnerability

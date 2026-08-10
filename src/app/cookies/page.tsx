@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cookie policy — Xupersplit",
+  title: "Cookie policy — xupersplit",
 };
 
 export default function CookiesPage() {
@@ -16,7 +16,7 @@ export default function CookiesPage() {
       </Link>
       <h1 className="mb-2 text-3xl font-black tracking-tight">Cookie policy</h1>
       <p className="mb-8 text-stone-500">
-        Short version: Xupersplit only uses cookies that are needed for the
+        Short version: xupersplit only uses cookies that are needed for the
         site to work. No tracking, no ads, no third-party cookies — and so no
         cookie consent is required.
       </p>

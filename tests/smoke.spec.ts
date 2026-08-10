@@ -11,7 +11,7 @@ const SMOKE_KEY = process.env.SMOKE_SPLIT_KEY;
 
 test("landing page renders with a create button", async ({ page }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle(/Xupersplit/);
+  await expect(page).toHaveTitle(/xupersplit/);
   await expect(
     page.getByRole("link", { name: /create a new xupersplit/i })
   ).toBeVisible();

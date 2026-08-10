@@ -201,7 +201,7 @@ const sv = {
   },
   confirm: {
     heading: "Bekräfta inloggning",
-    body: "Tryck på knappen för att logga in på Xupersplit.",
+    body: "Tryck på knappen för att logga in på xupersplit.",
     login: "Logga in",
     loggingIn: "Loggar in…",
     invalid: "Länken är ogiltig eller har gått ut.",

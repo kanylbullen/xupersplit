@@ -140,7 +140,7 @@ const RPC_MESSAGES: Record<string, string> = {
   // Order matters: callRpc matches by substring, and "rate_limited_global"
   // contains "rate_limited". The specific code has to come first.
   rate_limited_global:
-    "Xupersplit as a whole is at its hourly split limit right now. Try again later.",
+    "xupersplit as a whole is at its hourly split limit right now. Try again later.",
   rate_limited:
     "Too many splits have been created from this network in the last hour. Try again later.",
   title_required: "The split needs a title.",

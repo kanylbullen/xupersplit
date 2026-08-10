@@ -28,7 +28,7 @@ Not a developer, or a GitHub account feels like too much? Just email
 ## Suggesting a feature
 
 Open a [feature request](https://github.com/kanylbullen/xupersplit/issues/new?template=feature_request.yml)
-and say what problem it solves for your group. Xupersplit deliberately stays
+and say what problem it solves for your group. xupersplit deliberately stays
 small — the bar is "would most groups splitting a bill want this?"
 
 Things that are already on the wish list:

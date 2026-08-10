@@ -3,7 +3,7 @@ import type { Help } from "./types";
 const fi: Help = {
   title: "Ohjeet ja käyttöönotto",
   intro:
-    "Xupersplit jakaa yhteiset kulut ilman tilejä: luot jaon, jaat linkin, ja jokainen kirjaa mitä on maksanut. Tässä ovat perusasiat, tilanteet joita oikeasti tulee vastaan, ja se miten annat tekoälyavustajan hoitaa koko homman.",
+    "xupersplit jakaa yhteiset kulut ilman tilejä: luot jaon, jaat linkin, ja jokainen kirjaa mitä on maksanut. Tässä ovat perusasiat, tilanteet joita oikeasti tulee vastaan, ja se miten annat tekoälyavustajan hoitaa koko homman.",
 
   toc: {
     start: "Näin pääset alkuun",
@@ -28,7 +28,7 @@ const fi: Help = {
     },
     {
       title: "4. Selvittäkää velat",
-      body: "Saldot laskee pienimmän määrän siirtoja, joilla kaikki ovat kuitit, ja tarjoaa maksutavaksi Swishin, Lightningin, USDC:n ja muita. Paina ”Merkitse maksetuksi”, kun raha on oikeasti liikkunut — mikään maksu ei kulje Xupersplitin kautta, joten mikään ei kerro sitä meille itsestään.",
+      body: "Saldot laskee pienimmän määrän siirtoja, joilla kaikki ovat kuitit, ja tarjoaa maksutavaksi Swishin, Lightningin, USDC:n ja muita. Paina ”Merkitse maksetuksi”, kun raha on oikeasti liikkunut — mikään maksu ei kulje xupersplitin kautta, joten mikään ei kerro sitä meille itsestään.",
     },
   ],
 
@@ -68,7 +68,7 @@ const fi: Help = {
 
   aiHeading: "Tekoälyavustajan kanssa",
   aiIntro:
-    "Xupersplit on MCP-palvelin, joten Clauden, ChatGPT:n, Perplexityn tai Grokin kaltainen avustaja voi tehdä kaiken yllä olevan puolestasi — luoda jaon, kirjata kuka maksoi mitäkin ja kertoa kuka on velkaa kenelle. Se ei tarvitse tiliä eikä API-avainta, pelkän osoitteen. Kun se on kytketty, sanot suunnilleen näin.",
+    "xupersplit on MCP-palvelin, joten Clauden, ChatGPT:n, Perplexityn tai Grokin kaltainen avustaja voi tehdä kaiken yllä olevan puolestasi — luoda jaon, kirjata kuka maksoi mitäkin ja kertoa kuka on velkaa kenelle. Se ei tarvitse tiliä eikä API-avainta, pelkän osoitteen. Kun se on kytketty, sanot suunnilleen näin.",
   aiSetupCta: "Kytke avustajasi",
   promptsIntro:
     "Anna avustajalle jaon linkki aina kun työskentelette jo olemassa olevan jaon parissa — linkki on se, joka antaa pääsyn, niin ihmisille kuin avustajillekin.",
@@ -124,8 +124,8 @@ const fi: Help = {
       a: "SEK, EUR, USD, NOK, DKK, ISK, GBP, CHF, PLN, THB — ja satsit, jos haluatte pyörittää koko jaon bitcoineissa. Jokaisella kululla voi olla oma valuuttansa; jaon päävaluutta on se, jossa saldot esitetään.",
     },
     {
-      q: "Kulkevatko rahat Xupersplitin kautta?",
-      a: "Eivät koskaan. Xupersplit vain rakentaa maksun, jonka sitten hyväksyt omassa sovelluksessasi: Swish-QR-koodin summa valmiina, Lightning-laskun, valmiiksi täytetyn USDC-siirron Basessa, Arbitrumissa, Optimismissa tai Solanassa. Revolutissa avataan saajan profiili, ja Vippsin, MobilePayn ja IBANin kohdalla tiedot näytetään kopiointipainikkeen kanssa, koska niillä ei ole avointa henkilöltä henkilölle -rajapintaa esitäytettäväksi.",
+      q: "Kulkevatko rahat xupersplitin kautta?",
+      a: "Eivät koskaan. xupersplit vain rakentaa maksun, jonka sitten hyväksyt omassa sovelluksessasi: Swish-QR-koodin summa valmiina, Lightning-laskun, valmiiksi täytetyn USDC-siirron Basessa, Arbitrumissa, Optimismissa tai Solanassa. Revolutissa avataan saajan profiili, ja Vippsin, MobilePayn ja IBANin kohdalla tiedot näytetään kopiointipainikkeen kanssa, koska niillä ei ole avointa henkilöltä henkilölle -rajapintaa esitäytettäväksi.",
     },
     {
       q: "Mistä tiedän, että maksutiedot ovat oikeat?",
@@ -146,7 +146,7 @@ const fi: Help = {
     },
     {
       q: "Mitä se maksaa, ja voinko pyörittää sitä itse?",
-      a: "Ei mitään, ja kyllä. Xupersplit on avointa lähdekoodia MIT-lisenssillä, ja itse ylläpidetty instanssi saa oman MCP-palvelimensa omaan /api/mcp-osoitteeseensa.",
+      a: "Ei mitään, ja kyllä. xupersplit on avointa lähdekoodia MIT-lisenssillä, ja itse ylläpidetty instanssi saa oman MCP-palvelimensa omaan /api/mcp-osoitteeseensa.",
       more: { label: "Lähdekoodi GitHubissa", href: "https://github.com/kanylbullen/xupersplit" },
     },
     {

@@ -3,7 +3,7 @@ import type { Help } from "./types";
 const sv: Help = {
   title: "Hjälp och kom igång",
   intro:
-    "Xupersplit delar gemensamma utgifter utan konton: du skapar en split, delar länken, och alla lägger in vad de betalat. Här är grunderna, situationerna som faktiskt dyker upp, och hur du låter en AI-assistent sköta alltihop.",
+    "xupersplit delar gemensamma utgifter utan konton: du skapar en split, delar länken, och alla lägger in vad de betalat. Här är grunderna, situationerna som faktiskt dyker upp, och hur du låter en AI-assistent sköta alltihop.",
 
   toc: {
     start: "Kom igång",
@@ -28,7 +28,7 @@ const sv: Help = {
     },
     {
       title: "4. Gör upp",
-      body: "Saldon räknar ut det minsta antal överföringar som gör alla kvitt, och erbjuder betalning med Swish, Lightning, USDC och mer. Tryck ”Markera som betald” när pengarna faktiskt flyttat — ingen betalning går genom Xupersplit, så inget talar om det för oss av sig självt.",
+      body: "Saldon räknar ut det minsta antal överföringar som gör alla kvitt, och erbjuder betalning med Swish, Lightning, USDC och mer. Tryck ”Markera som betald” när pengarna faktiskt flyttat — ingen betalning går genom xupersplit, så inget talar om det för oss av sig självt.",
     },
   ],
 
@@ -68,7 +68,7 @@ const sv: Help = {
 
   aiHeading: "Med en AI-assistent",
   aiIntro:
-    "Xupersplit är en MCP-server, så en assistent som Claude, ChatGPT, Perplexity eller Grok kan göra allt ovanstående åt dig — skapa spliten, lägga in vad var och en betalat och berätta vem som är skyldig vem. Den behöver varken konto eller API-nyckel, bara adressen. När den väl är inkopplad är det ungefär så här du säger.",
+    "xupersplit är en MCP-server, så en assistent som Claude, ChatGPT, Perplexity eller Grok kan göra allt ovanstående åt dig — skapa spliten, lägga in vad var och en betalat och berätta vem som är skyldig vem. Den behöver varken konto eller API-nyckel, bara adressen. När den väl är inkopplad är det ungefär så här du säger.",
   aiSetupCta: "Koppla in din assistent",
   promptsIntro:
     "Ge assistenten splitens länk när ni jobbar på en som redan finns — länken är det som ger åtkomst, för människor och assistenter lika.",
@@ -124,8 +124,8 @@ const sv: Help = {
       a: "SEK, EUR, USD, NOK, DKK, ISK, GBP, CHF, PLN, THB — och sats, om ni vill köra hela spliten i bitcoin. Varje utgift kan ha sin egen valuta; splitens huvudvaluta är den saldona presenteras i.",
     },
     {
-      q: "Går pengarna genom Xupersplit?",
-      a: "Aldrig. Xupersplit bygger bara betalningen som du sedan godkänner i din egen app: en Swish-QR med beloppet ifyllt, en Lightning-faktura, en förifylld USDC-överföring på Base, Arbitrum, Optimism eller Solana. För Revolut öppnas mottagarens profil, och för Vipps, MobilePay och IBAN visas uppgifterna med en kopieringsknapp, eftersom de saknar ett öppet person-till-person-gränssnitt att förifylla.",
+      q: "Går pengarna genom xupersplit?",
+      a: "Aldrig. xupersplit bygger bara betalningen som du sedan godkänner i din egen app: en Swish-QR med beloppet ifyllt, en Lightning-faktura, en förifylld USDC-överföring på Base, Arbitrum, Optimism eller Solana. För Revolut öppnas mottagarens profil, och för Vipps, MobilePay och IBAN visas uppgifterna med en kopieringsknapp, eftersom de saknar ett öppet person-till-person-gränssnitt att förifylla.",
     },
     {
       q: "Hur vet jag att betaluppgifterna är rätt?",
@@ -146,7 +146,7 @@ const sv: Help = {
     },
     {
       q: "Vad kostar det, och kan jag köra det själv?",
-      a: "Ingenting, och ja. Xupersplit är öppen källkod under MIT-licens, och en självhostad instans får sin egen MCP-server på sin egen /api/mcp.",
+      a: "Ingenting, och ja. xupersplit är öppen källkod under MIT-licens, och en självhostad instans får sin egen MCP-server på sin egen /api/mcp.",
       more: { label: "Källkoden på GitHub", href: "https://github.com/kanylbullen/xupersplit" },
     },
     {

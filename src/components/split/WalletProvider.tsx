@@ -21,7 +21,7 @@ if (wagmiAdapter && solanaAdapter && projectId) {
     networks: allNetworks,
     projectId,
     metadata: {
-      name: "Xupersplit",
+      name: "xupersplit",
       description: "Split shared expenses",
       url: "https://split.xuper.fun",
       icons: ["https://split.xuper.fun/icon.svg"],

@@ -1,4 +1,4 @@
-// Farcaster Mini App (formerly "Frames v2") wiring. Sharing a Xupersplit URL in
+// Farcaster Mini App (formerly "Frames v2") wiring. Sharing a xupersplit URL in
 // a Farcaster client renders an interactive launch card via the fc:miniapp
 // embed below; the app calls sdk.actions.ready() once mounted (MiniAppReady).
 // See /.well-known/farcaster.json for the manifest.

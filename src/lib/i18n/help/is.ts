@@ -3,7 +3,7 @@ import type { Help } from "./types";
 const is: Help = {
   title: "Hjálp og fyrstu skref",
   intro:
-    "Xupersplit skiptir sameiginlegum kostnaði án aðganga: þú býrð til skiptingu, deilir hlekknum og allir skrá hvað þeir greiddu. Hér eru grunnatriðin, aðstæðurnar sem koma raunverulega upp, og hvernig þú lætur gervigreindaraðstoðarmann sjá um allt saman.",
+    "xupersplit skiptir sameiginlegum kostnaði án aðganga: þú býrð til skiptingu, deilir hlekknum og allir skrá hvað þeir greiddu. Hér eru grunnatriðin, aðstæðurnar sem koma raunverulega upp, og hvernig þú lætur gervigreindaraðstoðarmann sjá um allt saman.",
 
   toc: {
     start: "Fyrstu skref",
@@ -28,7 +28,7 @@ const is: Help = {
     },
     {
       title: "4. Gerið upp",
-      body: "Stöður reikna út fæstu millifærslurnar sem gera alla kvitta og bjóða greiðslu með Swish, Lightning, USDC og fleiru. Ýttu á „Merkja sem greitt“ þegar peningarnir hafa raunverulega færst — engin greiðsla fer í gegnum Xupersplit, svo ekkert segir okkur það af sjálfu sér.",
+      body: "Stöður reikna út fæstu millifærslurnar sem gera alla kvitta og bjóða greiðslu með Swish, Lightning, USDC og fleiru. Ýttu á „Merkja sem greitt“ þegar peningarnir hafa raunverulega færst — engin greiðsla fer í gegnum xupersplit, svo ekkert segir okkur það af sjálfu sér.",
     },
   ],
 
@@ -68,7 +68,7 @@ const is: Help = {
 
   aiHeading: "Með gervigreindaraðstoð",
   aiIntro:
-    "Xupersplit er MCP-þjónn, svo aðstoðarmaður eins og Claude, ChatGPT, Perplexity eða Grok getur gert allt ofangreint fyrir þig — búið til skiptinguna, skráð hvað hver greiddi og sagt þér hver skuldar hverjum. Hann þarf hvorki aðgang né API-lykil, bara slóðina. Þegar hann er tengdur segirðu eitthvað á þessa leið.",
+    "xupersplit er MCP-þjónn, svo aðstoðarmaður eins og Claude, ChatGPT, Perplexity eða Grok getur gert allt ofangreint fyrir þig — búið til skiptinguna, skráð hvað hver greiddi og sagt þér hver skuldar hverjum. Hann þarf hvorki aðgang né API-lykil, bara slóðina. Þegar hann er tengdur segirðu eitthvað á þessa leið.",
   aiSetupCta: "Tengdu aðstoðarmanninn þinn",
   promptsIntro:
     "Gefðu aðstoðarmanninum hlekk skiptingarinnar þegar þið vinnið með eina sem er þegar til — hlekkurinn er það sem veitir aðgang, jafnt fyrir fólk og aðstoðarmenn.",
@@ -124,8 +124,8 @@ const is: Help = {
       a: "SEK, EUR, USD, NOK, DKK, ISK, GBP, CHF, PLN, THB — og sats, ef þið viljið keyra alla skiptinguna í bitcoin. Hver færsla má hafa sinn eigin gjaldmiðil; aðalgjaldmiðill skiptingarinnar er sá sem stöðurnar birtast í.",
     },
     {
-      q: "Fara peningarnir í gegnum Xupersplit?",
-      a: "Aldrei. Xupersplit býr aðeins til greiðsluna sem þú samþykkir svo í þínu eigin appi: Swish-QR með upphæðinni útfylltri, Lightning-reikning, forútfyllda USDC-millifærslu á Base, Arbitrum, Optimism eða Solana. Fyrir Revolut opnast prófíll móttakanda, og fyrir Vipps, MobilePay og IBAN eru upplýsingarnar sýndar með afritunarhnappi, því þau bjóða ekki upp á opið viðmót milli einstaklinga til að forútfylla.",
+      q: "Fara peningarnir í gegnum xupersplit?",
+      a: "Aldrei. xupersplit býr aðeins til greiðsluna sem þú samþykkir svo í þínu eigin appi: Swish-QR með upphæðinni útfylltri, Lightning-reikning, forútfyllda USDC-millifærslu á Base, Arbitrum, Optimism eða Solana. Fyrir Revolut opnast prófíll móttakanda, og fyrir Vipps, MobilePay og IBAN eru upplýsingarnar sýndar með afritunarhnappi, því þau bjóða ekki upp á opið viðmót milli einstaklinga til að forútfylla.",
     },
     {
       q: "Hvernig veit ég að greiðsluupplýsingarnar séu réttar?",
@@ -146,7 +146,7 @@ const is: Help = {
     },
     {
       q: "Hvað kostar þetta, og get ég keyrt það sjálf(ur)?",
-      a: "Ekkert, og já. Xupersplit er opinn hugbúnaður undir MIT-leyfi, og sjálfhýst eintak fær sinn eigin MCP-þjón á sínu eigin /api/mcp.",
+      a: "Ekkert, og já. xupersplit er opinn hugbúnaður undir MIT-leyfi, og sjálfhýst eintak fær sinn eigin MCP-þjón á sínu eigin /api/mcp.",
       more: { label: "Kóðinn á GitHub", href: "https://github.com/kanylbullen/xupersplit" },
     },
     {

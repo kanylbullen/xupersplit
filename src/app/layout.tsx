@@ -20,11 +20,11 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL("https://split.xuper.fun"),
   title: {
-    default: "Xupersplit — split shared expenses",
-    template: "%s — Xupersplit",
+    default: "xupersplit — split shared expenses",
+    template: "%s — xupersplit",
   },
   description: DESCRIPTION,
-  applicationName: "Xupersplit",
+  applicationName: "xupersplit",
   keywords: [
     "split expenses",
     "expense splitter",
@@ -38,15 +38,15 @@ export const metadata: Metadata = {
   // The opengraph-image / twitter-image files attach the card automatically.
   openGraph: {
     type: "website",
-    siteName: "Xupersplit",
-    title: "Xupersplit — split shared expenses",
+    siteName: "xupersplit",
+    title: "xupersplit — split shared expenses",
     description: DESCRIPTION,
     url: "/",
     locale: "en",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Xupersplit — split shared expenses",
+    title: "xupersplit — split shared expenses",
     description: DESCRIPTION,
   },
   // Farcaster Mini App launch card (sharing split.xuper.fun opens the app).
@@ -80,14 +80,14 @@ export default async function RootLayout({
                 {
                   "@type": "Organization",
                   "@id": "https://split.xuper.fun/#org",
-                  name: "Xupersplit",
+                  name: "xupersplit",
                   url: "https://split.xuper.fun",
                   logo: "https://split.xuper.fun/apple-icon.png",
                   sameAs: ["https://github.com/kanylbullen/xupersplit"],
                 },
                 {
                   "@type": "WebApplication",
-                  name: "Xupersplit",
+                  name: "xupersplit",
                   url: "https://split.xuper.fun",
                   applicationCategory: "FinanceApplication",
                   operatingSystem: "Web",
