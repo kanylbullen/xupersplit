@@ -19,18 +19,13 @@ Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
-<img src="docs/demo.gif" alt="xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="260" />
-
-<br />
-<br />
-
-<img src="docs/screenshot-balances.png" alt="Balances view: who pays whom, with a Swish button on each row" width="252" />
+<img src="docs/demo.gif" alt="xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="240" />
 &nbsp;
-<img src="docs/screenshot-pay.png" alt="Pay dialog: a Swish QR with the exact amount already filled in" width="252" />
+<img src="docs/screenshot-pay.png" alt="Pay dialog: a Swish QR with the exact amount already filled in" width="240" />
 &nbsp;
-<img src="docs/screenshot-shares.png" alt="New expense: splitting by shares, a couple counting double" width="252" />
+<img src="docs/screenshot-shares.png" alt="New expense: splitting by shares, a couple counting double" width="240" />
 
-<sub>Who owes whom · a Swish QR with the amount already in it · splitting by shares</sub>
+<sub>Create a split and see who owes whom · a Swish QR with the amount already in it · splitting by shares</sub>
 
 </div>
 

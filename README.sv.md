@@ -19,18 +19,13 @@ Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
-<img src="docs/demo-sv.gif" alt="xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="260" />
-
-<br />
-<br />
-
-<img src="docs/screenshot-balances.png" alt="Saldovyn: vem betalar vem, med en Swish-knapp på varje rad" width="252" />
+<img src="docs/demo-sv.gif" alt="xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="240" />
 &nbsp;
-<img src="docs/screenshot-pay.png" alt="Betaldialogen: en Swish-QR med exakt belopp redan ifyllt" width="252" />
+<img src="docs/screenshot-pay.png" alt="Betaldialogen: en Swish-QR med exakt belopp redan ifyllt" width="240" />
 &nbsp;
-<img src="docs/screenshot-shares.png" alt="Ny utgift: delning med andelar, där ett par räknas dubbelt" width="252" />
+<img src="docs/screenshot-shares.png" alt="Ny utgift: delning med andelar, där ett par räknas dubbelt" width="240" />
 
-<sub>Vem som ska ha vad · Swish-QR med beloppet redan i · delning med andelar</sub>
+<sub>Skapa en split och se vem som ska ha vad · Swish-QR med beloppet redan i · delning med andelar</sub>
 
 </div>
 
