@@ -91,6 +91,8 @@ const en: Dict = {
     privacy: "privacy policy",
     cookies: "cookies",
     help: "help",
+    madeWith: "made with",
+    createOwn: "create your own",
     openSource: "Open source on GitHub",
   },
   mySplits: {

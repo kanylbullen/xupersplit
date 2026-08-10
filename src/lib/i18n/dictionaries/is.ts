@@ -91,6 +91,8 @@ const is: Dict = {
     privacy: "persónuvernd",
     cookies: "vafrakökur",
     help: "hjálp",
+    madeWith: "gert með",
+    createOwn: "búðu til þína eigin",
     openSource: "Opinn hugbúnaður á GitHub",
   },
   mySplits: {

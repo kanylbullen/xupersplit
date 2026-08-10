@@ -6,6 +6,7 @@ import { Button, Input, Label, Select } from "@/components/ui";
 import { CURRENCIES } from "@/lib/money";
 import { useI18n } from "@/lib/i18n/client";
 import { FarcasterFollowPicker } from "@/components/new/FarcasterFollowPicker";
+import { markJustCreated } from "@/lib/growth";
 import { createSplitAction } from "./actions";
 
 type SplitType = "simple" | "email" | "farcaster";
@@ -169,7 +170,13 @@ function ConfiguredForm({
   }, []);
 
   return (
-    <form action={formAction} className="space-y-5">
+    <form
+      action={formAction}
+      // Tells the split view we're about to land on that this device made it,
+      // rather than being handed the link — see lib/growth.ts.
+      onSubmit={markJustCreated}
+      className="space-y-5"
+    >
       {/* Hidden config derived from the chosen type. */}
       {secure && <input type="hidden" name="secure" value="on" />}
       {showInvite && <input type="hidden" name="claim_mode" value="invite" />}
