@@ -23,7 +23,10 @@ export const runtime = "nodejs";
 // `new McpServer(...)`, so every field here reaches the wire.
 const serverInfo = {
   name: "xupersplit",
-  version: "1.0.0",
+  // Keep in step with server.json — that's what the registry publishes, and a
+  // client that reads both shouldn't see two different numbers. It tracks the
+  // MCP contract, not the app's own release version in package.json.
+  version: "1.0.1",
   websiteUrl: APP_ORIGIN,
   description:
     "Split shared expenses in a group — no account needed. Create a split, " +
