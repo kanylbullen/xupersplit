@@ -41,6 +41,7 @@ export type Help = {
     HelpExample,
     HelpExample,
     HelpExample,
+    HelpExample,
   ];
 
   aiHeading: string;

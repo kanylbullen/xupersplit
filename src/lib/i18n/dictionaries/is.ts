@@ -15,6 +15,7 @@ const is: Dict = {
     menu: "Valmynd",
     signedInAs: "Skráð(ur) inn sem {email}",
     logout: "Skrá út",
+    help: "Hjálp",
     login: "Skrá inn",
     addPasskey: "Bæta við aðgangslykli",
     passkeys: "Aðgangslyklar",

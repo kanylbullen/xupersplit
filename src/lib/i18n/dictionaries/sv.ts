@@ -15,6 +15,7 @@ const sv = {
     menu: "Meny",
     signedInAs: "Inloggad som {email}",
     logout: "Logga ut",
+    help: "Hjälp",
     login: "Logga in",
     addPasskey: "Lägg till passkey",
     passkeys: "Passkeys",

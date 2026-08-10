@@ -34,7 +34,7 @@ const fi: Help = {
 
   examplesHeading: "Tavalliset tilanteet",
   examplesIntro:
-    "Useimmat kulujen jakamista koskevat kysymykset ovat oikeasti kysymyksiä jostakin näistä kuudesta.",
+    "Useimmat kulujen jakamista koskevat kysymykset ovat oikeasti kysymyksiä jostakin näistä seitsemästä.",
   examples: [
     {
       title: "Matka, jolla useampi maksoi",
@@ -59,6 +59,10 @@ const fi: Help = {
     {
       title: "Raha, joka liikkui sovelluksen ulkopuolella",
       body: "Joku antoi käteistä tai maksoi takaisin ennen kuin ehdit edes tehdä jakoa. Kirjaa se Siirtona — maksajalta saajalle — niin se otetaan huomioon. ”Merkitse maksetuksi” saldorivillä tekee täsmälleen saman asian.",
+    },
+    {
+      title: "Yhteinen vene, asunto tai projekti joka jatkuu",
+      body: "Kaikki jaot eivät pääty viikonloppuun. Kahden perheen yhteinen vene, treenikämppä, talo jossa on jatkuva korjauslista — kuluja tulee vuosien ajan. Anna yhden ja saman jaon jatkua sen sijaan, että aloittaisit uuden joka kaudella: saldo yksinkertaisesti jatkuu, eikä välillä selvittäminen sulje mitään. Kaksi asetusta kannattaa tuntea näitä varten. Kytke Asetuksista päälle ”Säilytä maksutiedot, vaikka kaikki olisivat tasoissa”, muuten tallennetut tilinumerot siivotaan pois joka kerta kun satutte olemaan nollassa. Ja luo jako kirjautuneena, jotta voit kytkeä pois automaattisen poiston kuuden kuukauden käyttämättömyyden jälkeen — vene seisoo koko talven, ja se lasketaan käyttämättömyydeksi.",
     },
   ],
 

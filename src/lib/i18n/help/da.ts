@@ -34,7 +34,7 @@ const da: Help = {
 
   examplesHeading: "Almindelige situationer",
   examplesIntro:
-    "De fleste spørgsmål om at dele udgifter er i virkeligheden spørgsmål om én af disse seks.",
+    "De fleste spørgsmål om at dele udgifter er i virkeligheden spørgsmål om én af disse syv.",
   examples: [
     {
       title: "En tur, hvor flere har lagt ud",
@@ -59,6 +59,10 @@ const da: Help = {
     {
       title: "Penge, der er flyttet uden om appen",
       body: "Nogen gav kontanter eller betalte tilbage, før du nåede at lave splittet. Læg det ind som en Overførsel — fra den, der betalte, til den, der modtog — så tælles det med. »Markér som betalt« på en saldorække gør nøjagtig det samme.",
+    },
+    {
+      title: "En delt båd, en lejlighed, et projekt der bliver ved",
+      body: "Ikke alle splits slutter efter en weekend. En båd, som to familier deler, et øvelokale, et hus med en stående liste over reparationer — udgifterne bliver ved med at komme i årevis. Lad ét og samme split køre videre i stedet for at starte et nyt hver sæson: saldoen fortsætter ganske enkelt, og at gøre op undervejs lukker ingenting. To indstillinger er værd at kende her. Slå »Behold betalingsoplysninger, også når alle er kvit« til under Indstillinger, ellers ryddes gemte MobilePay- og IBAN-oplysninger hver gang I tilfældigvis står på nul. Og opret splittet, mens du er logget ind, så du kan slå den automatiske sletning efter seks måneder uden aktivitet fra — en båd ligger stille hele vinteren, og det tæller som inaktivitet.",
     },
   ],
 

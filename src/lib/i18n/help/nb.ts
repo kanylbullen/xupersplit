@@ -34,7 +34,7 @@ const nb: Help = {
 
   examplesHeading: "Vanlige situasjoner",
   examplesIntro:
-    "De fleste spørsmål om å dele utgifter er egentlig spørsmål om én av disse seks.",
+    "De fleste spørsmål om å dele utgifter er egentlig spørsmål om én av disse sju.",
   examples: [
     {
       title: "En tur der flere har lagt ut",
@@ -59,6 +59,10 @@ const nb: Help = {
     {
       title: "Penger som har beveget seg utenfor appen",
       body: "Noen ga kontanter, eller betalte tilbake før du rakk å lage spliten. Legg det inn som en Overføring — fra den som betalte til den som fikk — så blir det regnet med. «Marker som betalt» på en saldorad gjør nøyaktig det samme.",
+    },
+    {
+      title: "En delt båt, en leilighet, et prosjekt som ruller videre",
+      body: "Ikke alle splitter tar slutt etter en helg. En båt to familier deler, et øvingslokale, et hus med en stående liste over reparasjoner — utgiftene fortsetter å komme i årevis. La én og samme split rulle i stedet for å starte en ny hver sesong: saldoen fortsetter rett og slett, og å gjøre opp innimellom lukker ingenting. To innstillinger er verdt å kjenne til her. Skru på «Behold betalingsinfo selv når alle er skuls» under Innstillinger, ellers ryddes lagrede Vipps- og IBAN-detaljer bort hver gang dere tilfeldigvis står på null. Og lag spliten mens du er innlogget, så du kan skru av den automatiske slettingen etter seks måneder uten aktivitet — en båt står stille hele vinteren, og det teller som inaktivitet.",
     },
   ],
 

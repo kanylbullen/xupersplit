@@ -15,6 +15,7 @@ const nb: Dict = {
     menu: "Meny",
     signedInAs: "Logget inn som {email}",
     logout: "Logg ut",
+    help: "Hjelp",
     login: "Logg inn",
     addPasskey: "Legg til passkey",
     passkeys: "Passkeys",

@@ -60,6 +60,8 @@ test("account menu holds language, theme and log in", async ({ page }) => {
   await menu.click();
   await expect(page.getByRole("combobox")).toBeVisible(); // language switcher
   await expect(page.getByRole("button", { name: "System" })).toBeVisible();
+  // Exact, or it also matches the footer's lowercase "help" link.
+  await expect(page.getByRole("link", { name: "Help", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
   // Escape closes it again.
   await page.keyboard.press("Escape");

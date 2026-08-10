@@ -34,7 +34,7 @@ const is: Help = {
 
   examplesHeading: "Algengar aðstæður",
   examplesIntro:
-    "Flestar spurningar um kostnaðarskiptingu eru í raun spurningar um eina af þessum sex.",
+    "Flestar spurningar um kostnaðarskiptingu eru í raun spurningar um eina af þessum sjö.",
   examples: [
     {
       title: "Ferð þar sem fleiri en einn lögðu út",
@@ -59,6 +59,10 @@ const is: Help = {
     {
       title: "Peningar sem færðust utan appsins",
       body: "Einhver rétti reiðufé, eða borgaði til baka áður en þú náðir að búa til skiptinguna. Skráðu það sem Millifærslu — frá þeim sem greiddi til þess sem fékk — og þá er tekið tillit til þess. „Merkja sem greitt“ á stöðulínu gerir nákvæmlega það sama.",
+    },
+    {
+      title: "Sameiginlegur bátur, íbúð eða verkefni sem heldur áfram",
+      body: "Ekki lýkur öllum skiptingum eftir eina helgi. Bátur sem tvær fjölskyldur eiga saman, æfingahúsnæði, hús með stöðugum viðgerðalista — útgjöldin halda áfram að berast árum saman. Láttu eina og sömu skiptinguna rúlla áfram í stað þess að byrja nýja á hverju tímabili: staðan heldur einfaldlega áfram, og að gera upp í millitíðinni lokar engu. Tvær stillingar er vert að þekkja fyrir þetta. Kveiktu á „Halda greiðsluupplýsingum þótt allir séu kvittir“ í Stillingum, annars hreinsast vistuð reikningsnúmer í hvert sinn sem þið standið á núlli. Og búðu skiptinguna til innskráð(ur), svo þú getir slökkt á sjálfvirku eyðingunni eftir sex mánuði án virkni — bátur stendur kyrr allan veturinn, og það telst sem óvirkni.",
     },
   ],
 

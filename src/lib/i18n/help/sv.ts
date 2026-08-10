@@ -34,7 +34,7 @@ const sv: Help = {
 
   examplesHeading: "Vanliga situationer",
   examplesIntro:
-    "De flesta frågor om att dela utgifter är egentligen frågor om någon av de här sex.",
+    "De flesta frågor om att dela utgifter är egentligen frågor om någon av de här sju.",
   examples: [
     {
       title: "En resa där flera har lagt ut",
@@ -59,6 +59,10 @@ const sv: Help = {
     {
       title: "Pengar som rört sig utanför appen",
       body: "Någon gav kontanter, eller betalade tillbaka innan du ens hunnit göra spliten. Lägg in det som en Överföring — från den som betalade till den som fick — så räknas det med. ”Markera som betald” på en saldorad gör exakt samma sak.",
+    },
+    {
+      title: "En delad båt, en lägenhet, ett projekt som rullar vidare",
+      body: "Alla splitar tar inte slut efter en helg. En båt som två familjer delar, ett replokal, ett hus med en stående lista på reparationer — utgifterna fortsätter komma i åratal. Låt en och samma split rulla i stället för att starta en ny varje säsong: saldot fortsätter helt enkelt, och att göra upp däremellan stänger ingenting. Två inställningar är värda att känna till för de här. Slå på ”Behåll betaluppgifter även när alla är kvitt” under Inställningar, annars rensas sparade Swish- och IBAN-uppgifter varje gång ni råkar stå på noll. Och skapa spliten inloggad, så att du kan stänga av den automatiska raderingen efter sex månaders inaktivitet — en båt står stilla hela vintern, och det räknas som inaktivitet.",
     },
   ],
 
