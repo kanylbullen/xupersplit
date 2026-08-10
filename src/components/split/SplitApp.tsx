@@ -7,6 +7,12 @@ import { markSeenAction } from "@/app/k/[key]/actions";
 import type { Entry, EntryKind, SplitData } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
 import { VISITED_KEY } from "@/lib/visited";
+import {
+  type Origin,
+  rememberOrigin,
+  takeCrossover,
+  takeJustCreated,
+} from "@/lib/growth";
 import { EntriesView } from "./EntriesView";
 import { BalancesView } from "./BalancesView";
 import { EntryDialog } from "./EntryDialog";
@@ -39,10 +45,13 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
 
   // Remember visited splits so the landing page can list them per device.
   useEffect(() => {
+    // Assume first sight; the stored list below is what disproves it.
+    let firstOpen = true;
     try {
       const raw = JSON.parse(
         localStorage.getItem(VISITED_KEY) ?? "[]"
       ) as { key: string; title: string; at: number }[];
+      firstOpen = !raw.some((v) => v.key === split.key);
       const rest = raw.filter((v) => v.key !== split.key);
       rest.unshift({ key: split.key, title: split.title, at: Date.now() });
       localStorage.setItem(VISITED_KEY, JSON.stringify(rest.slice(0, 50)));
@@ -53,6 +62,18 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
         JSON.stringify([{ key: split.key, title: split.title, at: Date.now() }])
       );
     }
+
+    // Both paths — made it, was sent it — land on this screen, so this is the
+    // only place the difference can be recorded. Revisits say nothing about
+    // reach, so only the first sight is counted.
+    if (!firstOpen) return;
+    const origin: Origin = takeJustCreated() ? "created" : "invited";
+    rememberOrigin(origin);
+    track("split_first_open", { origin });
+    // Someone who arrived through a friend's link has now started their own:
+    // the share loop closing, which is the number that decides whether any of
+    // this compounds.
+    if (origin === "created" && takeCrossover()) track("loop_crossover");
   }, [split.key, split.title]);
 
   useEffect(() => {
@@ -218,16 +239,34 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
         {/* Quiet and last: findable when something goes wrong, not competing
             with the actual task. Inside pb-28 so the fixed action bar below
             doesn't cover it. */}
-        <footer className="mt-10 text-center text-xs text-stone-400">
-          {/* Someone stuck on "how do I split this unevenly" is standing right
-              here, not on the landing page. */}
-          <Link href="/help" className="hover:text-ink">
-            {dict.footer.help}
-          </Link>{" "}
-          ·{" "}
-          <button onClick={() => setFeedbackOpen(true)} className="hover:text-ink">
-            {dict.feedback.trigger}
-          </button>
+        <footer className="mt-10 space-y-2 text-center text-xs text-stone-400">
+          {/* Most people on this screen were handed the link and have never
+              seen the product's name. Without this they can't look it up
+              later, which is the whole of our distribution leaking. */}
+          <p>
+            {dict.footer.madeWith}{" "}
+            <Link href="/" className="font-bold text-primary hover:underline">
+              xupersplit
+            </Link>{" "}
+            ·{" "}
+            <Link href="/new" className="hover:text-ink">
+              {dict.footer.createOwn}
+            </Link>
+          </p>
+          <p>
+            {/* Someone stuck on "how do I split this unevenly" is standing
+                right here, not on the landing page. */}
+            <Link href="/help" className="hover:text-ink">
+              {dict.footer.help}
+            </Link>{" "}
+            ·{" "}
+            <button
+              onClick={() => setFeedbackOpen(true)}
+              className="hover:text-ink"
+            >
+              {dict.feedback.trigger}
+            </button>
+          </p>
         </footer>
       </div>
 

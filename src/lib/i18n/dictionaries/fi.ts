@@ -91,6 +91,8 @@ const fi: Dict = {
     privacy: "tietosuoja",
     cookies: "evästeet",
     help: "ohjeet",
+    madeWith: "tehty työkalulla",
+    createOwn: "luo oma jako",
     openSource: "Avoin lähdekoodi GitHubissa",
   },
   mySplits: {

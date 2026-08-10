@@ -91,6 +91,8 @@ const sv = {
     privacy: "integritetspolicy",
     cookies: "cookies",
     help: "hjälp",
+    madeWith: "gjord med",
+    createOwn: "skapa en egen",
     openSource: "Öppen källkod på GitHub",
   },
   mySplits: {
