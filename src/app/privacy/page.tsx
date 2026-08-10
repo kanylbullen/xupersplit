@@ -2,7 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy policy — xupersplit",
+  // The root layout's template appends " — xupersplit"; spelling it out here
+  // too is what made the tab read "Privacy policy — xupersplit — xupersplit".
+  title: "Privacy policy",
   // Keep the policy out of search results — data subjects reach it via the
   // footer link; it shouldn't surface the controller's name in searches.
   robots: { index: false, follow: false },

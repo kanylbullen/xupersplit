@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of use — xupersplit",
+  title: "Terms of use",
   description:
     "The short version: xupersplit is a free hobby project, it never touches your money, and the split link is the key.",
 };
