@@ -10,13 +10,27 @@ automatically, with one-tap payments straight from the balance view.
 
 [**split.xuper.fun**](https://split.xuper.fun) · English · [Svenska](README.sv.md)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
-&nbsp;[![MCP server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
-&nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
+[![CI](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml/badge.svg)](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml)
+&nbsp;[![License: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP registry](https://img.shields.io/badge/MCP-registry-f59e0b.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=xupersplit)
+&nbsp;[![Live app](https://img.shields.io/badge/live-split.xuper.fun-0d9488.svg)](https://split.xuper.fun)
+
+Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
 <img src="docs/demo.gif" alt="Xupersplit demo — create a split, add an expense, then settle up onchain in USDC" width="260" />
+
+<br />
+<br />
+
+<img src="docs/screenshot-balances.png" alt="Balances view: who pays whom, with a Swish button on each row" width="252" />
+&nbsp;
+<img src="docs/screenshot-pay.png" alt="Pay dialog: a Swish QR with the exact amount already filled in" width="252" />
+&nbsp;
+<img src="docs/screenshot-shares.png" alt="New expense: splitting by shares, a couple counting double" width="252" />
+
+<sub>Who owes whom · a Swish QR with the amount already in it · splitting by shares</sub>
 
 </div>
 

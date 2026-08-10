@@ -10,13 +10,27 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 
 [**split.xuper.fun**](https://split.xuper.fun) · [English](README.md) · Svenska
 
-[![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
-&nbsp;[![MCP-server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
-&nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
+[![CI](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml/badge.svg)](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml)
+&nbsp;[![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP-register](https://img.shields.io/badge/MCP-registret-f59e0b.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=xupersplit)
+&nbsp;[![Live](https://img.shields.io/badge/live-split.xuper.fun-0d9488.svg)](https://split.xuper.fun)
+
+Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
 <img src="docs/demo-sv.gif" alt="Xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="260" />
+
+<br />
+<br />
+
+<img src="docs/screenshot-balances.png" alt="Saldovyn: vem betalar vem, med en Swish-knapp på varje rad" width="252" />
+&nbsp;
+<img src="docs/screenshot-pay.png" alt="Betaldialogen: en Swish-QR med exakt belopp redan ifyllt" width="252" />
+&nbsp;
+<img src="docs/screenshot-shares.png" alt="Ny utgift: delning med andelar, där ett par räknas dubbelt" width="252" />
+
+<sub>Vem som ska ha vad · Swish-QR med beloppet redan i · delning med andelar</sub>
 
 </div>
 
