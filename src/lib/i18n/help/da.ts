@@ -49,6 +49,10 @@ const da: Help = {
       body: "Brug Andele og giv parret vægten 2 mod de andres 1, eller en husstand på fire dens fire dele af taxaen. Andele tager også præcise beløb pr. person, når du allerede kender fordelingen — beløbene skal summe til totalen, så intet kan forsvinde i stilhed.",
     },
     {
+      title: "En delt båd, en lejlighed, et projekt der bliver ved",
+      body: "Ikke alle splits slutter efter en weekend. En båd, som to familier deler, et øvelokale, et hus med en stående liste over reparationer — udgifterne bliver ved med at komme i årevis. Lad ét og samme split køre videre i stedet for at starte et nyt hver sæson: saldoen fortsætter ganske enkelt, og at gøre op undervejs lukker ingenting. To indstillinger er værd at kende her. Slå »Behold betalingsoplysninger, også når alle er kvit« til under Indstillinger, ellers ryddes gemte MobilePay- og IBAN-oplysninger hver gang I tilfældigvis står på nul. Og opret splittet, mens du er logget ind, så du kan slå den automatiske sletning efter seks måneder uden aktivitet fra — en båd ligger stille hele vinteren, og det tæller som inaktivitet.",
+    },
+    {
       title: "Nogen betalte i en anden valuta",
       body: "Læg udgiften ind i den valuta, den faktisk blev betalt i. Vekselkursen låses i det øjeblik, du gemmer, så en bevægelse tre uger senere omskriver ikke, hvad I skylder hinanden. Splittets hovedvaluta er den, saldiene vises i.",
     },
@@ -59,10 +63,6 @@ const da: Help = {
     {
       title: "Penge, der er flyttet uden om appen",
       body: "Nogen gav kontanter eller betalte tilbage, før du nåede at lave splittet. Læg det ind som en Overførsel — fra den, der betalte, til den, der modtog — så tælles det med. »Markér som betalt« på en saldorække gør nøjagtig det samme.",
-    },
-    {
-      title: "En delt båd, en lejlighed, et projekt der bliver ved",
-      body: "Ikke alle splits slutter efter en weekend. En båd, som to familier deler, et øvelokale, et hus med en stående liste over reparationer — udgifterne bliver ved med at komme i årevis. Lad ét og samme split køre videre i stedet for at starte et nyt hver sæson: saldoen fortsætter ganske enkelt, og at gøre op undervejs lukker ingenting. To indstillinger er værd at kende her. Slå »Behold betalingsoplysninger, også når alle er kvit« til under Indstillinger, ellers ryddes gemte MobilePay- og IBAN-oplysninger hver gang I tilfældigvis står på nul. Og opret splittet, mens du er logget ind, så du kan slå den automatiske sletning efter seks måneder uden aktivitet fra — en båd ligger stille hele vinteren, og det tæller som inaktivitet.",
     },
   ],
 

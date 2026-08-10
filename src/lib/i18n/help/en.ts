@@ -49,6 +49,10 @@ const en: Help = {
       body: "Use Shares and give a couple a weight of 2 against everyone else's 1, or a household of four its four parts of the taxi. Shares also takes exact amounts per person when you already know the breakdown — the amounts have to add up to the total, so nothing can quietly go missing.",
     },
     {
+      title: "A shared boat, a flat, a project that keeps running",
+      body: "Not every split ends after a weekend. A boat two families share, a band's rehearsal room, a house with a standing list of repairs — costs keep arriving for years. Keep one split running rather than starting a new one each season: the balance simply carries on, and settling up in between doesn't close anything. Two settings are worth knowing about for these. Turn on “Keep payment info even after everyone is square” in Settings, or the stored Swish and IBAN details are wiped every time you happen to hit zero. And create the split while signed in, so you can switch off the automatic deletion after six months of inactivity — a boat is quiet all winter, and that counts as inactivity.",
+    },
+    {
       title: "Someone paid in a different currency",
       body: "Enter the expense in the currency it was actually paid in. The exchange rate is locked the moment you save, so a swing three weeks later doesn't rewrite what people owe each other. The split's main currency is what balances are shown in.",
     },
@@ -59,10 +63,6 @@ const en: Help = {
     {
       title: "Money that moved outside the app",
       body: "Someone handed over cash, or paid you back before you'd even made the split. Record it as a Transfer — from whoever paid, to whoever received it — and the balances take it into account. “Mark as paid” on a balance row does exactly the same thing.",
-    },
-    {
-      title: "A shared boat, a flat, a project that keeps running",
-      body: "Not every split ends after a weekend. A boat two families share, a band's rehearsal room, a house with a standing list of repairs — costs keep arriving for years. Keep one split running rather than starting a new one each season: the balance simply carries on, and settling up in between doesn't close anything. Two settings are worth knowing about for these. Turn on “Keep payment info even after everyone is square” in Settings, or the stored Swish and IBAN details are wiped every time you happen to hit zero. And create the split while signed in, so you can switch off the automatic deletion after six months of inactivity — a boat is quiet all winter, and that counts as inactivity.",
     },
   ],
 

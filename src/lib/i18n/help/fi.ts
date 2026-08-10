@@ -49,6 +49,10 @@ const fi: Help = {
       body: "Käytä Osuuksia ja anna pariskunnalle painoksi 2 muiden 1:tä vastaan, tai neljän hengen taloudelle sen neljä osaa taksista. Osuudet ottaa myös tarkat summat henkilöä kohden, kun tiedät jaon jo valmiiksi — summien on täsmättävä loppusummaan, joten mikään ei voi hiljaa kadota.",
     },
     {
+      title: "Yhteinen vene, asunto tai projekti joka jatkuu",
+      body: "Kaikki jaot eivät pääty viikonloppuun. Kahden perheen yhteinen vene, treenikämppä, talo jossa on jatkuva korjauslista — kuluja tulee vuosien ajan. Anna yhden ja saman jaon jatkua sen sijaan, että aloittaisit uuden joka kaudella: saldo yksinkertaisesti jatkuu, eikä välillä selvittäminen sulje mitään. Kaksi asetusta kannattaa tuntea näitä varten. Kytke Asetuksista päälle ”Säilytä maksutiedot, vaikka kaikki olisivat tasoissa”, muuten tallennetut tilinumerot siivotaan pois joka kerta kun satutte olemaan nollassa. Ja luo jako kirjautuneena, jotta voit kytkeä pois automaattisen poiston kuuden kuukauden käyttämättömyyden jälkeen — vene seisoo koko talven, ja se lasketaan käyttämättömyydeksi.",
+    },
+    {
       title: "Joku maksoi toisessa valuutassa",
       body: "Kirjaa kulu siinä valuutassa, jossa se oikeasti maksettiin. Valuuttakurssi lukitaan sillä hetkellä kun tallennat, joten kolmen viikon päästä tapahtuva heilahdus ei kirjoita uusiksi sitä, mitä olette toisillenne velkaa. Jaon päävaluutta on se, jossa saldot näytetään.",
     },
@@ -59,10 +63,6 @@ const fi: Help = {
     {
       title: "Raha, joka liikkui sovelluksen ulkopuolella",
       body: "Joku antoi käteistä tai maksoi takaisin ennen kuin ehdit edes tehdä jakoa. Kirjaa se Siirtona — maksajalta saajalle — niin se otetaan huomioon. ”Merkitse maksetuksi” saldorivillä tekee täsmälleen saman asian.",
-    },
-    {
-      title: "Yhteinen vene, asunto tai projekti joka jatkuu",
-      body: "Kaikki jaot eivät pääty viikonloppuun. Kahden perheen yhteinen vene, treenikämppä, talo jossa on jatkuva korjauslista — kuluja tulee vuosien ajan. Anna yhden ja saman jaon jatkua sen sijaan, että aloittaisit uuden joka kaudella: saldo yksinkertaisesti jatkuu, eikä välillä selvittäminen sulje mitään. Kaksi asetusta kannattaa tuntea näitä varten. Kytke Asetuksista päälle ”Säilytä maksutiedot, vaikka kaikki olisivat tasoissa”, muuten tallennetut tilinumerot siivotaan pois joka kerta kun satutte olemaan nollassa. Ja luo jako kirjautuneena, jotta voit kytkeä pois automaattisen poiston kuuden kuukauden käyttämättömyyden jälkeen — vene seisoo koko talven, ja se lasketaan käyttämättömyydeksi.",
     },
   ],
 

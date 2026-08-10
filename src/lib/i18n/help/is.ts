@@ -49,6 +49,10 @@ const is: Help = {
       body: "Notaðu Hlutföll og gefðu parinu vægið 2 á móti 1 hjá hinum, eða fjögurra manna heimili sína fjóra hluta af leigubílnum. Hlutföll taka líka nákvæmar upphæðir á mann þegar þú veist skiptinguna fyrir — upphæðirnar verða að standast heildarupphæðina, svo ekkert getur horfið í kyrrþey.",
     },
     {
+      title: "Sameiginlegur bátur, íbúð eða verkefni sem heldur áfram",
+      body: "Ekki lýkur öllum skiptingum eftir eina helgi. Bátur sem tvær fjölskyldur eiga saman, æfingahúsnæði, hús með stöðugum viðgerðalista — útgjöldin halda áfram að berast árum saman. Láttu eina og sömu skiptinguna rúlla áfram í stað þess að byrja nýja á hverju tímabili: staðan heldur einfaldlega áfram, og að gera upp í millitíðinni lokar engu. Tvær stillingar er vert að þekkja fyrir þetta. Kveiktu á „Halda greiðsluupplýsingum þótt allir séu kvittir“ í Stillingum, annars hreinsast vistuð reikningsnúmer í hvert sinn sem þið standið á núlli. Og búðu skiptinguna til innskráð(ur), svo þú getir slökkt á sjálfvirku eyðingunni eftir sex mánuði án virkni — bátur stendur kyrr allan veturinn, og það telst sem óvirkni.",
+    },
+    {
       title: "Einhver greiddi í öðrum gjaldmiðli",
       body: "Skráðu útgjöldin í þeim gjaldmiðli sem raunverulega var greitt í. Gengið er læst um leið og þú vistar, svo sveifla þremur vikum síðar endurskrifar ekki hvað þið skuldið hvert öðru. Aðalgjaldmiðill skiptingarinnar er sá sem stöðurnar birtast í.",
     },
@@ -59,10 +63,6 @@ const is: Help = {
     {
       title: "Peningar sem færðust utan appsins",
       body: "Einhver rétti reiðufé, eða borgaði til baka áður en þú náðir að búa til skiptinguna. Skráðu það sem Millifærslu — frá þeim sem greiddi til þess sem fékk — og þá er tekið tillit til þess. „Merkja sem greitt“ á stöðulínu gerir nákvæmlega það sama.",
-    },
-    {
-      title: "Sameiginlegur bátur, íbúð eða verkefni sem heldur áfram",
-      body: "Ekki lýkur öllum skiptingum eftir eina helgi. Bátur sem tvær fjölskyldur eiga saman, æfingahúsnæði, hús með stöðugum viðgerðalista — útgjöldin halda áfram að berast árum saman. Láttu eina og sömu skiptinguna rúlla áfram í stað þess að byrja nýja á hverju tímabili: staðan heldur einfaldlega áfram, og að gera upp í millitíðinni lokar engu. Tvær stillingar er vert að þekkja fyrir þetta. Kveiktu á „Halda greiðsluupplýsingum þótt allir séu kvittir“ í Stillingum, annars hreinsast vistuð reikningsnúmer í hvert sinn sem þið standið á núlli. Og búðu skiptinguna til innskráð(ur), svo þú getir slökkt á sjálfvirku eyðingunni eftir sex mánuði án virkni — bátur stendur kyrr allan veturinn, og það telst sem óvirkni.",
     },
   ],
 
