@@ -60,9 +60,6 @@ export function AccountMenu({
 
   const initial = displayName?.replace(/^@/, "").charAt(0).toUpperCase();
   const showSplits = hasServerSplits || hasLocalSplits;
-  // Logged out with no splits yet, the panel starts at Language — no divider
-  // above it, or it reads as an empty first section.
-  const hasIdentitySection = Boolean(displayName) || showSplits;
 
   return (
     // The passkey dialog lives outside <details> — inside, a closed menu would
@@ -127,7 +124,14 @@ export function AccountMenu({
             </Link>
           )}
 
-          {hasIdentitySection && <hr className="my-1.5 border-stone-100" />}
+          {/* Navigation, so it sits with "your splits" rather than among the
+              settings below. Always present — which is also why the divider
+              under it no longer depends on the identity section. */}
+          <Link href="/help" className={ROW} onClick={closeMenu}>
+            {dict.nav.help}
+          </Link>
+
+          <hr className="my-1.5 border-stone-100" />
 
           <div className="flex items-center justify-between gap-2 px-2.5 py-1.5">
             <span className="text-sm text-stone-500">{dict.switcher.label}</span>

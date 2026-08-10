@@ -15,6 +15,7 @@ const is: Dict = {
     menu: "Valmynd",
     signedInAs: "Skráð(ur) inn sem {email}",
     logout: "Skrá út",
+    help: "Hjálp",
     login: "Skrá inn",
     addPasskey: "Bæta við aðgangslykli",
     passkeys: "Aðgangslyklar",
@@ -89,6 +90,7 @@ const is: Dict = {
     terms: "skilmálar",
     privacy: "persónuvernd",
     cookies: "vafrakökur",
+    help: "hjálp",
     openSource: "Opinn hugbúnaður á GitHub",
   },
   mySplits: {

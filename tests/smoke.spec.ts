@@ -32,6 +32,27 @@ test("landing page points at the MCP server", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("help page carries all four sections and reachable example prompts", async ({
+  page,
+}) => {
+  await page.goto("/help");
+  await expect(
+    page.getByRole("heading", { name: "Help & getting started" })
+  ).toBeVisible();
+  // The anchors the table of contents jumps to — a renamed id silently breaks
+  // every one of those links.
+  for (const id of ["start", "examples", "ai", "faq"]) {
+    await expect(page.locator(`#${id}`)).toBeVisible();
+  }
+  await expect(page.getByRole("button", { name: "Copy" }).first()).toBeVisible();
+});
+
+test("the landing footer reaches the help page", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "help", exact: true }).click();
+  await expect(page).toHaveURL(/\/help$/);
+});
+
 test("account menu holds language, theme and log in", async ({ page }) => {
   await page.goto("/");
   const menu = page.locator("summary").filter({ hasText: "Menu" });
@@ -39,6 +60,8 @@ test("account menu holds language, theme and log in", async ({ page }) => {
   await menu.click();
   await expect(page.getByRole("combobox")).toBeVisible(); // language switcher
   await expect(page.getByRole("button", { name: "System" })).toBeVisible();
+  // Exact, or it also matches the footer's lowercase "help" link.
+  await expect(page.getByRole("link", { name: "Help", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Log in" })).toBeVisible();
   // Escape closes it again.
   await page.keyboard.press("Escape");

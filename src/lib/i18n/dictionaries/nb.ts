@@ -15,6 +15,7 @@ const nb: Dict = {
     menu: "Meny",
     signedInAs: "Logget inn som {email}",
     logout: "Logg ut",
+    help: "Hjelp",
     login: "Logg inn",
     addPasskey: "Legg til passkey",
     passkeys: "Passkeys",
@@ -89,6 +90,7 @@ const nb: Dict = {
     terms: "vilkår",
     privacy: "personvern",
     cookies: "informasjonskapsler",
+    help: "hjelp",
     openSource: "Åpen kildekode på GitHub",
   },
   mySplits: {

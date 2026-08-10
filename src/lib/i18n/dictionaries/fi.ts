@@ -15,6 +15,7 @@ const fi: Dict = {
     menu: "Valikko",
     signedInAs: "Kirjautunut tunnuksella {email}",
     logout: "Kirjaudu ulos",
+    help: "Ohjeet",
     login: "Kirjaudu sisään",
     addPasskey: "Lisää passkey",
     passkeys: "Passkey-avaimet",
@@ -89,6 +90,7 @@ const fi: Dict = {
     terms: "käyttöehdot",
     privacy: "tietosuoja",
     cookies: "evästeet",
+    help: "ohjeet",
     openSource: "Avoin lähdekoodi GitHubissa",
   },
   mySplits: {

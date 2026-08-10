@@ -9,6 +9,7 @@
 ## Pages
 - [Home](https://split.xuper.fun/): what it is and how it works
 - [Create a split](https://split.xuper.fun/new): start a new split (no account)
+- [Help & getting started](https://split.xuper.fun/help): walkthrough, worked examples, FAQ, and example prompts for agents
 - [MCP server](https://split.xuper.fun/mcp): connect an AI agent
 - [Privacy](https://split.xuper.fun/privacy)
 - [Cookies](https://split.xuper.fun/cookies)

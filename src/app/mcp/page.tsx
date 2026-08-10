@@ -270,7 +270,12 @@ add_expense  taxi 300, shares: [{Alice, weight: 2}, {Bob, weight: 1}]`}</Code>
       </div>
 
       <p className="mt-8 text-sm text-stone-500">
-        Prefer clicking?{" "}
+        For what to actually say once it&rsquo;s connected — and the same thing
+        done by hand —{" "}
+        <Link href="/help" className="text-primary underline underline-offset-2">
+          see the help page
+        </Link>
+        . Prefer clicking?{" "}
         <Link href="/new" className="text-primary underline underline-offset-2">
           Create a split in the browser
         </Link>

@@ -219,6 +219,12 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             with the actual task. Inside pb-28 so the fixed action bar below
             doesn't cover it. */}
         <footer className="mt-10 text-center text-xs text-stone-400">
+          {/* Someone stuck on "how do I split this unevenly" is standing right
+              here, not on the landing page. */}
+          <Link href="/help" className="hover:text-ink">
+            {dict.footer.help}
+          </Link>{" "}
+          ·{" "}
           <button onClick={() => setFeedbackOpen(true)} className="hover:text-ink">
             {dict.feedback.trigger}
           </button>
