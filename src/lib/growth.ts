@@ -1,5 +1,5 @@
 /**
- * How this device first met Xupersplit, and whether it later crossed over.
+ * How this device first met xupersplit, and whether it later crossed over.
  *
  * The product's only real distribution is the share link: someone drops a
  * split in a group chat and a handful of people use the app without ever

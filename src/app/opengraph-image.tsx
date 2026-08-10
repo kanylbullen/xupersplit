@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 // Branded social-share card (Open Graph + Twitter). Site-wide default; routes
 // can override. English, on-brand: cream background, teal wordmark + mark.
-export const alt = "Xupersplit — split shared expenses";
+export const alt = "xupersplit — split shared expenses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -200,7 +200,7 @@ const da: Dict = {
   },
   confirm: {
     heading: "Bekræft login",
-    body: "Tryk på knappen for at logge ind på Xupersplit.",
+    body: "Tryk på knappen for at logge ind på xupersplit.",
     login: "Log ind",
     loggingIn: "Logger ind …",
     invalid: "Linket er ugyldigt eller udløbet.",

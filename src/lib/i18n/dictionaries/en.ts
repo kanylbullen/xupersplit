@@ -200,7 +200,7 @@ const en: Dict = {
   },
   confirm: {
     heading: "Confirm sign-in",
-    body: "Press the button to log in to Xupersplit.",
+    body: "Press the button to log in to xupersplit.",
     login: "Log in",
     loggingIn: "Logging in…",
     invalid: "The link is invalid or has expired.",

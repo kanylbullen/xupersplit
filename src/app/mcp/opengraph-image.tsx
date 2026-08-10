@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 // person, which is the wrong pitch when someone drops this link in a
 // developer channel. Same brand furniture as ../opengraph-image.tsx, but the
 // headline and the endpoint are the point.
-export const alt = "Xupersplit MCP server — connect an AI agent, no account needed";
+export const alt = "xupersplit MCP server — connect an AI agent, no account needed";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

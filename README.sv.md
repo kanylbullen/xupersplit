@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/cover.png" alt="Xupersplit — dela utgifter, slipp tjafset" width="640" />
+<img src="docs/cover.png" alt="xupersplit — dela utgifter, slipp tjafset" width="640" />
 
-# Xupersplit
+# xupersplit
 
 **Dela utgifter i grupp utan krångel.** Skapa en split, dela länken och låt
 alla lägga in vad de betalat — saldon och vem-betalar-vem räknas ut
@@ -10,19 +10,33 @@ automatiskt, med betalning på ett tryck direkt från saldovyn.
 
 [**split.xuper.fun**](https://split.xuper.fun) · [English](README.md) · Svenska
 
-[![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
-&nbsp;[![MCP-server](https://img.shields.io/badge/MCP-server-f59e0b.svg)](#mcp-server)
-&nbsp;Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
+[![CI](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml/badge.svg)](https://github.com/kanylbullen/xupersplit/actions/workflows/ci.yml)
+&nbsp;[![Licens: MIT](https://img.shields.io/badge/License-MIT-0d9488.svg)](LICENSE)
+&nbsp;[![MCP-register](https://img.shields.io/badge/MCP-registret-f59e0b.svg)](https://registry.modelcontextprotocol.io/v0/servers?search=xupersplit)
+&nbsp;[![Live](https://img.shields.io/badge/live-split.xuper.fun-0d9488.svg)](https://split.xuper.fun)
+
+Next.js 16 · Supabase · Tailwind v4 · wagmi/viem
 
 <br />
 
-<img src="docs/demo-sv.gif" alt="Xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="260" />
+<img src="docs/demo-sv.gif" alt="xupersplit-demo — skapa en split, lägg in en utgift och gör upp med Swish" width="260" />
+
+<br />
+<br />
+
+<img src="docs/screenshot-balances.png" alt="Saldovyn: vem betalar vem, med en Swish-knapp på varje rad" width="252" />
+&nbsp;
+<img src="docs/screenshot-pay.png" alt="Betaldialogen: en Swish-QR med exakt belopp redan ifyllt" width="252" />
+&nbsp;
+<img src="docs/screenshot-shares.png" alt="Ny utgift: delning med andelar, där ett par räknas dubbelt" width="252" />
+
+<sub>Vem som ska ha vad · Swish-QR med beloppet redan i · delning med andelar</sub>
 
 </div>
 
 ---
 
-> **Funkar med AI-agenter.** Xupersplit är även en [MCP-server](#mcp-server) —
+> **Funkar med AI-agenter.** xupersplit är även en [MCP-server](#mcp-server) —
 > peka din assistent på en URL så kan den skapa spliten, lägga in vad alla
 > betalat och säga vem som är skyldig vem. Inget konto, ingen API-nyckel,
 > inget att installera.
@@ -67,10 +81,10 @@ Byggd som ett en-prompt-projekt och vidareutvecklad därifrån.
 
 ## Betalsätt
 
-Xupersplit lagrar varje mottagares betaluppgift(er) och, där ett betalnätverk
+xupersplit lagrar varje mottagares betaluppgift(er) och, där ett betalnätverk
 erbjuder ett **öppet, avtalsfritt** gränssnitt, gör saldoraden till en riktig
 betalning på ett tryck — **förifylld med exakt belopp**. Inga pengar passerar
-någonsin Xupersplit; appen bygger bara länken/fakturan/transaktionen som
+någonsin xupersplit; appen bygger bara länken/fakturan/transaktionen som
 betalaren godkänner i sin egen app.
 
 | Betalsätt | Upplevelse | Hur |
@@ -88,7 +102,7 @@ QR-endpoint; Lightnings LNURL och EVM/Solana via WalletConnect är öppna
 protokoll. Vipps
 och MobilePay (numera Vipps MobilePay) erbjuder bara beloppsförifyllda flöden
 via sina **handlar-API:er** — ett företagsavtal som dirigerar pengar till ett
-bolag, inte person-till-person — så för dem gör Xupersplit det ärliga och visar
+bolag, inte person-till-person — så för dem gör xupersplit det ärliga och visar
 uppgiften med en kopiera-knapp. Skulle de någon gång släppa en öppen
 P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
 
@@ -98,7 +112,7 @@ P2P-deeplänk är det en liten ändring att koppla in. PR:er välkomnas. 🤞
 
 ## MCP-server
 
-Xupersplit pratar [Model Context Protocol](https://modelcontextprotocol.io), så
+xupersplit pratar [Model Context Protocol](https://modelcontextprotocol.io), så
 en AI-assistent kan skapa en split, lägga in vad alla betalat och räkna ut vem
 som är skyldig vem — och sedan ge dig länken att dela. Kontolöst som resten av
 appen: ingen registrering, ingen API-nyckel.
@@ -255,7 +269,7 @@ MIT — se [LICENSE](LICENSE).
 
 <div align="center">
 
-Om Xupersplit besparade din grupp lite tjafs kan du
+Om xupersplit besparade din grupp lite tjafs kan du
 
 [![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
 

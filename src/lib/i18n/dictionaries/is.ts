@@ -96,7 +96,7 @@ const is: Dict = {
     openSource: "Opinn hugbúnaður á GitHub",
   },
   mySplits: {
-    title: "Xupersplitarnir þínir",
+    title: "xupersplitarnir þínir",
     participants: "{count} þátttakendur",
     entriesOne: "{count} færsla",
     entriesMany: "{count} færslur",
@@ -200,7 +200,7 @@ const is: Dict = {
   },
   confirm: {
     heading: "Staðfesta innskráningu",
-    body: "Ýttu á hnappinn til að skrá þig inn á Xupersplit.",
+    body: "Ýttu á hnappinn til að skrá þig inn á xupersplit.",
     login: "Skrá inn",
     loggingIn: "Skrái inn …",
     invalid: "Hlekkurinn er ógildur eða útrunninn.",

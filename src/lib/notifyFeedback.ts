@@ -49,7 +49,7 @@ export async function notifyFeedback(args: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Xupersplit <split@xuper.fun>",
+        from: "xupersplit <split@xuper.fun>",
         to,
         reply_to: args.replyEmail ?? undefined,
         subject: `[${args.kind}] ${firstLine || "feedback"}`,

@@ -2,14 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of use — Xupersplit",
+  title: "Terms of use — xupersplit",
   description:
-    "The short version: Xupersplit is a free hobby project, it never touches your money, and the split link is the key.",
+    "The short version: xupersplit is a free hobby project, it never touches your money, and the split link is the key.",
 };
 
 const SECTIONS: [string, React.ReactNode][] = [
   [
-    "What Xupersplit is",
+    "What xupersplit is",
     <>
       A free hobby project run by a private individual in Sweden — not a company
       and not a business. The code is open source under the MIT licence, so you
@@ -32,7 +32,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "We never touch your money",
     <>
-      Xupersplit does not hold, receive, transfer or process funds, and it is
+      xupersplit does not hold, receive, transfer or process funds, and it is
       not a payment service. It does arithmetic and it draws links: it works out
       who owes whom and shows a Swish, Vipps, MobilePay or Revolut link, an
       IBAN, a Lightning invoice or a wallet address that a participant entered
@@ -50,7 +50,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "AI assistants and agents",
     <>
-      Xupersplit runs an{" "}
+      xupersplit runs an{" "}
       <Link href="/mcp" className="text-primary hover:text-primary-dark">
         MCP server
       </Link>{" "}
@@ -78,14 +78,14 @@ const SECTIONS: [string, React.ReactNode][] = [
       <Link href="/privacy" className="text-primary hover:text-primary-dark">
         privacy policy
       </Link>{" "}
-      has the details. Don’t rely on Xupersplit as your only record of anything
+      has the details. Don’t rely on xupersplit as your only record of anything
       you need to keep.
     </>,
   ],
   [
     "Fair use",
     <>
-      Don’t use Xupersplit to break the law, to harass anyone, or to store other
+      Don’t use xupersplit to break the law, to harass anyone, or to store other
       people’s personal data without their knowledge. Don’t automate abusive
       volumes of requests — split creation is rate-limited, and traffic or
       content that is abusive, illegal or degrades the service for everyone else
@@ -95,7 +95,7 @@ const SECTIONS: [string, React.ReactNode][] = [
   [
     "No warranty",
     <>
-      Xupersplit is provided “as is”, without warranties of any kind, express or
+      xupersplit is provided “as is”, without warranties of any kind, express or
       implied, including any implied warranty of merchantability or fitness for
       a particular purpose. Calculations can be wrong. Verify anything that
       matters before money changes hands.
@@ -105,7 +105,7 @@ const SECTIONS: [string, React.ReactNode][] = [
     "Liability",
     <>
       To the fullest extent permitted by law, we are not liable for any loss
-      arising from your use of Xupersplit — money sent to the wrong recipient, a
+      arising from your use of xupersplit — money sent to the wrong recipient, a
       split someone else edited or deleted, or data lost while the service was
       unavailable. Nothing here excludes liability that cannot be excluded by
       law, and if you are a consumer in the EU your mandatory statutory rights

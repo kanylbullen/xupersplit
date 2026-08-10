@@ -1,7 +1,7 @@
-# Xupersplit — organic marketing plan
+# xupersplit — organic marketing plan
 
 Focus: **organic** social on **Farcaster + X** (and Nostr as a bonus), aimed at
-the crypto crowd — because crypto settlement is the one thing Xupersplit does
+the crypto crowd — because crypto settlement is the one thing xupersplit does
 that Splitwise / Tricount / Kittysplit don't.
 
 ## 1. Positioning (the wedge)
@@ -33,7 +33,7 @@ itself**. Every time someone drops a split link in their group chat, N people
 see the app *with the crypto pay buttons visible*. Optimise that:
 
 - **OG preview** sells the crypto angle, not just "split expenses".
-- **"settle in crypto" in shared views** — a discreet "made with Xupersplit ·
+- **"settle in crypto" in shared views** — a discreet "made with xupersplit ·
   settle in USDC/sats" so non-users see the hook.
 - **"Share to Farcaster / X" button** on the balances view — one tap → cast/tweet
   with link + OG. Highest-ROI product change for organic spread.

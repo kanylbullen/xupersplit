@@ -4,14 +4,14 @@ import { CopyCode } from "@/components/CopyCode";
 import { MCP_ENDPOINT as ENDPOINT } from "@/lib/mcp/endpoint";
 
 const DESCRIPTION =
-  "Xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
+  "xupersplit speaks Model Context Protocol. Point an AI agent at one URL and " +
   "it can create a split, add expenses and work out who owes whom — no account, " +
   "no API key.";
 
-const SHARE_TITLE = "Xupersplit MCP server — split expenses from your AI";
+const SHARE_TITLE = "xupersplit MCP server — split expenses from your AI";
 
 export const metadata: Metadata = {
-  // The root layout's template appends " — Xupersplit".
+  // The root layout's template appends " — xupersplit".
   title: "MCP server",
   description: DESCRIPTION,
   // Relative, resolved against metadataBase — same as the landing page.
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   // itself comes from ./opengraph-image.tsx automatically.
   openGraph: {
     type: "website",
-    siteName: "Xupersplit",
+    siteName: "xupersplit",
     title: SHARE_TITLE,
     description: DESCRIPTION,
     url: "/mcp",
@@ -69,7 +69,7 @@ export default function McpPage() {
       </Link>
       <h1 className="mb-2 text-3xl font-black tracking-tight">MCP server</h1>
       <p className="mb-8 text-stone-500">
-        Xupersplit speaks{" "}
+        xupersplit speaks{" "}
         <a
           href="https://modelcontextprotocol.io"
           className="text-primary underline underline-offset-2"
@@ -254,7 +254,7 @@ add_expense  taxi 300, shares: [{Alice, weight: 2}, {Bob, weight: 1}]`}</Code>
         <section className="rounded-2xl border border-stone-200/80 bg-surface p-5 shadow-sm">
           <h2 className="mb-1.5 font-bold">Self-hosting</h2>
           <p className="text-sm leading-relaxed text-stone-500">
-            The endpoint ships with the app, so a self-hosted Xupersplit gets
+            The endpoint ships with the app, so a self-hosted xupersplit gets
             its own MCP server at{" "}
             <code className="rounded bg-stone-100 px-1">/api/mcp</code>. The
             source is on{" "}

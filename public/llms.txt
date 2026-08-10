@@ -1,4 +1,4 @@
-# Xupersplit
+# xupersplit
 
 > Accountless group expense splitter. Create a split, share the secret link, and
 > everyone adds what they paid — balances and who-owes-whom are worked out
