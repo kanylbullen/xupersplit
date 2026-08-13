@@ -53,20 +53,51 @@ function logRequest(
   );
 }
 
-// The JSON-RPC method, for the log line above. Read from a clone so the handler
-// still gets an unconsumed body; anything unparseable is left to the handler to
-// reject.
-async function peekMethod(request: Request): Promise<string | undefined> {
+// The JSON-RPC method and id, for the log line above and for the subscription
+// refusal below. Read from a clone so the handler still gets an unconsumed body;
+// anything unparseable is left to the handler to reject.
+type Envelope = { method: string; id: unknown };
+
+async function peekEnvelope(request: Request): Promise<Envelope | undefined> {
   if (request.method !== "POST") return undefined;
   try {
     const body: unknown = await request.clone().json();
     if (body && typeof body === "object" && "method" in body) {
-      return String((body as { method: unknown }).method);
+      const envelope = body as { method: unknown; id?: unknown };
+      return { method: String(envelope.method), id: envelope.id ?? null };
     }
   } catch {
     /* not JSON-RPC — the handler answers with an error of its own */
   }
   return undefined;
+}
+
+// `subscriptions/listen` is a long poll: the SDK sends the response headers at
+// once and then holds the SSE stream open until the client goes away, waiting
+// for a change event to forward. That is the right shape for a server process
+// that stays resident and the wrong one for a function billed per invocation.
+// Claude's client opens five of these every four minutes, and until maxDuration
+// was capped each one billed the platform's full 300 s sitting idle — that was
+// the Function Duration spike, ~30 of every 48 requests to this route.
+//
+// There is nothing for them to wait for, either: this server is stateless and
+// its tool list is fixed at build time, so no change event can ever be
+// published. So refuse them in the same words the SDK uses when its own
+// `maxSubscriptions` limit is reached — an in-band JSON-RPC error over HTTP 200,
+// which is what the spec defines for a server that won't take another
+// subscription. (Setting `maxSubscriptions: 0` would be the tidier way to say
+// this, but mcp-handler doesn't pass that option through to the SDK handler.)
+const SUBSCRIPTION_METHOD = "subscriptions/listen";
+
+function refuseSubscription(id: unknown): Response {
+  return Response.json(
+    {
+      jsonrpc: "2.0",
+      id,
+      error: { code: -32603, message: "Subscription limit reached" },
+    },
+    { status: 200 },
+  );
 }
 
 // Identity a client shows in its connector list. `icons` is part of the MCP
@@ -158,11 +189,7 @@ const CORS: Record<string, string> = {
   "Access-Control-Max-Age": "86400",
 };
 
-async function serve(request: Request): Promise<Response> {
-  const started = Date.now();
-  const method = await peekMethod(request);
-  const response = await handler(request);
-  logRequest(request, method, response, Date.now() - started);
+function withCors(response: Response): Response {
   const headers = new Headers(response.headers);
   for (const [name, value] of Object.entries(CORS)) headers.set(name, value);
   headers.set("Cache-Control", "no-store");
@@ -171,6 +198,20 @@ async function serve(request: Request): Promise<Response> {
     statusText: response.statusText,
     headers,
   });
+}
+
+async function serve(request: Request): Promise<Response> {
+  const started = Date.now();
+  const envelope = await peekEnvelope(request);
+
+  // Refused before the SDK sees it, so no stream is ever opened.
+  const response =
+    envelope?.method === SUBSCRIPTION_METHOD
+      ? refuseSubscription(envelope.id)
+      : await handler(request);
+
+  logRequest(request, envelope?.method, response, Date.now() - started);
+  return withCors(response);
 }
 
 export { serve as GET, serve as POST, serve as DELETE };
