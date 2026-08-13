@@ -1,6 +1,7 @@
 import { createMcpHandler, type McpHandlerOptions } from "mcp-handler";
 import { after } from "next/server";
 import { track } from "@vercel/analytics/server";
+import { withCaller } from "@/lib/mcp/caller";
 import { registerSplitTools } from "@/lib/mcp/server";
 import { APP_ORIGIN } from "@/lib/miniapp";
 
@@ -263,6 +264,18 @@ function withCors(response: Response): Response {
   });
 }
 
+// One name for the caller, for the analytics event a tool emits on its way out.
+// The declared identity is the better one and the user-agent is the fallback,
+// because they are not the same thing and neither is always there: the scanner
+// that shows up as `SentinelOracle/0.1` calls itself `glimind-probe/0.1.0` on
+// the wire, while Claude's client declares `Anthropic/ClaudeAI/1.0.0` on
+// `initialize` and then sends its tool calls with no declaration at all. The log
+// line keeps both fields apart; this collapses them, so one event property can
+// still say who ran the tool.
+function callerOf(request: Request, envelope: Envelope | undefined): string {
+  return envelope?.client ?? request.headers.get("user-agent") ?? "unknown";
+}
+
 async function serve(request: Request): Promise<Response> {
   const started = Date.now();
   const envelope = await peekEnvelope(request);
@@ -271,7 +284,7 @@ async function serve(request: Request): Promise<Response> {
   const response =
     envelope?.method === SUBSCRIPTION_METHOD
       ? refuseSubscription(envelope.id)
-      : await handler(request);
+      : await withCaller(callerOf(request, envelope), () => handler(request));
 
   logRequest(request, envelope, response, Date.now() - started);
   return withCors(response);

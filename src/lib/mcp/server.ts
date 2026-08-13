@@ -3,6 +3,7 @@ import { after } from "next/server";
 import { track } from "@vercel/analytics/server";
 import { z } from "zod";
 import { clientIpHash } from "@/lib/ipHash";
+import { currentCaller } from "./caller";
 import { CURRENCIES } from "@/lib/money";
 import { PAYMENT_TYPES } from "@/lib/payment";
 import { clearPaymentMethodsIfSettled } from "@/lib/split/wipe";
@@ -105,16 +106,20 @@ async function respond(
  * Usage is measured here rather than in the handler's event hook because this
  * is the only place that knows both which tool ran and how it went: a rejected
  * call still answers with a normal JSON-RPC result, so the transport counts it
- * a success either way. Only the tool name and that verdict are recorded — the arguments
- * hold split keys and participant names, and the error messages name people
- * too, so neither is ever sent.
+ * a success either way. Only the tool name, that verdict and who called are
+ * recorded — the arguments hold split keys and participant names, and the error
+ * messages name people too, so neither is ever sent.
+ *
+ * The caller is read here, while the request is still on the stack, and closed
+ * over: `after()` runs once the response is gone and the store is empty by then.
  */
 async function guard(
   tool: string,
   run: () => Promise<ToolResult>,
 ): Promise<ToolResult> {
+  const client = currentCaller() ?? "unknown";
   const count = (ok: boolean) =>
-    after(() => track("mcp_tool", { tool, ok }).catch(() => {}));
+    after(() => track("mcp_tool", { tool, ok, client }).catch(() => {}));
   try {
     const result = await run();
     count(true);
