@@ -15,6 +15,60 @@ import { APP_ORIGIN } from "@/lib/miniapp";
 
 export const runtime = "nodejs";
 
+// A serverless invocation is billed for as long as it *runs*, not for as long
+// as the client waits — and some clients leave an invocation alive here after
+// its response has been sent (the platform logs a 200 for the request and a
+// "Task timed out" for the same invocation five minutes later). With the
+// platform default of 300 s that turns a 200 ms tool call into five minutes of
+// billed duration, which is what set off the Function Duration alert on
+// 2026-08-13: ~8 requests every four minutes, each holding a function open for
+// the full 300 s.
+//
+// Nothing on this route legitimately needs more than a second or two — every
+// tool is a single Supabase RPC — and `after()` work counts against the same
+// budget, so cap the invocation. That doesn't explain the leak, but it bounds
+// what the leak can cost until it's found.
+export const maxDuration = 15;
+
+// One line per request. The platform's log record for a timed-out invocation
+// carries no client identity and no JSON-RPC method, so there is otherwise
+// nothing to attribute the duration to. `ms` is how long the handler took to
+// produce the response: when the platform reports a far longer duration for the
+// same request, the difference was spent after the response was sent, which is
+// the shape of the leak above.
+function logRequest(
+  request: Request,
+  method: string | undefined,
+  response: Response,
+  ms: number,
+): void {
+  console.log(
+    JSON.stringify({
+      evt: "mcp_request",
+      method: method ?? request.method,
+      status: response.status,
+      ms,
+      ua: request.headers.get("user-agent") ?? "",
+    }),
+  );
+}
+
+// The JSON-RPC method, for the log line above. Read from a clone so the handler
+// still gets an unconsumed body; anything unparseable is left to the handler to
+// reject.
+async function peekMethod(request: Request): Promise<string | undefined> {
+  if (request.method !== "POST") return undefined;
+  try {
+    const body: unknown = await request.clone().json();
+    if (body && typeof body === "object" && "method" in body) {
+      return String((body as { method: unknown }).method);
+    }
+  } catch {
+    /* not JSON-RPC — the handler answers with an error of its own */
+  }
+  return undefined;
+}
+
 // Identity a client shows in its connector list. `icons` is part of the MCP
 // `Implementation` shape — without it a client has nothing to render but its
 // own placeholder, which is why the wordmark didn't show up. The mark carries
@@ -105,7 +159,10 @@ const CORS: Record<string, string> = {
 };
 
 async function serve(request: Request): Promise<Response> {
+  const started = Date.now();
+  const method = await peekMethod(request);
   const response = await handler(request);
+  logRequest(request, method, response, Date.now() - started);
   const headers = new Headers(response.headers);
   for (const [name, value] of Object.entries(CORS)) headers.set(name, value);
   headers.set("Cache-Control", "no-store");
