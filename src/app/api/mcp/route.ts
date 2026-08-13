@@ -38,14 +38,16 @@ export const maxDuration = 15;
 // the shape of the leak above.
 function logRequest(
   request: Request,
-  method: string | undefined,
+  envelope: Envelope | undefined,
   response: Response,
   ms: number,
 ): void {
   console.log(
     JSON.stringify({
       evt: "mcp_request",
-      method: method ?? request.method,
+      method: envelope?.method ?? request.method,
+      ...(envelope?.tool !== undefined && { tool: envelope.tool }),
+      client: envelope?.client ?? "",
       status: response.status,
       ms,
       ua: request.headers.get("user-agent") ?? "",
@@ -53,18 +55,67 @@ function logRequest(
   );
 }
 
-// The JSON-RPC method and id, for the log line above and for the subscription
-// refusal below. Read from a clone so the handler still gets an unconsumed body;
-// anything unparseable is left to the handler to reject.
-type Envelope = { method: string; id: unknown };
+// What the log line and the subscription refusal below need out of the request.
+// Read from a clone so the handler still gets an unconsumed body; anything
+// unparseable is left to the handler to reject.
+//
+// `client` is the interesting one. This server is stateless — there is no
+// session to hang an identity on, and a `tools/call` arrives with no memory of
+// the `initialize` that came before it — so the only per-request identity is
+// what the caller declares in the envelope's `_meta`. Agents on the 2026-07-28
+// protocol put their name and version there on *every* request, which is what
+// makes "which agent called which tool" answerable at all. Older clients don't,
+// and then the user-agent header is all there is.
+const CLIENT_INFO_META = "io.modelcontextprotocol/clientInfo";
+
+type Envelope = {
+  method: string;
+  id: unknown;
+  tool?: string;
+  client?: string;
+};
+
+type RawEnvelope = {
+  method: unknown;
+  id?: unknown;
+  params?: {
+    name?: unknown;
+    clientInfo?: unknown;
+    _meta?: Record<string, unknown>;
+  };
+};
+
+// Two places an agent names itself: `_meta` on any request, and `params` on the
+// `initialize` handshake specifically. Read both, or the one request that always
+// carries an identity would be the one line logged without one.
+function declaredClient(params: RawEnvelope["params"]): string | undefined {
+  return (
+    formatClient(params?._meta?.[CLIENT_INFO_META]) ??
+    formatClient(params?.clientInfo)
+  );
+}
+
+function formatClient(info: unknown): string | undefined {
+  if (!info || typeof info !== "object") return undefined;
+  const { name, version } = info as { name?: unknown; version?: unknown };
+  if (typeof name !== "string" || name === "") return undefined;
+  return typeof version === "string" ? `${name}/${version}` : name;
+}
 
 async function peekEnvelope(request: Request): Promise<Envelope | undefined> {
   if (request.method !== "POST") return undefined;
   try {
     const body: unknown = await request.clone().json();
     if (body && typeof body === "object" && "method" in body) {
-      const envelope = body as { method: unknown; id?: unknown };
-      return { method: String(envelope.method), id: envelope.id ?? null };
+      const envelope = body as RawEnvelope;
+      const tool = envelope.params?.name;
+      const client = declaredClient(envelope.params);
+      return {
+        method: String(envelope.method),
+        id: envelope.id ?? null,
+        ...(typeof tool === "string" && { tool }),
+        ...(client !== undefined && { client }),
+      };
     }
   } catch {
     /* not JSON-RPC — the handler answers with an error of its own */
@@ -158,6 +209,18 @@ function recordConnection(event: McpEvent): void {
 const handler = createMcpHandler(registerSplitTools, {
   serverInfo,
   onEvent: recordConnection,
+  // Don't promise a notification we can never send. `listChanged` says "ask me
+  // to watch this list and I'll tell you when it changes", and it is what
+  // invites the `subscriptions/listen` long polls refused below — but this
+  // server is stateless and its tool list is fixed at build time, so no change
+  // event can ever be published. McpServer turns the bit on by itself when the
+  // first tool is registered, and only an explicit `false` survives that
+  // (`getCapabilities().tools?.listChanged ?? true`).
+  //
+  // The refusal below stays regardless: a client is free to ask for a
+  // subscription whether or not we advertise one, and it's the refusal, not
+  // this, that keeps the function from being held open.
+  capabilities: { tools: { listChanged: false } },
   instructions:
     "xupersplit splits shared expenses in a group — no accounts, no app. " +
     "Create a split with create_split, then hand the returned link to the user " +
@@ -210,7 +273,7 @@ async function serve(request: Request): Promise<Response> {
       ? refuseSubscription(envelope.id)
       : await handler(request);
 
-  logRequest(request, envelope?.method, response, Date.now() - started);
+  logRequest(request, envelope, response, Date.now() - started);
   return withCors(response);
 }
 
