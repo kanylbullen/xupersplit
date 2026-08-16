@@ -148,7 +148,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             {split.title}
           </h1>
           <a
-            href="https://buymeacoffee.com/xuperfun"
+            href="https://beer.xuper.fun/?from=xupersplit"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Buy me a beer"
