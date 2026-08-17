@@ -5,7 +5,7 @@ import { track } from "@vercel/analytics";
 export function BeerButton() {
   return (
     <a
-      href="https://buymeacoffee.com/xuperfun"
+      href="https://beer.xuper.fun/?from=xupersplit"
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => track("beer_clicked", { location: "footer" })}

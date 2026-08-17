@@ -262,7 +262,7 @@ MIT — see [LICENSE](LICENSE).
 
 If xupersplit saved your group some bickering, you can
 
-[![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/xuperfun)
+[![Buy me a beer](https://img.shields.io/badge/Buy%20me%20a%20beer-%F0%9F%8D%BA-9A7BFF?style=for-the-badge)](https://beer.xuper.fun/?from=github)
 
 *built with love, coffee and beer*
 
