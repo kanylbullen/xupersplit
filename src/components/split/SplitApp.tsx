@@ -9,9 +9,12 @@ import { useI18n } from "@/lib/i18n/client";
 import { VISITED_KEY } from "@/lib/visited";
 import {
   type Origin,
+  nudgeDone,
   rememberOrigin,
+  rememberSplitOrigin,
   takeCrossover,
   takeJustCreated,
+  wasInvitedTo,
 } from "@/lib/growth";
 import { EntriesView } from "./EntriesView";
 import { BalancesView } from "./BalancesView";
@@ -21,6 +24,7 @@ import { SettingsDialog } from "./SettingsDialog";
 import { FeedbackDialog } from "./FeedbackDialog";
 import { WalletProvider } from "./WalletProvider";
 import { ClaimBanner } from "./ClaimBanner";
+import { NextSplitNudge } from "./NextSplitNudge";
 
 type Tab = "entries" | "balances";
 
@@ -42,6 +46,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [identityOpen, setIdentityOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [showNudge, setShowNudge] = useState(false);
 
   // Remember visited splits so the landing page can list them per device.
   useEffect(() => {
@@ -69,6 +74,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
     if (!firstOpen) return;
     const origin: Origin = takeJustCreated() ? "created" : "invited";
     rememberOrigin(origin);
+    rememberSplitOrigin(split.key, origin);
     track("split_first_open", { origin });
     // Someone who arrived through a friend's link has now started their own:
     // the share loop closing, which is the number that decides whether any of
@@ -109,6 +115,14 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
     localStorage.setItem(storageKey, id);
     setMeId(id === "viewer" ? null : id);
     setIdentityOpen(false);
+  }
+
+  // Right after someone who was sent this link logs an expense of their own,
+  // offer them a split of their own — once per device. See lib/growth.ts.
+  function onEntrySaved({ kind, isEdit }: { kind: EntryKind; isEdit: boolean }) {
+    if (kind !== "expense" || isEdit) return;
+    if (!wasInvitedTo(split.key) || nudgeDone()) return;
+    setShowNudge(true);
   }
 
   function showToast(message: string) {
@@ -210,6 +224,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
             requireFarcaster={split.require_farcaster}
           />
         )}
+        {showNudge && <NextSplitNudge onDone={() => setShowNudge(false)} />}
         {tab === "entries" ? (
           <EntriesView
             entries={entries}
@@ -305,6 +320,7 @@ export function SplitApp({ data, loggedIn }: { data: SplitData; loggedIn: boolea
         initialKind={entryDialog.kind}
         meId={meId}
         lockPayer={secure}
+        onSaved={onEntrySaved}
       />
       {!secure && (
         <IdentityDialog

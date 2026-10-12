@@ -32,6 +32,7 @@ export function EntryDialog({
   initialKind,
   meId,
   lockPayer = false,
+  onSaved,
 }: {
   open: boolean;
   onClose: () => void;
@@ -43,6 +44,8 @@ export function EntryDialog({
   meId: string | null;
   /** Secure splits: the payer is forced to you and can't be changed. */
   lockPayer?: boolean;
+  /** Called after a new or edited entry is saved (not after a delete). */
+  onSaved?: (info: { kind: EntryKind; isEdit: boolean }) => void;
 }) {
   const { dict, t, te, locale } = useI18n();
   const money = (cents: number) => formatMoney(cents, currency, LOCALE_INTL[locale]);
@@ -251,6 +254,7 @@ export function EntryDialog({
       else {
         track("entry_saved", { kind, isEdit: Boolean(entry) });
         onClose();
+        onSaved?.({ kind, isEdit: Boolean(entry) });
       }
     });
   }
