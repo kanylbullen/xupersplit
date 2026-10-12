@@ -118,6 +118,44 @@ export function BalancesView({
   }, []);
 
   const [inviteCopied, setInviteCopied] = useState(false);
+  const [summaryCopied, setSummaryCopied] = useState(false);
+
+  // The settle-up plan as plain text for the group chat. Every one of these
+  // messages carries the split's link to people who may never have opened it,
+  // and "Erik → Anna: 340 kr" is the most clicked-on sentence the app writes.
+  async function shareSummary() {
+    const url = `${window.location.origin}/k/${splitKey}`;
+    const lines = plan.map((s) => {
+      const from = byId.get(s.from)?.name ?? "?";
+      const to = byId.get(s.to)?.name ?? "?";
+      return `• ${from} → ${to}: ${money(s.amount_cents)}`;
+    });
+    const text = [
+      t(dict.bal.summaryHeading, { title: splitTitle }),
+      ...lines,
+      "",
+      `${dict.bal.summaryFooter} ${url}`,
+    ].join("\n");
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ text });
+        track("summary_shared", { via: "share_sheet", rows: plan.length });
+        return;
+      } catch (e) {
+        // A cancelled share sheet isn't a failure worth a clipboard write.
+        if (e instanceof DOMException && e.name === "AbortError") return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      track("summary_shared", { via: "clipboard", rows: plan.length });
+      setSummaryCopied(true);
+      setTimeout(() => setSummaryCopied(false), 4000);
+    } catch {
+      // no clipboard (insecure context, denied) — nothing sensible to do
+    }
+  }
 
   // When the split has reserved Farcaster invitees, "Invite on Farcaster"
   // composes a cast that @-mentions them (which notifies them) + embeds the
@@ -353,6 +391,15 @@ export function BalancesView({
           </div>
         )}
         {error && <p className="mt-2 text-sm text-negative">{error}</p>}
+        {plan.length > 0 && (
+          <button
+            onClick={shareSummary}
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-primary/30 bg-primary-soft/40 px-4 py-2.5 text-sm font-semibold text-primary-dark transition-colors hover:bg-primary-soft/70"
+          >
+            <span aria-hidden>💬</span>
+            {summaryCopied ? dict.bal.shareSummaryCopied : dict.bal.shareSummary}
+          </button>
+        )}
         <p className="mt-2 px-1 text-xs text-stone-400">{dict.bal.markPaidHint}</p>
       </section>
 

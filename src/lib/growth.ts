@@ -82,3 +82,55 @@ export function takeCrossover(): boolean {
     return false;
   }
 }
+
+/*
+ * The "start your own" nudge.
+ *
+ * The footer already says "made with xupersplit · create your own", but it
+ * sits below everything and reads as boilerplate. The moment a recipient is
+ * most open to the idea is right after they've used the thing — they just
+ * logged what they paid and watched the balances update. So: invited devices
+ * see one dismissible card after their first saved expense, and never again
+ * once they act on it either way.
+ */
+
+/** Per split: this device made it ("created") or was sent it ("invited"). */
+const SPLIT_ORIGIN = (key: string) => `xupersplit:origin:${key}`;
+
+/** Device-wide: set once the nudge has been clicked or dismissed. */
+const NUDGE_DONE = "xupersplit:nudge-done";
+
+/** Recorded on first open, alongside the device-wide origin. */
+export function rememberSplitOrigin(key: string, origin: Origin): void {
+  try {
+    if (!localStorage.getItem(SPLIT_ORIGIN(key)))
+      localStorage.setItem(SPLIT_ORIGIN(key), origin);
+  } catch {
+    // no storage — the nudge just never shows, which is the safe failure
+  }
+}
+
+/** True when this device arrived at this split through someone's link. */
+export function wasInvitedTo(key: string): boolean {
+  try {
+    return localStorage.getItem(SPLIT_ORIGIN(key)) === "invited";
+  } catch {
+    return false;
+  }
+}
+
+export function nudgeDone(): boolean {
+  try {
+    return localStorage.getItem(NUDGE_DONE) !== null;
+  } catch {
+    return true;
+  }
+}
+
+export function markNudgeDone(): void {
+  try {
+    localStorage.setItem(NUDGE_DONE, "1");
+  } catch {
+    // worst case it comes back on the next expense; still one tap to close
+  }
+}

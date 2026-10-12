@@ -27,10 +27,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { key } = await params;
   const data = await fetchSplit(key);
-  // Keep the split out of search engines, but give link-unfurlers a clean,
-  // generic English card (the OG image is inherited from the app root).
+  // Keep the split out of search engines, but give link-unfurlers a card that
+  // names the split. The image comes from ./opengraph-image, which falls back
+  // to the generic site card for secure splits; the title does the same.
   const inviteDescription =
     "You've been invited to split shared expenses on xupersplit. Open the link to add what you paid and see who owes what.";
+  const cardTitle =
+    data && data !== "forbidden" && !data.split.secure
+      ? `${data.split.title} — split it on xupersplit`
+      : "You've been invited to a xupersplit";
   return {
     title:
       data && data !== "forbidden"
@@ -40,12 +45,12 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: "xupersplit",
-      title: "You've been invited to a xupersplit",
+      title: cardTitle,
       description: inviteDescription,
     },
     twitter: {
       card: "summary_large_image",
-      title: "You've been invited to a xupersplit",
+      title: cardTitle,
       description: inviteDescription,
     },
     // Farcaster Mini App: sharing this split opens it as a launch card in-feed.
