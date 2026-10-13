@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { swishPayee } from "@/lib/payment";
 
 // Proxy for Swish's public prefilled-QR generator (it has no CORS headers,
 // so the browser can't call it directly).
@@ -11,11 +12,13 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const number = searchParams.get("number") ?? "";
+  // Canonicalised, not just checked: stored values can be +46… (see swishPayee),
+  // and an unencoded "+" in a query string arrives here as a space.
+  const number = swishPayee(searchParams.get("number") ?? "");
   const amountCents = Number(searchParams.get("amount") ?? "");
   const message = (searchParams.get("msg") ?? "").slice(0, 50);
 
-  if (!/^07\d{8}$/.test(number) || !Number.isInteger(amountCents) || amountCents <= 0) {
+  if (!number || !Number.isInteger(amountCents) || amountCents <= 0) {
     return new Response("Bad request", { status: 400 });
   }
 

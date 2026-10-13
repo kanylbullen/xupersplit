@@ -62,9 +62,30 @@ export function normalizePayment(type: PaymentType, input: string): string | nul
     const clean = input.trim();
     return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(clean) ? clean : null;
   }
-  // phone-type (swish/vipps/mobilepay)
+  // Swish is Swedish-only, so it gets a stricter check than vipps/mobilepay
+  // and is stored in the one form the QR and app link take.
+  if (type === "swish") {
+    return swishPayee(input);
+  }
+  // phone-type (vipps/mobilepay)
   const clean = input.replace(/[\s\-()./]/g, "");
   return /^\+?[0-9]{6,15}$/.test(clean) ? clean : null;
+}
+
+/**
+ * Canonical Swish payee: a mobile number as 07XXXXXXXX, or a Swish Handel
+ * (123…) or charity (90…) number as-is. Null when it is not a Swish number.
+ *
+ * Stored Swish values can still be +46…, 0046… or 46…: the database (and so
+ * the MCP tools) only checks for 6–15 digits, and an agent writes a Swedish
+ * number the international way. Read paths canonicalise through this rather
+ * than trusting the stored form.
+ */
+export function swishPayee(value: string): string | null {
+  const clean = value.replace(/[\s\-()./]/g, "");
+  const mobile = clean.match(/^(?:\+46|0046|46)?0?(7\d{8})$/);
+  if (mobile) return `0${mobile[1]}`;
+  return /^123\d{7}$/.test(clean) || /^90\d{5}$/.test(clean) ? clean : null;
 }
 
 /** Pretty-print a stored payment value for display. */
@@ -84,8 +105,9 @@ export function formatPayment(type: PaymentType, value: string): string {
     return `${value.slice(0, 4)}…${value.slice(-4)}`;
   }
   // Swedish Swish numbers get the familiar grouping; others shown as-is.
-  if (type === "swish" && /^07\d{8}$/.test(value)) {
-    return `${value.slice(0, 3)}-${value.slice(3, 6)} ${value.slice(6, 8)} ${value.slice(8)}`;
+  const swish = type === "swish" ? swishPayee(value) : null;
+  if (swish && /^07\d{8}$/.test(swish)) {
+    return `${swish.slice(0, 3)}-${swish.slice(3, 6)} ${swish.slice(6, 8)} ${swish.slice(8)}`;
   }
   return value;
 }
