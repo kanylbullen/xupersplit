@@ -24,7 +24,7 @@
     "@tanstack/react-query": "^5.101.0",
     "@vercel/analytics": "^2.0.1",
     "mcp-handler": "^2.1.0",
-    "next": "^16.2.7",
+    "next": "^16.3.8",
     "next-themes": "^0.4.6",
     "react": "19.2.7",
     "react-dom": "19.2.7",
@@ -40,14 +40,14 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.0-preview.0",
+    "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "overrides": {
     "postcss": "^8.5.18",
-    "sharp": "^0.35.0",
-    "axios": "^1.18.1",
+    "sharp": "^0.35.4",
+    "axios": "^1.20.0",
     "uuid": "^11.1.1"
   }
 }
