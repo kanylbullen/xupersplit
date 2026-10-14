@@ -12,6 +12,7 @@ import {
   hasRichLink,
   revolutLink,
   swishAppLink,
+  swishPayee,
 } from "@/lib/payment";
 import type { PaymentMethod } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/client";
@@ -200,7 +201,16 @@ export function PaymentDialog({
   const pretty = formatPayment(type, method.value);
   const label = PAYMENT_META[type].label;
   const amount = formatMoney(payment.amountCents, payment.currency, LOCALE_INTL[locale]);
-  const qrSrc = `/api/swish-qr?number=${method.value}&amount=${payment.amountCents}&msg=${encodeURIComponent(payment.message)}`;
+  // No QR for a stored value that isn't a Swish number — the proxy would
+  // refuse it and the dialog would show a broken image.
+  const swishNumber = rich ? swishPayee(method.value) : null;
+  const qrSrc = swishNumber
+    ? `/api/swish-qr?${new URLSearchParams({
+        number: swishNumber,
+        amount: String(payment.amountCents),
+        msg: payment.message,
+      })}`
+    : null;
 
   async function copy() {
     if (!method) return;
@@ -340,7 +350,7 @@ export function PaymentDialog({
           {(isLightning || isEvm || isSolana) && ` ${dict.pay.cryptoIrreversible}`}
         </p>
 
-        {rich && open && (
+        {qrSrc && open && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={qrSrc}
@@ -408,9 +418,9 @@ export function PaymentDialog({
 
         {rich ? (
           <>
-            <p className="text-sm text-stone-500">{dict.pay.swishScan}</p>
+            {qrSrc && <p className="text-sm text-stone-500">{dict.pay.swishScan}</p>}
             <a
-              href={swishAppLink(method.value, payment.amountCents, payment.message)}
+              href={swishAppLink(swishNumber ?? method.value, payment.amountCents, payment.message)}
               onClick={() => track("swish_app_opened")}
               className="w-full rounded-xl bg-primary px-4 py-3 font-bold text-white shadow-md transition-colors hover:bg-primary-dark"
             >

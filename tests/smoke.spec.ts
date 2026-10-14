@@ -76,6 +76,19 @@ test("FX endpoint returns a numeric rate", async ({ request }) => {
   expect(body.rate).toBeGreaterThan(0);
 });
 
+// Stored Swish numbers can be +46… (the database only checks digits, and agents
+// write numbers that way); the QR proxy once refused everything but 07….
+test("Swish QR accepts a number in international form", async ({ request }) => {
+  for (const number of ["0701234567", "+46701234567", "46 70 123 45 67"]) {
+    const qs = new URLSearchParams({ number, amount: "12550", msg: "Smoke" });
+    const res = await request.get(`/api/swish-qr?${qs}`);
+    expect(res.status(), number).toBe(200);
+    expect(res.headers()["content-type"]).toBe("image/png");
+  }
+  const bad = await request.get("/api/swish-qr?number=12345&amount=100&msg=x");
+  expect(bad.status()).toBe(400);
+});
+
 // ── MCP endpoint ─────────────────────────────────────────────────────────────
 // Stateless Streamable HTTP: a POST carrying JSON-RPC, answered as a one-shot
 // SSE frame. Both Accept types are required by the transport.
