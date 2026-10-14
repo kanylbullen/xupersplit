@@ -298,6 +298,10 @@ const da: Dict = {
     swishScan:
       "Scan QR-koden med Swish-appen, eller åbn Swish direkte på denne enhed:",
     openSwish: "Åbn Swish-appen",
+    swishFx: "≈ {amount} efter dagens kurs",
+    swishFxLoading: "Henter dagens kurs…",
+    swishFxError:
+      "Kunne ikke hente dagens kurs — indtast selv beløbet i Swish.",
     openRevolut: "Åbn Revolut",
     revolutOpen:
       "Åbn Revolut, indtast beløbet ovenfor, og tjek modtageren, før du sender:",

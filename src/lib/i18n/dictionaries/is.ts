@@ -298,6 +298,10 @@ const is: Dict = {
     swishScan:
       "Skannaðu QR-kóðann með Swish-appinu, eða opnaðu Swish beint á þessu tæki:",
     openSwish: "Opna Swish-appið",
+    swishFx: "≈ {amount} á gengi dagsins",
+    swishFxLoading: "Sæki gengi dagsins…",
+    swishFxError:
+      "Ekki tókst að sækja gengi dagsins — sláðu upphæðina inn í Swish.",
     openRevolut: "Opna Revolut",
     revolutOpen:
       "Opnaðu Revolut, sláðu inn upphæðina að ofan og athugaðu viðtakanda áður en þú sendir:",

@@ -298,6 +298,10 @@ const en: Dict = {
     swishScan:
       "Scan the QR code with the Swish app, or open Swish directly on this device:",
     openSwish: "Open the Swish app",
+    swishFx: "≈ {amount} at today's rate",
+    swishFxLoading: "Fetching today's rate…",
+    swishFxError:
+      "Couldn't fetch today's rate — enter the amount in Swish yourself.",
     openRevolut: "Open Revolut",
     revolutOpen:
       "Open Revolut, enter the amount above and check the recipient before sending:",

@@ -131,17 +131,21 @@ export function revolutLink(tag: string): string {
   return `https://revolut.me/${tag}`;
 }
 
-/** Official Swish app link — opens the Swish app with everything prefilled. */
+/**
+ * Official Swish app link — opens the Swish app with everything prefilled.
+ * `amountOre` is in kronor (öre); null leaves the amount for the payer to
+ * enter, for when a split in another currency couldn't be converted.
+ */
 export function swishAppLink(
   number: string,
-  amountCents: number,
+  amountOre: number | null,
   message: string
 ): string {
-  const params = new URLSearchParams({
-    sw: number,
-    amt: (amountCents / 100).toFixed(2),
-    cur: "SEK",
-    msg: message.slice(0, 50),
-  });
+  const params = new URLSearchParams({ sw: number });
+  if (amountOre !== null) {
+    params.set("amt", (amountOre / 100).toFixed(2));
+    params.set("cur", "SEK");
+  }
+  params.set("msg", message.slice(0, 50));
   return `https://app.swish.nu/1/p/sw/?${params.toString()}`;
 }
