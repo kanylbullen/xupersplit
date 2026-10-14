@@ -299,6 +299,10 @@ const sv = {
     swishScan:
       "Scanna QR-koden med Swish-appen, eller öppna Swish direkt på den här enheten:",
     openSwish: "Öppna Swish-appen",
+    swishFx: "≈ {amount} enligt dagens kurs",
+    swishFxLoading: "Hämtar dagens kurs…",
+    swishFxError:
+      "Kunde inte hämta dagens kurs — skriv in beloppet själv i Swish.",
     openRevolut: "Öppna Revolut",
     revolutOpen:
       "Öppna Revolut, skriv in beloppet ovan och kontrollera mottagaren innan du skickar:",

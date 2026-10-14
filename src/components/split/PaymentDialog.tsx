@@ -44,6 +44,12 @@ type EvmState =
   | { status: "ready"; address: string; usd: number | null }
   | { status: "error" };
 
+type SwishState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "ready"; ore: number }
+  | { status: "error" };
+
 export function PaymentDialog({
   open,
   onClose,
@@ -62,6 +68,10 @@ export function PaymentDialog({
   const [ln, setLn] = useState<LnState>({ status: "idle" });
   const [evm, setEvm] = useState<EvmState>({ status: "idle" });
   const [solUsd, setSolUsd] = useState<number | null>(null);
+  const [sekRate, setSekRate] = useState<{
+    payment: Payment;
+    rate: number | null;
+  } | null>(null);
 
   // Close on Escape (this is a plain overlay, not a native <dialog>).
   useEffect(() => {
@@ -190,6 +200,28 @@ export function PaymentDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, payment, method?.type, method?.value]);
 
+  // Swish moves kronor only. A split in another currency is converted at
+  // today's rate, so the QR and app link prefill the debt in SEK — not the
+  // same number read as kronor (€12.50 is not 12.50 kr). The rate is stored
+  // against the payment it was fetched for and the status derived from that
+  // below, so the effect only ever sets state once the fetch settles.
+  const needsSekRate =
+    open && !!payment && method?.type === "swish" && payment.currency !== "SEK";
+  useEffect(() => {
+    if (!needsSekRate || !payment) return;
+    let cancelled = false;
+    fetch(`/api/fx?from=${payment.currency}&to=SEK`)
+      .then((r) => r.json())
+      .then((fx) => (typeof fx.rate === "number" && fx.rate > 0 ? fx.rate : null))
+      .catch(() => null)
+      .then((rate: number | null) => {
+        if (!cancelled) setSekRate({ payment, rate });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [needsSekRate, payment]);
+
   if (!open || !payment || !method) return null;
 
   const type: PaymentType = method.type;
@@ -202,15 +234,30 @@ export function PaymentDialog({
   const label = PAYMENT_META[type].label;
   const amount = formatMoney(payment.amountCents, payment.currency, LOCALE_INTL[locale]);
   // No QR for a stored value that isn't a Swish number — the proxy would
-  // refuse it and the dialog would show a broken image.
+  // refuse it and the dialog would show a broken image — nor before the
+  // amount in kronor is known.
   const swishNumber = rich ? swishPayee(method.value) : null;
-  const qrSrc = swishNumber
-    ? `/api/swish-qr?${new URLSearchParams({
-        number: swishNumber,
-        amount: String(payment.amountCents),
-        msg: payment.message,
-      })}`
-    : null;
+  const swish: SwishState = !rich
+    ? { status: "idle" }
+    : payment.currency === "SEK"
+      ? { status: "ready", ore: payment.amountCents }
+      : sekRate?.payment !== payment
+        ? { status: "loading" }
+        : sekRate.rate === null
+          ? { status: "error" }
+          : {
+              status: "ready",
+              ore: Math.max(1, Math.round(payment.amountCents * sekRate.rate)),
+            };
+  const swishOre = swish.status === "ready" ? swish.ore : null;
+  const qrSrc =
+    swishNumber && swishOre
+      ? `/api/swish-qr?${new URLSearchParams({
+          number: swishNumber,
+          amount: String(swishOre),
+          msg: payment.message,
+        })}`
+      : null;
 
   async function copy() {
     if (!method) return;
@@ -263,6 +310,17 @@ export function PaymentDialog({
           {isLightning && ln.status === "ready" && payment.currency !== "SATS" && (
             <p className="text-sm font-semibold text-stone-500">
               ≈ {new Intl.NumberFormat(LOCALE_INTL[locale]).format(ln.sats)} sats
+            </p>
+          )}
+          {rich && payment.currency !== "SEK" && swish.status !== "idle" && (
+            <p className="text-sm font-semibold text-stone-500">
+              {swish.status === "ready"
+                ? t(dict.pay.swishFx, {
+                    amount: formatMoney(swish.ore, "SEK", LOCALE_INTL[locale]),
+                  })
+                : swish.status === "loading"
+                  ? dict.pay.swishFxLoading
+                  : dict.pay.swishFxError}
             </p>
           )}
           {/* The wallet shows only the invoice, not who is behind it — show
@@ -419,13 +477,17 @@ export function PaymentDialog({
         {rich ? (
           <>
             {qrSrc && <p className="text-sm text-stone-500">{dict.pay.swishScan}</p>}
-            <a
-              href={swishAppLink(swishNumber ?? method.value, payment.amountCents, payment.message)}
-              onClick={() => track("swish_app_opened")}
-              className="w-full rounded-xl bg-primary px-4 py-3 font-bold text-white shadow-md transition-colors hover:bg-primary-dark"
-            >
-              {dict.pay.openSwish}
-            </a>
+            {/* Held back while the rate loads, so a quick tap can't open Swish
+                without an amount; after a failed lookup it opens with none. */}
+            {swish.status !== "loading" && (
+              <a
+                href={swishAppLink(swishNumber ?? method.value, swishOre, payment.message)}
+                onClick={() => track("swish_app_opened")}
+                className="w-full rounded-xl bg-primary px-4 py-3 font-bold text-white shadow-md transition-colors hover:bg-primary-dark"
+              >
+                {dict.pay.openSwish}
+              </a>
+            )}
           </>
         ) : appLink ? (
           <>
