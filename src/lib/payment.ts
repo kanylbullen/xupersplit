@@ -131,21 +131,57 @@ export function revolutLink(tag: string): string {
   return `https://revolut.me/${tag}`;
 }
 
+// Swish's message charset: "the letters a-ö, A-Ö, the numbers 0-9, and
+// special characters !?(),.-:;" — plus the space between words.
+const SWISH_MESSAGE_CHAR = /^[a-zA-Z0-9åäöÅÄÖ!?(),.\-:; ]$/;
+
+/**
+ * A message Swish will accept: typographic dashes as "-" (a date range like
+ * "8–11 okt" is the common case), accents dropped where that leaves an allowed
+ * letter (é → e), anything else (& / + emoji) turned into a space, at most
+ * 50 characters — the length the app shows and keeps.
+ */
+export function swishMessage(text: string): string {
+  return Array.from(text)
+    .map((ch) => {
+      if (SWISH_MESSAGE_CHAR.test(ch)) return ch;
+      if (/[‐-―−]/.test(ch)) return "-";
+      // Invisible formatting (soft hyphen, zero-width space) sits inside words.
+      if (/\p{Cf}/u.test(ch)) return "";
+      const base = ch.normalize("NFD").replace(/[̀-ͯ]/g, "");
+      return SWISH_MESSAGE_CHAR.test(base) ? base : " ";
+    })
+    .join("")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 50)
+    .trim();
+}
+
 /**
  * Official Swish app link — opens the Swish app with everything prefilled.
  * `amountOre` is in kronor (öre); null leaves the amount for the payer to
  * enter, for when a split in another currency couldn't be converted.
+ *
+ * Built to the form in Swish's own examples (developer.swish.nu, "Create QR
+ * code from specification"): a mobile payee as 46…, the message
+ * percent-encoded, no currency parameter. The iPhone app answered the
+ * URLSearchParams form — sw=07…, "+" between words, cur=SEK — with
+ * "felaktigt format", though Android took it.
  */
 export function swishAppLink(
   number: string,
   amountOre: number | null,
   message: string
 ): string {
-  const params = new URLSearchParams({ sw: number });
+  const payee = swishPayee(number) ?? number;
+  const parts = [`sw=${/^07\d{8}$/.test(payee) ? `46${payee.slice(1)}` : payee}`];
   if (amountOre !== null) {
-    params.set("amt", (amountOre / 100).toFixed(2));
-    params.set("cur", "SEK");
+    parts.push(`amt=${(amountOre / 100).toFixed(2)}`);
   }
-  params.set("msg", message.slice(0, 50));
-  return `https://app.swish.nu/1/p/sw/?${params.toString()}`;
+  const msg = swishMessage(message);
+  if (msg) {
+    parts.push(`msg=${encodeURIComponent(msg)}`);
+  }
+  return `https://app.swish.nu/1/p/sw/?${parts.join("&")}`;
 }

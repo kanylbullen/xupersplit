@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { swishPayee } from "@/lib/payment";
+import { swishMessage, swishPayee } from "@/lib/payment";
 
 // Proxy for Swish's public prefilled-QR generator (it has no CORS headers,
 // so the browser can't call it directly).
@@ -16,7 +16,9 @@ export async function GET(request: NextRequest) {
   // and an unencoded "+" in a query string arrives here as a space.
   const number = swishPayee(searchParams.get("number") ?? "");
   const amountCents = Number(searchParams.get("amount") ?? "");
-  const message = (searchParams.get("msg") ?? "").slice(0, 50);
+  // Swish's QR service takes any text, but the app reading the code keeps to
+  // its own charset — same cleaning as the app link.
+  const message = swishMessage(searchParams.get("msg") ?? "");
 
   if (!number || !Number.isInteger(amountCents) || amountCents <= 0) {
     return new Response("Bad request", { status: 400 });
