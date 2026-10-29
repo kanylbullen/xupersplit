@@ -89,6 +89,23 @@ test("Swish QR accepts a number in international form", async ({ request }) => {
   expect(bad.status()).toBe(400);
 });
 
+// Installability rests on the manifest link and icons that actually resolve; a
+// moved icon file fails silently, Chrome just stops offering "Install app".
+test("web app manifest is linked and its icons resolve", async ({ page, request }) => {
+  await page.goto("/");
+  const href = await page.locator('link[rel="manifest"]').getAttribute("href");
+  expect(href).toBeTruthy();
+  const manifest = await (await request.get(href!)).json();
+  expect(manifest.display).toBe("standalone");
+  const sizes = manifest.icons.map((i: { sizes: string }) => i.sizes);
+  expect(sizes).toEqual(expect.arrayContaining(["192x192", "512x512"]));
+  for (const icon of manifest.icons as { src: string }[]) {
+    const res = await request.get(icon.src);
+    expect(res.status(), icon.src).toBe(200);
+    expect(res.headers()["content-type"]).toBe("image/png");
+  }
+});
+
 // ── MCP endpoint ─────────────────────────────────────────────────────────────
 // Stateless Streamable HTTP: a POST carrying JSON-RPC, answered as a one-shot
 // SSE frame. Both Accept types are required by the transport.
