@@ -50,7 +50,11 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
   },
   // Farcaster Mini App launch card (sharing split.xuper.fun opens the app).
-  other: { "fc:miniapp": miniappEmbed(APP_ORIGIN) },
+  other: {
+    "fc:miniapp": miniappEmbed(APP_ORIGIN),
+    // Site ownership check for Vibekollen.
+    "vibekollen-verifiering": "vk-18055f9b64046dd7f0a85a11",
+  },
 };
 
 export const viewport: Viewport = {
